@@ -1,0 +1,62 @@
+###############################################################################
+### ==> Normal
+###############################################################################
+
+- alias: Wohnzimmermodus auf Normal setzen, wenn das Wohnzimmer eingeschaltet wird
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Normal'
+
+- alias: Wohnzimmermodus mit Remote auf Normal setzen
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 3002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 3002
+  condition:
+    - condition: state
+      entity_id: input_select.mode_living_room
+      state: 'Gedämmt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Normal'
+
+###############################################################################
+### ==> Gedämmt
+###############################################################################
+
+- alias: Wohnzimmermodus mit Remote auf Gedämmt setzen
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 2002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 2002
+  condition:
+    - condition: state
+      entity_id: input_select.mode_living_room
+      state: 'Normal'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Gedämmt'

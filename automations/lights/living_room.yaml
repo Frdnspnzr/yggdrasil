@@ -1,0 +1,40 @@
+- alias: Wohnzimmerlicht auf Normal schalten
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: state
+      entity_id: input_select.mode_living_room
+      to: 'Normal'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+    - condition: state
+      entity_id: input_select.mode_living_room
+      state: 'Normal'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_normal
+
+- alias: Wohnzimmerlicht auf Gedämmt schalten
+  trigger:
+    - platform: state
+      entity_id: input_select.mode_living_room
+      to: 'Gedämmt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_gedämmt
+
+- alias: Wohnzimmerlicht ausschalten
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Leer'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_aus

@@ -4,31 +4,30 @@
       state: on
       transition: 3
       brightness_pct: 100
+    switch.outlet_living_room_1:
+      state: on
 
-- name: Livingroom normal
+- name: Wohnzimmer Normal
   entities:
     light.wohnzimmer_ventilator:
       state: on
       transition: 3
       brightness_pct: 85
+    switch.outlet_living_room_1:
+      state: off
 
-- name: Livingroom dim
+- name: Wohnzimmer Gedämmt
   entities:
     light.wohnzimmer_ventilator:
       state: on
       transition: 3
       brightness_pct: 10
-
-- name: Front door automatic on
-  entities:
-    light.front_door_1:
+    switch.outlet_living_room_1:
       state: on
-      transition: 1
-      brightness_pct: 100
 
-- name: Front door automatic off
+- name: Wohnzimmer Aus
   entities:
-    light.front_door_1:
+    light.wohnzimmer_ventilator:
       state: off
-      transition: 10
-      brightness_pct: 100
+    switch.outlet_living_room_1:
+      state: off
