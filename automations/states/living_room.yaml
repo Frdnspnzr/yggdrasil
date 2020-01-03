@@ -1,0 +1,56 @@
+###############################################################################
+### ==> An
+###############################################################################
+
+- alias: Wohnzimmerzustand mit Remote auf An schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 1002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 1002
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'An'
+
+###############################################################################
+### ==> Leer
+###############################################################################
+
+- alias: Wohnzimmerzustand mit Remote auf Leer schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 1002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 1002
+  condition:
+    condition: state
+    entity_id: input_select.state_living_room
+    state: 'An'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'Leer'
