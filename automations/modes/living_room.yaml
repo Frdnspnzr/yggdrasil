@@ -19,12 +19,12 @@
       event_type: deconz_event
       event_data:
         id: tradfri_switch_wohnzimmer_1
-        event: 3002
+        event: 2002
     - platform: event
       event_type: deconz_event
       event_data:
         id: tradfri_switch_wohnzimmer_2
-        event: 3002
+        event: 2002
   condition:
     - condition: state
       entity_id: input_select.mode_living_room
@@ -45,12 +45,12 @@
       event_type: deconz_event
       event_data:
         id: tradfri_switch_wohnzimmer_1
-        event: 2002
+        event: 3002
     - platform: event
       event_type: deconz_event
       event_data:
         id: tradfri_switch_wohnzimmer_2
-        event: 2002
+        event: 3002
   condition:
     - condition: state
       entity_id: input_select.mode_living_room
