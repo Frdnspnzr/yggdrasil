@@ -81,6 +81,13 @@ favicon:
 
 speedtestdotnet:
 
+history:
+  exclude:
+    domains:
+      - automation
+      - scene
+      - zone
+
 default_config:
 
 homeassistant:
