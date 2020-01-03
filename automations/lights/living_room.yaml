@@ -28,7 +28,7 @@
       state: 'An'
   action:
     - service: scene.turn_on
-      entity_id: scene.wohnzimmer_gedämmt
+      entity_id: scene.wohnzimmer_gedaemmt
 
 - alias: Wohnzimmerlicht ausschalten
   trigger:

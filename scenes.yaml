@@ -16,7 +16,7 @@
     switch.outlet_living_room_1:
       state: off
 
-- name: Wohnzimmer Gedämmt
+- name: Wohnzimmer Gedaemmt
   entities:
     light.wohnzimmer_ventilator:
       state: on
