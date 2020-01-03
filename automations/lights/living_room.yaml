@@ -17,11 +17,11 @@
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_normal
 
-- alias: Wohnzimmerlicht auf Gedämmt schalten
+- alias: Wohnzimmerlicht auf Gedaemmt schalten
   trigger:
     - platform: state
       entity_id: input_select.mode_living_room
-      to: 'Gedämmt'
+      to: 'Gedaemmt'
   condition:
     - condition: state
       entity_id: input_select.state_living_room

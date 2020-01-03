@@ -11,7 +11,7 @@ scene.livingroom_normal:
   friendly_name: Wohnzimmer normal
 
 scene.livingroom_dim:
-  friendly_name: Wohnzimmer gedämmt
+  friendly_name: Wohnzimmer Gedaemmt
 
 scene.livingroom_full:
   friendly_name: Wohnzimmer voll

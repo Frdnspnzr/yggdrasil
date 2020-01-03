@@ -28,7 +28,7 @@
   condition:
     - condition: state
       entity_id: input_select.mode_living_room
-      state: 'Gedämmt'
+      state: 'Gedaemmt'
   action:
     - service: input_select.select_option
       data:
@@ -36,10 +36,10 @@
         option: 'Normal'
 
 ###############################################################################
-### ==> Gedämmt
+### ==> Gedaemmt
 ###############################################################################
 
-- alias: Wohnzimmermodus mit Remote auf Gedämmt setzen
+- alias: Wohnzimmermodus mit Remote auf Gedaemmt setzen
   trigger:
     - platform: event
       event_type: deconz_event
@@ -59,4 +59,4 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Gedämmt'
+        option: 'Gedaemmt'
