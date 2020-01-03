@@ -1,0 +1,40 @@
+###############################################################################
+### Set thermostats according to house states
+###############################################################################
+
+- alias: Thermostate ausschalten, wenn das Haus den Zustand wechselt
+  trigger:
+  - platform: state
+    entity_id: input_select.state_house
+    to: 'Leer'
+  - platform: state
+    entity_id: input_select.state_house
+    to: 'Nacht'
+  - platform: state
+    entity_id: input_select.state_house
+    to: 'Leerstehend'
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - group.all_thermostats
+        option: 'eco'
+
+- alias: Thermostate einschalten, wenn das Haus den Zustand wechselt
+  trigger:
+  - platform: state
+    entity_id: input_select.state_house
+    to: 'Bewohnt'
+  - platform: state
+    entity_id: input_select.state_house
+    to: 'Erwartend'
+  condition:
+    condition: time
+    after: '05:00'
+    before: '22:00'
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - group.all_thermostats
+        option: 'comfort'

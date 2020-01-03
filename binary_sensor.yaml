@@ -1,0 +1,10 @@
+- platform: workday
+  name: workday_today
+  country: DE
+  province: RP
+
+- platform: workday
+  name: workday_tomorrow
+  days_offset: 1
+  country: DE
+  province: RP

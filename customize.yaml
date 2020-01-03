@@ -1,0 +1,17 @@
+# LIGHTS
+
+light.wohnzimmer_ventilator_1:
+  friendly_name: Wohnzimmer Ventilator 1
+
+light.wohnzimmer_ventilator_2:
+  friendly_name: Wohnzimmer Ventilator 2
+
+# SCENES
+scene.livingroom_normal:
+  friendly_name: Wohnzimmer normal
+
+scene.livingroom_dim:
+  friendly_name: Wohnzimmer gedämmt
+
+scene.livingroom_full:
+  friendly_name: Wohnzimmer voll

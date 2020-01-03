@@ -1,0 +1,17 @@
+- name: Home
+  latitude: !secret zone_home_lat
+  longitude: !secret zone_home_lon
+  radius: 50
+  icon: mdi:home
+
+- name: !secret zone_work_pascal_name
+  latitude: !secret zone_work_pascal_lat
+  longitude: !secret zone_work_pascal_lon
+  radius: 1000
+  icon: mdi:worker
+
+- name: !secret zone_work_andrea_name
+  latitude: !secret zone_work_andrea_lat
+  longitude: !secret zone_work_andrea_lon
+  radius: 500
+  icon: mdi:worker

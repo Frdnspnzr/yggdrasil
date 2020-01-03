@@ -1,0 +1,102 @@
+device_tracker:
+  - platform: fritz
+    host: !secret hostname_fritz_box
+    new_device_defaults:
+      track_new_devices: false
+
+fritzbox:
+  devices:
+    - host: !secret hostname_fritz_box
+      username: !secret fritz_box_username
+      password: !secret fritz_box_password
+
+group:
+  bewohner:
+    name: Bewohner
+    entities:
+        - person.andrea
+        - person.pascal
+  all_thermostats:
+    name: Alle Thermostate
+    entities:
+       - climate.badezimmer_1
+
+light:
+- platform: group
+  name: Wohnzimmer Ventilator
+  entities:
+    - light.wohnzimmer_ventilator_1
+    - light.wohnzimmer_ventilator_2
+
+media_player:
+  - platform: webostv
+    host: !secret ip_adress_tv_living_room
+    name: fernseher_wohnzimmer
+    timeout: 5
+    customize:
+      sources:
+        - livetv
+        - youtube
+        - netflix
+        - amazon
+        - xbox
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: !secret mac_adress_tv
+
+notify:
+  - platform: webostv
+    host: !secret ip_adress_tv_living_room
+    name: fernseher_wohnzimmer
+    filename: webostv.conf
+  - name: telegram_pascal
+    platform: telegram
+    chat_id: !secret telegram_chat_id_pascal
+  - name: telegram_andrea
+    platform: telegram
+    chat_id: !secret telegram_chat_id_andrea
+  - name: telegram_alle
+    platform: group
+    services:
+      - service: telegram_pascal
+      - service: telegram_andrea
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_chat_id_pascal
+      - !secret telegram_chat_id_andrea
+
+wake_on_lan:
+
+http:
+  server_port: 80
+
+favicon:
+  title: Yggdrasil Home Automation
+  favicon: /local/favicon/favicon.ico
+  apple: /local/favicon/apple-touch-icon-180x180.png
+
+shell_command:
+  git_pull: '/config/git_pull.sh'
+
+default_config:
+
+homeassistant:
+  customize: !include customize.yaml
+  latitude: !secret zone_home_lat
+  longitude: !secret zone_home_lon
+  unit_system: metric
+  time_zone: Europe/Berlin
+  name: Yggdrasil
+
+# INCLUDES
+zone: !include zones.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
+scene: !include scenes.yaml
+automation: !include_dir_merge_list automations/
+binary_sensor: !include binary_sensor.yaml
+sensor: !include sensors.yaml

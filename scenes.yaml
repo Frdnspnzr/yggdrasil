@@ -1,0 +1,34 @@
+- name: Livingroom full
+  entities:
+    light.wohnzimmer_ventilator:
+      state: on
+      transition: 3
+      brightness_pct: 100
+
+- name: Livingroom normal
+  entities:
+    light.wohnzimmer_ventilator:
+      state: on
+      transition: 3
+      brightness_pct: 85
+
+- name: Livingroom dim
+  entities:
+    light.wohnzimmer_ventilator:
+      state: on
+      transition: 3
+      brightness_pct: 10
+
+- name: Front door automatic on
+  entities:
+    light.front_door_1:
+      state: on
+      transition: 1
+      brightness_pct: 100
+
+- name: Front door automatic off
+  entities:
+    light.front_door_1:
+      state: off
+      transition: 10
+      brightness_pct: 100

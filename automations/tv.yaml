@@ -1,0 +1,59 @@
+- alias: Fernseher abschalten wenn niemand zuhause ist
+  trigger:
+  - platform: state
+    entity_id: group.bewohner
+    from: Home
+    to: Away
+    for: 00:05:00
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('media_player.fernseher_wohnzimmer', 'off') }}"
+  action:
+    - service: media_player.turn_off
+      data:
+        entity_id: fernseher_wohnzimmer
+    - service: notify.telegram_alle
+      data:
+        message: "Ich hab den Fernseher für euch ausgeschaltet. ✌️"
+
+- alias: Licht dimmen wenn der Fernseher eingeschaltet wird
+  trigger:
+    platform: state
+    entity_id: media_player.fernseher_wohnzimmer
+    from: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.automate_light_livingroom_main
+        state: 'on'
+      - condition: state
+        entity_id: group.bewohner
+        state: 'home'
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_dim
+
+- alias: Licht wieder einschalten wenn der Fernseher ausgeschaltet wird
+  trigger:
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: "off"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.automate_light_livingroom_main
+        state: 'on'
+      - condition: state
+        entity_id: group.bewohner
+        state: 'home'
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_normal

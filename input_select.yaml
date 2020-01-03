@@ -1,0 +1,29 @@
+state_house:
+  name: Zustand Haus
+  options:
+    - Bewohnt
+    - Leer
+    - Erwartend
+    - Leerstehend
+    - Nacht
+
+mode_house:
+  name: Modus Haus
+  options:
+    - Komplett
+    - Subtle
+    - Manual
+
+state_living_room:
+  name: Zustand Wohnzimmer
+  options:
+    - Bewohnt
+    - Leer
+    - An
+
+mode_living_room:
+  name: Modus Wohnzimmer
+  options:
+    - Komplett
+    - Normal
+    - Gedämmt

@@ -1,0 +1,180 @@
+###############################################################################
+### ==> Bewohnt
+###############################################################################
+
+- alias: Haus werktags morgens einschalten
+  trigger:
+    - platform: time
+      at: "05:30"
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.workday_today
+      state: 'on'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Bewohnt'
+
+
+- alias: Haus an freien Tagen morgens einschalten
+  trigger:
+    - platform: time
+      at: "08:00"
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.workday_today
+      state: 'off'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Bewohnt'
+
+- alias: Haus einschalten wenn jemand nach Hause kommt
+  trigger:
+  - platform: state
+    entity_id: group.bewohner
+    to: 'home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Bewohnt'
+
+- alias: Haus einschalten wenn jemand in einem Raum ist
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'On'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Bewohnt'
+
+###############################################################################
+### ==> Leer
+###############################################################################
+
+- alias: Haus ausschalten wenn niemand mehr zu Hause ist
+  trigger:
+  - platform: state
+    entity_id: group.bewohner
+    to: 'not_home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Leer'
+
+###############################################################################
+### ==> Erwartend
+###############################################################################
+
+- alias: Haus werktags mittags auf Erwartend schalten
+  trigger:
+    - platform: time
+      at: "16:00"
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Leer'
+    - condition: state
+      entity_id: binary_sensor.workday_today
+      state: 'on'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Erwartend'
+
+- alias: Haus auf Erwartend schalten wenn der Telegram-Bot den Befehl empfängt
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/komme'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Leer'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Leerstehend'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Erwartend'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        target: '{{ trigger.event.data.user_id }}'
+        message: '😘 Alles klar, ich heize schonmal das Bad auf.'
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Erwartend'
+
+- alias: Mit Fehler antworten wenn der Telegram-Bot den Befehl empfängt und schon jemand da ist
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/komme'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        target: '{{ trigger.event.data.user_id }}'
+        message: '🥰 Ist schon alles toll hier.'
+
+###############################################################################
+### ==> Nacht
+###############################################################################
+
+- alias: Haus auf Nacht schalten, wenn der folgende Tag ein Werktag ist
+  trigger:
+    - platform: time
+      at: "22:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_tomorrow
+      state: 'on'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Nacht'
+
+- alias: Haus auf Nacht schalten, wenn der folgende Tag kein Werktag ist
+  trigger:
+    - platform: time
+      at: "23:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_tomorrow
+      state: 'off'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Nacht'

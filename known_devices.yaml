@@ -1,0 +1,23 @@
+android:
+  hide_if_away: false
+  icon: mdi:phone_android
+  mac: !secret mac_adress_phone_pascal
+  name: Handy Pascal
+  picture: mdi:phone_android
+  track: true
+
+blind_guardian:
+  hide_if_away: false
+  icon:
+  mac: !secret mac_adress_tablet_pascal
+  name: Tablet Pascal
+  picture: mdi:tablet_android
+  track: true
+
+ding:
+  hide_if_away: false
+  icon: mdi:phone_iphone
+  mac: !secret mac_adress_phone_andrea
+  name: Handy Andrea
+  picture:
+  track: true

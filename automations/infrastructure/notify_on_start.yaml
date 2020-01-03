@@ -1,0 +1,8 @@
+- alias: Benachrichtigung beim Start
+  trigger:
+    - platform: event
+      event_type: homeassistant_start
+  action:
+    - service: notify.telegram_pascal
+      data:
+        message: "💪 Yggdrasil ist wieder hochgefahren."
