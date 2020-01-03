@@ -79,8 +79,7 @@ favicon:
   favicon: /local/favicon/favicon.ico
   apple: /local/favicon/apple-touch-icon-180x180.png
 
-shell_command:
-  git_pull: '/config/git_pull.sh'
+speedtestdotnet:
 
 default_config:
 
