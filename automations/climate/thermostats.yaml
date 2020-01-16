@@ -18,7 +18,7 @@
       data:
         entity_id:
           - group.all_thermostats
-        option: 'eco'
+        preset_mode: 'eco'
 
 - alias: Thermostate einschalten, wenn das Haus den Zustand wechselt
   trigger:
@@ -37,4 +37,4 @@
       data:
         entity_id:
           - group.all_thermostats
-        option: 'comfort'
+        preset_mode: 'comfort'
