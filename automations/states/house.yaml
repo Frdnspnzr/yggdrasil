@@ -81,10 +81,12 @@
 ### ==> Erwartend
 ###############################################################################
 
-- alias: Haus werktags mittags auf Erwartend schalten
+- alias: Haus auf erwartend schalten wenn Andrea die Arbeit verlässt
   trigger:
-    - platform: time
-      at: "16:00"
+  - platform: state
+    entity_id: person.andrea
+    from: !secret zone_work_andrea_name
+    to: 'away'
   condition:
     - condition: state
       entity_id: input_select.state_house
@@ -92,6 +94,31 @@
     - condition: state
       entity_id: binary_sensor.workday_today
       state: 'on'
+    - condition: time
+      after: '15:00:00'
+      before: '18:00:00'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_house
+        option: 'Erwartend'
+
+- alias: Haus auf erwartend schalten wenn Pascal die Arbeit verlässt
+  trigger:
+  - platform: state
+    entity_id: person.pascal
+    from: !secret zone_work_pascal_name
+    to: 'away'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Leer'
+    - condition: state
+      entity_id: binary_sensor.workday_today
+      state: 'on'
+    - condition: time
+      after: '16:00:00'
+      before: '19:00:00'
   action:
     - service: input_select.select_option
       data:
