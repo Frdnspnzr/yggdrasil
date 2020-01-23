@@ -1,0 +1,46 @@
+###############################################################################
+### ==> An
+###############################################################################
+
+- alias: Kuechenzustand mit Remote auf An schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_kitchen_1
+        event: 1002
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.state_kitchen
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_kitchen
+      state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: 'An'
+
+###############################################################################
+### ==> Leer
+###############################################################################
+
+- alias: Kuechenzustand mit Remote auf Leer schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_kitchen_1
+        event: 1002
+  condition:
+    condition: state
+    entity_id: input_select.state_kitchen
+    state: 'An'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: 'Leer'

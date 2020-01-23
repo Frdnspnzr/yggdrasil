@@ -27,3 +27,10 @@ mode_living_room:
     - Komplett
     - Normal
     - Gedaemmt
+
+state_kitchen:
+  name: Zustand Kueche
+  options:
+    - Bewohnt
+    - Leer
+    - An
