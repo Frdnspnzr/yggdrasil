@@ -83,10 +83,10 @@
 
 - alias: Haus auf erwartend schalten wenn Andrea die Arbeit verlässt
   trigger:
-  - platform: state
+  - platform: zone
     entity_id: person.andrea
-    from: !secret zone_work_andrea_name
-    to: 'away'
+    zone: zone.work_andrea
+    event: leave
   condition:
     - condition: state
       entity_id: input_select.state_house
@@ -105,10 +105,10 @@
 
 - alias: Haus auf erwartend schalten wenn Pascal die Arbeit verlässt
   trigger:
-  - platform: state
-    entity_id: person.pascal
-    from: !secret zone_work_pascal_name
-    to: 'away'
+  - platform: zone
+    entity_id: person.andrea
+    zone: zone.work_pascal
+    event: leave
   condition:
     - condition: state
       entity_id: input_select.state_house

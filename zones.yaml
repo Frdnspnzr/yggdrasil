@@ -4,13 +4,13 @@
   radius: 50
   icon: mdi:home
 
-- name: !secret zone_work_pascal_name
+- name: work_pascal
   latitude: !secret zone_work_pascal_lat
   longitude: !secret zone_work_pascal_lon
   radius: 1000
   icon: mdi:worker
 
-- name: !secret zone_work_andrea_name
+- name: work_andrea
   latitude: !secret zone_work_andrea_lat
   longitude: !secret zone_work_andrea_lon
   radius: 500

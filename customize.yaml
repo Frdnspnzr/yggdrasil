@@ -15,3 +15,9 @@ scene.livingroom_dim:
 
 scene.livingroom_full:
   friendly_name: Wohnzimmer voll
+
+# ZONES
+zone.work_andrea:
+  friendly_name: !secret zone_work_andrea_name
+zone.work_pascal:
+  friendly_name: !secret zone_work_pascal_name
