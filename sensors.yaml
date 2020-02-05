@@ -33,3 +33,11 @@
     ha_counter_switches:
       friendly_name: "Schalter"
       value_template: "{{ states.switch | count}}"
+
+    phone_andrea_battery_level:
+      friendly_name: "Akkustand Handy Andrea"
+      value_template: "{{ state_attr('device_tracker.andrea_7dd6c1c6_c657_444c_ba6b_d3e3bc960423', 'battery_level')}}"
+
+    phone_pascal_battery_level:
+      friendly_name: "Akkustand Handy Pascal"
+      value_template: "{{ state_attr('device_tracker.pascal_handy', 'battery_level')}}"
