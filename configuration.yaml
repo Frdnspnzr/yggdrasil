@@ -28,28 +28,26 @@ light:
     - light.wohnzimmer_ventilator_1
     - light.wohnzimmer_ventilator_2
 
+webostv:
+  host: !secret ip_adress_tv_living_room
+  name: Fernseher Wohnzimmer
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret mac_adress_tv
+  customize:
+    sources:
+      - livetv
+      - youtube
+      - netflix
+      - amazon
+      - xbox
+      - playstation
+      - switch
+
 media_player:
-  - platform: webostv
-    host: !secret ip_adress_tv_living_room
-    name: fernseher_wohnzimmer
-    timeout: 5
-    customize:
-      sources:
-        - livetv
-        - youtube
-        - netflix
-        - amazon
-        - xbox
-    turn_on_action:
-      service: wake_on_lan.send_magic_packet
-      data:
-        mac: !secret mac_adress_tv
 
 notify:
-  - platform: webostv
-    host: !secret ip_adress_tv_living_room
-    name: fernseher_wohnzimmer
-    filename: webostv.conf
   - name: telegram_pascal
     platform: telegram
     chat_id: !secret telegram_chat_id_pascal
