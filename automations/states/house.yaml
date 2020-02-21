@@ -106,7 +106,7 @@
 - alias: Haus auf erwartend schalten wenn Pascal die Arbeit verlässt
   trigger:
   - platform: zone
-    entity_id: person.andrea
+    entity_id: person.pascal
     zone: zone.work_pascal
     event: leave
   condition:
