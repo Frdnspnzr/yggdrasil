@@ -20,6 +20,8 @@ group:
     name: Alle Thermostate
     entities:
        - climate.badezimmer_1
+       - climate.thermostat_living_room_1
+       - climate.thermostat_living_room_2
 
 light:
 - platform: group
