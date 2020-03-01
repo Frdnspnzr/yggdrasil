@@ -56,6 +56,9 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_front_hallway
+      to: 'Bewohnt'
   condition:
     condition: or
     conditions:
@@ -118,7 +121,7 @@
 - alias: Haus auf erwartend schalten wenn Pascal die Arbeit verlässt
   trigger:
   - platform: zone
-    entity_id: person.pascal
+    entity_id: person.andrea
     zone: zone.work_pascal
     event: leave
   condition:

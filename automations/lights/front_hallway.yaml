@@ -1,0 +1,44 @@
+- alias: Flur vorne beleuchten (Tag)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_front_hallway
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 200
+        transition: 0.5
+        entity_id: light.front_hallway_main
+
+- alias: Flur vorne beleuchten (Nacht)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_front_hallway
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 50
+        transition: 0.5
+        entity_id: light.front_hallway_main
+
+- alias: Flur vorne entleuchten
+  trigger:
+    - platform: state
+      entity_id: input_select.state_front_hallway
+      to: 'Leer'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.front_hallway_main

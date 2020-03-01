@@ -34,3 +34,9 @@ state_kitchen:
     - Bewohnt
     - Leer
     - An
+
+state_front_hallway:
+  name: Zustand Flur vorne
+  options:
+    - Bewohnt
+    - Leer
