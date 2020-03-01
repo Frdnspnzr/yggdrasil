@@ -56,6 +56,18 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Leer'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Leerstehend'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Erwartend'
   action:
     - service: input_select.select_option
       data:
