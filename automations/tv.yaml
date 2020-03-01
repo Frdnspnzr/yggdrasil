@@ -25,8 +25,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.automate_light_livingroom_main
-        state: 'on'
+        entity_id: input_select.mode_house
+        state: 'Komplett'
       - condition: state
         entity_id: group.bewohner
         state: 'home'
@@ -34,8 +34,10 @@
         entity_id: sun.sun
         state: 'below_horizon'
   action:
-    - service: scene.turn_on
-      entity_id: scene.livingroom_dim
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mode_living_room
+        option: 'Gedaemmt'
 
 - alias: Licht wieder einschalten wenn der Fernseher ausgeschaltet wird
   trigger:
@@ -46,8 +48,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.automate_light_livingroom_main
-        state: 'on'
+        entity_id: input_select.mode_house
+        state: 'Komplett'
       - condition: state
         entity_id: group.bewohner
         state: 'home'
@@ -55,5 +57,7 @@
         entity_id: sun.sun
         state: 'below_horizon'
   action:
-    - service: scene.turn_on
-      entity_id: scene.livingroom_normal
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mode_living_room
+        option: 'Normal'
