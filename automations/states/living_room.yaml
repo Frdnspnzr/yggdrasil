@@ -54,3 +54,37 @@
       data:
         entity_id: input_select.state_living_room
         option: 'Leer'
+
+- alias: Wohnzimmerzustand auf Leer schalten wenn niemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_living_room
+      to: 'off'
+  condition:
+    condition: state
+    entity_id: input_select.state_living_room
+    state: 'Bewohnt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'Leer'
+
+###############################################################################
+### ==> Bewohnt
+###############################################################################
+
+- alias: Wohnzimmerzustand auf Bewohnt schalten wenn jemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_living_room
+      to: 'on'
+  condition:
+    condition: state
+    entity_id: input_select.state_living_room
+    state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'Bewohnt'

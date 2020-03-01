@@ -25,6 +25,24 @@
     switch.outlet_living_room_1:
       state: on
 
+- name: Wohnzimmer Nacht
+  entities:
+    light.wohnzimmer_ventilator:
+      state: on
+      transition: 1
+      brightness_pct: 10
+    switch.outlet_living_room_1:
+      state: off
+
+- name: Wohnzimmer Automatik
+  entities:
+    light.wohnzimmer_ventilator:
+      state: on
+      transition: 1
+      brightness_pct: 70
+    switch.outlet_living_room_1:
+      state: off
+
 - name: Wohnzimmer Aus
   entities:
     light.wohnzimmer_ventilator:

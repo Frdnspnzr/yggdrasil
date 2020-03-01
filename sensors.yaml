@@ -41,3 +41,7 @@
     phone_pascal_battery_level:
       friendly_name: "Akkustand Handy Pascal"
       value_template: "{{ state_attr('device_tracker.pascal_handy', 'battery_level')}}"
+
+    occupancy_living_room_probability:
+      friendly_name: ""
+      value_template: "{{ state_attr('binary_sensor.occupancy_living_room', 'probability') * 100}}"

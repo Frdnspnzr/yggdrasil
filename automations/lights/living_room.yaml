@@ -38,3 +38,44 @@
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_aus
+
+- alias: Wohnzimmerlicht Automatik
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_house
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: numeric_state
+      entity_id: sensor.light_living_room_2
+      below: 15
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_automatik
+
+- alias: Wohnzimmerlicht Automatik Nachtlicht
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_house
+      to: 'Nacht'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_nacht
