@@ -3,18 +3,55 @@
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'An'
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 255
+        transition: 1
+        entity_id: light.kueche_decke
+
+- alias: Küche automatisch beleuchten (Tag)
+  trigger:
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
-    - service: scene.turn_on
-      entity_id: scene.kitchen_normal
+    - service: light.turn_on
+      data:
+        brightness: 255
+        transition: 1
+        entity_id: light.kueche_decke
 
-- alias: Kuechenlicht ausschalten
+- alias: Küche automatisch beleuchten (Nacht)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 50
+        transition: 0.5
+        entity_id: light.kueche_decke
+
+- alias: Küche entleuchten
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Leer'
   action:
-    - service: scene.turn_on
-      entity_id: scene.kitchen_off
+    - service: light.turn_off
+      data:
+        entity_id: light.kueche_decke
+        transition: 1
