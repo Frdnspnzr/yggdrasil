@@ -44,3 +44,37 @@
       data:
         entity_id: input_select.state_kitchen
         option: 'Leer'
+
+- alias: Küche auf Leer schalten wenn niemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_1
+      to: 'off'
+  condition:
+    condition: state
+    entity_id: input_select.state_kitchen
+    state: 'Bewohnt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: 'Leer'
+
+###############################################################################
+### ==> Bewohnt
+###############################################################################
+
+- alias: Küche auf Bewohnt schalten wenn jemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_1
+      to: 'on'
+  condition:
+    condition: state
+    entity_id: input_select.state_kitchen
+    state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: 'Bewohnt'
