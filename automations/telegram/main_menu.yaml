@@ -1,0 +1,18 @@
+- alias: Telegram-Bot antwortet mit dem Hauptmenü
+  trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/start'
+    - platform: event
+      event_type: telegram_callback
+      event_data:
+        command: '/start'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        target: '{{ trigger.event.data.user_id }}'
+        message: '🤖 Hi, ich bin dein freundlicher, kleiner Hausroboter.'
+        inline_keyboard:
+          - "Ich komme nach Hause.:/komme"
+          - "Ich bin im Bett.:/bett"
