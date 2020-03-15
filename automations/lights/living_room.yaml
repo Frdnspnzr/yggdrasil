@@ -54,9 +54,9 @@
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
-    - condition: numeric_state
-      entity_id: sensor.light_living_room_2
-      below: 15
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_automatik
