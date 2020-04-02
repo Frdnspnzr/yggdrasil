@@ -68,9 +68,12 @@
         id: tradfri_switch_wohnzimmer_2
         event: 1002
   condition:
-    condition: state
-    entity_id: input_select.state_living_room
-    state: 'An'
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+    - condition: state
+      entity_id: binary_sensor.occupancy_living_room
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
@@ -103,8 +106,8 @@
       to: 'on'
   condition:
     - condition: state
-    entity_id: input_select.state_living_room
-    state: 'Leer'
+      entity_id: input_select.state_living_room
+      state: 'Leer'
     - condition: state
       entity_id: media_player.fernseher_wohnzimmer
       state: 'off'
@@ -114,6 +117,25 @@
         entity_id: input_select.state_living_room
         option: 'Bewohnt'
 
+- alias: Wohnzimmerzustand mit Remote auf Leer schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 1002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 1002
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+    - condition: state
+      entity_id: binary_sensor.occupancy_living_room
+      state: 'on'
   action:
     - service: input_select.select_option
       data:

@@ -39,7 +39,7 @@
     light.wohnzimmer_ventilator:
       state: on
       transition: 1
-      brightness_pct: 70
+      brightness_pct: 40
     switch.outlet_living_room_1:
       state: off
 
