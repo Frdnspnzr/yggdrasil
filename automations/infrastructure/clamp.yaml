@@ -1,0 +1,32 @@
+- alias: Clamp Global Hue Primary
+  trigger:
+    - platform: numeric_state
+      entity_id: input_number.global_hue_primary
+      above: 359
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 0
+
+- alias: Clamp Global Hue Secondary
+  trigger:
+    - platform: numeric_state
+      entity_id: input_number.global_hue_secondary
+      above: 359
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 0
+
+- alias: Clamp Global Hue Tertiary
+  trigger:
+    - platform: numeric_state
+      entity_id: input_number.global_hue_tertiary
+      above: 359
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 0
