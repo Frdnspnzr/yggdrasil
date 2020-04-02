@@ -1,8 +1,8 @@
 ###############################################################################
-### ==> Bewohnt
+### ==> Leer
 ###############################################################################
 
-- alias: Flur vorne auf Bewohnt schalten wenn jemand dort ist
+- alias: Flur vorne auf Leer schalten wenn niemand dort ist
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_front_hallway
@@ -18,10 +18,10 @@
         option: 'Bewohnt'
 
 ###############################################################################
-### ==> Leer
+### ==> Bewohnt
 ###############################################################################
 
-- alias: Flur vorne auf Leer schalten wenn niemand dort ist
+- alias: Flur vorne auf Bewohnt schalten wenn jemand dort ist
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_front_hallway
