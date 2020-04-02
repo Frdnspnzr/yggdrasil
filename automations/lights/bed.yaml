@@ -1,0 +1,80 @@
+- alias: Unter dem Bett Licht einschalten
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_1
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_2
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.bedroom_mood_lights
+      state: 'off'
+    - condition: or
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.light_bedroom_under_bed_1
+          below: 5
+        - condition: numeric_state
+          entity_id: sensor.light_bedroom_under_bed_2
+          below: 5
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom_under_bed_1
+        brightness: 33
+        rgb_color:
+          - 255
+          - 190
+          - 0
+
+- alias: Unter dem Bett Licht ausschalten
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_1
+      to: 'off'
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_2
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.bedroom_mood_lights
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_1
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_2
+      state: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.bedroom_under_bed_1
+
+- alias: Unter dem Bett Stimmungslicht einschalten
+  trigger:
+    - platform: state
+      entity_id: input_boolean.bedroom_mood_lights
+      to: 'on'
+    - platform: state
+      entity_id: input_number.global_hue_primary
+  condition:
+    - condition: state
+      entity_id: input_boolean.bedroom_mood_lights
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.bedroom_under_bed_1
+        brightness: 40
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+
+- alias: Unter dem Bett Stimmungslicht ausschalten
+  trigger:
+    - platform: state
+      entity_id: input_boolean.bedroom_mood_lights
+      to: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.bedroom_under_bed_1
