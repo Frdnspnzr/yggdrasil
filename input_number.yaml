@@ -1,0 +1,23 @@
+global_hue_primary:
+  name: Primärfarbe
+  initial: 40
+  min: 0
+  max: 360
+  step: 1
+  unit_of_measurement: '°'
+
+global_hue_secondary:
+  name: Sekundärfarbe
+  initial: 205
+  min: 0
+  max: 360
+  step: 1
+  unit_of_measurement: '°'
+
+global_hue_tertiary:
+  name: Tertiärfarbe
+  initial: 90
+  min: 0
+  max: 360
+  step: 1
+  unit_of_measurement: '°'

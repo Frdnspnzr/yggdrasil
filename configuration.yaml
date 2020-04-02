@@ -88,6 +88,13 @@ history:
       - scene
       - zone
 
+logbook:
+  exclude:
+    entities:
+      - input_number.global_hue_primary
+      - input_number.global_hue_secondary
+      - input_number.global_hue_tertiary
+
 default_config:
 
 homeassistant:
@@ -102,6 +109,7 @@ homeassistant:
 zone: !include zones.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml
 scene: !include scenes.yaml
 automation: !include_dir_merge_list automations/
 binary_sensor: !include binary_sensor.yaml
