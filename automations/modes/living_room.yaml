@@ -2,17 +2,6 @@
 ### ==> Normal
 ###############################################################################
 
-- alias: Wohnzimmermodus auf Normal setzen, wenn das Wohnzimmer eingeschaltet wird
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'An'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.mode_living_room
-        option: 'Normal'
-
 - alias: Wohnzimmermodus mit Remote auf Normal setzen
   trigger:
     - platform: event

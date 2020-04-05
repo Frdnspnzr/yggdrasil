@@ -20,12 +20,18 @@
 - alias: Wohnzimmerlicht auf Gedaemmt schalten
   trigger:
     - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: state
       entity_id: input_select.mode_living_room
       to: 'Gedaemmt'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'An'
+    - condition: state
+      entity_id: input_select.mode_living_room
+      state: 'Gedaemmt'
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_gedaemmt
@@ -44,19 +50,13 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: state
-      entity_id: input_select.state_house
-      to: 'Bewohnt'
   condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Bewohnt'
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_automatik
@@ -66,13 +66,7 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: state
-      entity_id: input_select.state_house
-      to: 'Nacht'
   condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
     - condition: state
       entity_id: input_select.state_house
       state: 'Nacht'
