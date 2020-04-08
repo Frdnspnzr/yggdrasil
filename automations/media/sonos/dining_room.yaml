@@ -1,0 +1,57 @@
+- alias: Sonos Esszimmer - Mit Küche verbinden
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 5002
+  condition:
+    - condition: state
+      entity_id: media_player.esszimmer
+      state: 'paused'
+    - condition: state
+      entity_id: media_player.kueche
+      state: 'playing'
+  action:
+    - service: sonos.join
+      data:
+        entity_id: media_player.esszimmer
+        master: media_player.kueche
+
+- alias: Sonos Esszimmer - Family Mix spielen
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 5002
+  condition:
+    - condition: state
+      entity_id: media_player.esszimmer
+      state: 'paused'
+    - condition: state
+      entity_id: media_player.kueche
+      state: 'paused'
+  action:
+    - service: sonos.unjoin
+      data:
+        entity_id: media_player.esszimmer
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.esszimmer
+        source: Family Mix
+
+- alias: Sonos Esszimmer - Entkoppeln und pausieren
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 4002
+  action:
+    - service: sonos.unjoin
+      data:
+        entity_id: media_player.esszimmer
+    - service: media_player.media_pause
+      data:
+        entity_id: media_player.esszimmer
