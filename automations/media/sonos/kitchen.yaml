@@ -5,6 +5,12 @@
       event_data:
         id: tradfri_switch_kitchen_1
         event: 5002
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'An'
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'Bewohnt'
   condition:
     - condition: state
       entity_id: media_player.kueche
@@ -17,6 +23,10 @@
       data:
         entity_id: media_player.kueche
         master: media_player.esszimmer
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kueche
+        volume_level: 0.1
 
 - alias: Sonos Küche - Family Mix spielen
   trigger:
@@ -48,6 +58,9 @@
       event_data:
         id: tradfri_switch_kitchen_1
         event: 4002
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'Leer'
   action:
     - service: sonos.unjoin
       data:
