@@ -80,11 +80,17 @@ http:
   server_port: 80
 
 favicon:
-  title: Yggdrasil Home Automation
+  title: Yggdrasil
   favicon: /local/favicon/favicon.ico
   apple: /local/favicon/apple-touch-icon-180x180.png
 
 speedtestdotnet:
+
+switch:
+  - platform: flux
+    disable_brightness_adjust: true
+    lights:
+      - light.kueche_decke
 
 history:
   exclude:
