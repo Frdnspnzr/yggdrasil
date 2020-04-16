@@ -22,6 +22,11 @@ group:
        - climate.badezimmer_1
        - climate.thermostat_living_room_1
        - climate.thermostat_living_room_2
+  thermostats_living_room:
+    name: Thermostate Wohnzimmer
+    entities:
+       - climate.thermostat_living_room_1
+       - climate.thermostat_living_room_2
 
 light:
 - platform: group
