@@ -28,7 +28,8 @@
 ### ==> Leer
 ###############################################################################
 
-- alias: Kuechenzustand mit Remote auf Leer schalten
+- id: state_kitche_set_to_off_with_remote
+  alias: Kuechenzustand mit Remote auf Leer schalten
   trigger:
     - platform: event
       event_type: deconz_event
@@ -36,9 +37,12 @@
         id: tradfri_switch_kitchen_1
         event: 1002
   condition:
-    condition: state
-    entity_id: input_select.state_kitchen
-    state: 'An'
+    - condition: state
+      entity_id: input_select.state_kitchen
+      state: 'An'
+    - condition: state
+      entity_id: binary_sensor.motion_kitchen_1
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
@@ -89,6 +93,27 @@
     condition: state
     entity_id: input_select.state_kitchen
     state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: 'Bewohnt'
+
+- id: state_kitchen_set_to_occupied_with_remote
+  alias: Küche - Zustand mit Remote auf Bewohnt schalten
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_kitchen_1
+        event: 1002
+  condition:
+    - condition: state
+      entity_id: input_select.state_kitchen
+      state: 'An'
+    - condition: state
+      entity_id: binary_sensor.motion_kitchen_1
+      state: 'on'
   action:
     - service: input_select.select_option
       data:

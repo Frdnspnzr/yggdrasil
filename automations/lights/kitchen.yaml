@@ -25,7 +25,7 @@
   action:
     - service: light.turn_on
       data:
-        brightness: 255
+        brightness: 150
         transition: 1
         entity_id: light.kueche_decke
 
