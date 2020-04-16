@@ -10,6 +10,12 @@
   token: !secret gitlab_token
   scan_interval: 30
 
+- platform: steam_online
+  api_key: !secret steam_key
+  accounts:
+    - !secret steam_id_pascal
+    - !secret steam_id_andrea
+
 - platform: here_travel_time
   api_key: !secret here_key
   name: Andrea nach Hause
