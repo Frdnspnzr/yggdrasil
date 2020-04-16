@@ -10,6 +10,22 @@
   token: !secret gitlab_token
   scan_interval: 30
 
+- platform: here_travel_time
+  api_key: !secret here_key
+  name: Andrea nach Hause
+  destination_entity_id: zone.home
+  origin_entity_id: person.andrea
+  traffic_mode: true
+  scan_interval: 300
+
+- platform: here_travel_time
+  api_key: !secret here_key
+  name: Pascal nach Hause
+  destination_entity_id: zone.home
+  origin_entity_id: person.pascal
+  traffic_mode: true
+  scan_interval: 300
+
 - platform: template
   sensors:
     thermostat_bathroom_1_battery_level:

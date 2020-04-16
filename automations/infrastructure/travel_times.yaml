@@ -1,0 +1,25 @@
+- id: update_travel_time_andrea_to_home
+  alias: "Reisezeit nach Hause - Andrea updaten wenn sie unterwegs ist"
+  trigger:
+    - platform: time_pattern
+      minutes: '/1'
+  condition:
+    - condition: state
+      entity_id: person.andrea
+      state: not_home
+  action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.andrea_nach_hause
+
+- id: update_travel_time_pascal_to_home
+  alias: "Reisezeit nach Hause - Pascal updaten wenn er unterwegs ist"
+  trigger:
+    - platform: time_pattern
+      minutes: '/1'
+  condition:
+    - condition: state
+      entity_id: person.pascal
+      state: not_home
+  action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.pascal_nach_hause
