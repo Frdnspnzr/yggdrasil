@@ -19,14 +19,14 @@
       entity_id: media_player.esszimmer
       state: 'playing'
   action:
-    - service: sonos.join
-      data:
-        entity_id: media_player.kueche
-        master: media_player.esszimmer
     - service: media_player.volume_set
       data:
         entity_id: media_player.kueche
         volume_level: 0.1
+    - service: sonos.join
+      data:
+        entity_id: media_player.kueche
+        master: media_player.esszimmer
 
 - alias: Sonos Küche - Family Mix spielen
   trigger:
@@ -61,6 +61,7 @@
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Leer'
+      for: '00:03:00'
   action:
     - service: sonos.unjoin
       data:
