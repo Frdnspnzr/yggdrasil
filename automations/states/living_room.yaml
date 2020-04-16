@@ -36,21 +36,21 @@
 - alias: Wohnzimmerzustand auf An und Gedämmt schalten wenn jemand dort ist und der Fernseher läuft
   trigger:
     - platform: state
-      entity_id: binary_sensor.occupancy_living_room
-      to: 'on'
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'on'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Leer'
-    - condition: state
-      entity_id: binary_sensor.occupancy_living_room
-      state: 'on'
+      state: 'Bewohnt'
     - condition: state
       entity_id: media_player.fernseher_wohnzimmer
       state: 'on'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: input_select.select_option
       data:
