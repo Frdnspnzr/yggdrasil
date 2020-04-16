@@ -49,15 +49,3 @@
       state: off
     switch.outlet_living_room_1:
       state: off
-
-- name: Kitchen Normal
-  entities:
-    light.kueche_decke:
-      state: on
-      transition: 1
-      brightness_pct: 85
-
-- name: Kitchen Off
-  entities:
-    light.kueche_decke:
-      state: off
