@@ -13,6 +13,10 @@
       entity_id: media_player.kueche
       state: 'playing'
   action:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kueche
+        volume_level: 0.1
     - service: sonos.join
       data:
         entity_id: media_player.esszimmer
@@ -36,6 +40,10 @@
     - service: sonos.unjoin
       data:
         entity_id: media_player.esszimmer
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kueche
+        volume_level: 0.1
     - service: media_player.select_source
       data:
         entity_id: media_player.esszimmer

@@ -22,7 +22,7 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.kueche
-        volume_level: 0.1
+        volume_level: 0.05
     - service: sonos.join
       data:
         entity_id: media_player.kueche
@@ -46,6 +46,10 @@
     - service: sonos.unjoin
       data:
         entity_id: media_player.kueche
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kueche
+        volume_level: 0.05
     - service: media_player.select_source
       data:
         entity_id: media_player.kueche
