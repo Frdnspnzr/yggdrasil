@@ -2,7 +2,14 @@
 ### ==> An
 ###############################################################################
 
-- alias: Wohnzimmerzustand mit Remote auf An schalten
+###
+# Coming from 'Bewohnt' (Occupied) or 'Leer' (Empty)
+# Event either 'main switch' (1002) or 'up button' (2002)
+# TV is off
+###
+
+- id: state_living_room_set_to_on_with_remote
+  alias: "Wohnzimmer - Zustand mit Remote auf An schalten"
   trigger:
     - platform: event
       event_type: deconz_event
@@ -14,91 +21,147 @@
       event_data:
         id: tradfri_switch_wohnzimmer_2
         event: 1002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 2002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 2002
   condition:
-    condition: or
-    conditions:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Leer'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Bewohnt'
     - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Leer'
+      entity_id: media_player.fernseher_wohnzimmer
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
         option: 'An'
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.mode_living_room
-        option: 'Normal'
 
-- alias: Wohnzimmerzustand auf An und Gedämmt schalten wenn jemand dort ist und der Fernseher läuft
+###
+# Coming from 'Gedaemmt' (Dimmed)
+# Event either 'up button' (2002) or TV turning off
+###
+
+- id: state_living_room_set_to_on_from_dimmed
+  alias: "Wohnzimmer - Zustand auf An schalten (war vorher gedämmt)"
   trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 2002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 2002
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: media_player.fernseher_wohnzimmer
-      state: 'on'
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+      to: 'off'
+      for: '00:00:12'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
         option: 'An'
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.mode_living_room
-        option: 'Gedaemmt'
 
 ###############################################################################
 ### ==> Leer
 ###############################################################################
 
-- alias: Wohnzimmerzustand mit Remote auf Leer schalten
+###
+# Coming from 'Bewohnt' (Occupied)
+# Event 'No occupancy'
+###
+
+- id: state_living_room_set_to_empty_automatically
+  alias: "Wohnzimmer - Zustand nach Timeout auf Leer schalten"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 1002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 1002
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
-    - condition: state
+    - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      state: 'off'
+      to: 'off'
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Bewohnt'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
         option: 'Leer'
 
-- alias: Wohnzimmerzustand auf Leer schalten wenn niemand dort ist
+###
+# Coming from 'An' (On) or 'Gedaemmt' (Dimmed)
+# Event 'no one there for 20 minutes'
+###
+
+- id: state_living_room_set_to_empty_automatically
+  alias: "Wohnzimmer - Zustand nach Timeout auf Leer schalten"
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
       to: 'off'
+      for: '00:20:00'
   condition:
-    condition: state
-    entity_id: input_select.state_living_room
-    state: 'Bewohnt'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Gedaemmt'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'An'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'Leer'
+
+###
+# Coming from either 'An' (On) or 'Gedaemmt' (Dimmed)
+# Event 'main switch'
+# No occupancy
+###
+
+- id: state_living_room_set_to_off_with_remote_no_occupancy
+  alias: "Wohnzimmer - Zustand mit Remote auf Aus schalten, wenn niemand da ist"
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 1002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 1002
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Gedaemmt'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'An'
+    - condition: state
+      entity_id: binary_sensor.occupancy_living_room
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
@@ -109,7 +172,13 @@
 ### ==> Bewohnt
 ###############################################################################
 
-- alias: Wohnzimmerzustand auf Bewohnt schalten wenn jemand dort ist
+###
+# Coming from 'Leer' (Empty)
+# Event 'Occupied'
+###
+
+- id: state_living_room_set_to_occupied_on_occupancy
+  alias: "Wohnzimmer - Zustand auf Bewohnt schalten wenn jemand dort ist"
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
@@ -118,16 +187,20 @@
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Leer'
-    - condition: state
-      entity_id: media_player.fernseher_wohnzimmer
-      state: 'off'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
         option: 'Bewohnt'
 
-- alias: Wohnzimmerzustand mit Remote auf Bewohnt schalten
+###
+# Coming from either 'An' (On) or 'Gedaemmt' (Dimmed)
+# Event 'main switch'
+# Occupancy
+###
+
+- id: state_living_room_set_to_occupied_with_remote
+  alias: "Wohnzimmer - Zustand mit Remote auf Bewohnt schalten"
   trigger:
     - platform: event
       event_type: deconz_event
@@ -140,9 +213,14 @@
         id: tradfri_switch_wohnzimmer_2
         event: 1002
   condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'An'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Gedaemmt'
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
       state: 'on'
@@ -151,3 +229,46 @@
       data:
         entity_id: input_select.state_living_room
         option: 'Bewohnt'
+
+###############################################################################
+### ==> Gedaemmt
+###############################################################################
+
+###
+# Coming from either 'Bewohnt' (Occupied), 'An' (On) or 'Leer' (Empty)
+# Event either 'TV turning on' or 'down button' (3002)
+###
+
+- id: state_living_room_set_to_dimmed
+  alias: "Wohnzimmer - Zustand auf Gedämmt schalten"
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_1
+        event: 3002
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        id: tradfri_switch_wohnzimmer_2
+        event: 3002
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'on'
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Bewohnt'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'An'
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_living_room
+        option: 'Gedaemmt'

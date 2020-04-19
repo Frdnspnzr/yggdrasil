@@ -20,12 +20,6 @@ state_living_room:
     - Bewohnt
     - Leer
     - An
-
-mode_living_room:
-  name: Modus Wohnzimmer
-  options:
-    - Komplett
-    - Normal
     - Gedaemmt
 
 state_kitchen:

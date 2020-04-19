@@ -3,16 +3,6 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'An'
-    - platform: state
-      entity_id: input_select.mode_living_room
-      to: 'Normal'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
-    - condition: state
-      entity_id: input_select.mode_living_room
-      state: 'Normal'
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_normal
@@ -21,17 +11,17 @@
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
-      to: 'An'
-    - platform: state
-      entity_id: input_select.mode_living_room
       to: 'Gedaemmt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
   condition:
     - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
-    - condition: state
-      entity_id: input_select.mode_living_room
+      entity_id: input_select.state_house
       state: 'Gedaemmt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_gedaemmt
@@ -50,7 +40,13 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
   condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
