@@ -7,7 +7,7 @@
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_normal
 
-- alias: Wohnzimmerlicht auf Gedaemmt schalten
+- alias: Wohnzimmerlicht auf Gedaemmt schalten (Nacht)
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -26,6 +26,25 @@
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_gedaemmt
 
+- alias: Wohnzimmerlicht auf Gedaemmt schalten (Tag)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Gedaemmt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Gedaemmt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_aus
+
 - alias: Wohnzimmerlicht ausschalten
   trigger:
     - platform: state
@@ -35,7 +54,29 @@
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_aus
 
-- alias: Wohnzimmerlicht Automatik
+- alias: Wohnzimmerlicht Automatik (Tag)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.wohnzimmer_aus
+
+- alias: Wohnzimmerlicht Automatik (Dunkelheit)
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -57,7 +98,7 @@
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_automatik
 
-- alias: Wohnzimmerlicht Automatik Nachtlicht
+- alias: Wohnzimmerlicht Automatik (Nacht)
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
