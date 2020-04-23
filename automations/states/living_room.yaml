@@ -50,12 +50,12 @@
         option: 'An'
 
 ###
-# Coming from 'Gedaemmt' (Dimmed)
+# Coming from every state
 # Event either 'up button' (2002) or TV turning off
 ###
 
 - id: state_living_room_set_to_on_from_dimmed
-  alias: "Wohnzimmer - Zustand auf An schalten (war vorher gedämmt)"
+  alias: "Wohnzimmer - Zustand auf An schalten"
   trigger:
     - platform: event
       event_type: deconz_event
@@ -93,11 +93,9 @@
       entity_id: binary_sensor.occupancy_living_room
       to: 'off'
   condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
   action:
     - service: input_select.select_option
       data:

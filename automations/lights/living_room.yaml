@@ -17,7 +17,7 @@
       to: 'below_horizon'
   condition:
     - condition: state
-      entity_id: input_select.state_house
+      entity_id: input_select.state_living_room
       state: 'Gedaemmt'
     - condition: state
       entity_id: sun.sun
@@ -36,7 +36,7 @@
       to: 'above_horizon'
   condition:
     - condition: state
-      entity_id: input_select.state_house
+      entity_id: input_select.state_living_room
       state: 'Gedaemmt'
     - condition: state
       entity_id: sun.sun
