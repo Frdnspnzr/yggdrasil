@@ -6,9 +6,14 @@
         id: tradfri_switch_wohnzimmer_2
         event: 5002
   condition:
-    - condition: state
-      entity_id: media_player.esszimmer
-      state: 'paused'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'paused'
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'idle'
     - condition: state
       entity_id: media_player.kueche
       state: 'playing'
@@ -30,12 +35,22 @@
         id: tradfri_switch_wohnzimmer_2
         event: 5002
   condition:
-    - condition: state
-      entity_id: media_player.esszimmer
-      state: 'paused'
-    - condition: state
-      entity_id: media_player.kueche
-      state: 'paused'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'paused'
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'idle'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.kueche
+          state: 'paused'
+        - condition: state
+          entity_id: media_player.kueche
+          state: 'idle'
   action:
     - service: sonos.unjoin
       data:
