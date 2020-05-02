@@ -32,6 +32,15 @@
   traffic_mode: true
   scan_interval: 300
 
+- platform: yr
+  name: Weather Forecast 7 Hours
+  forecast: 7
+  monitored_conditions:
+    - temperature
+    - precipitation
+    - windSpeed
+    - humidity
+
 - platform: template
   sensors:
     thermostat_bathroom_1_battery_level:
