@@ -5,4 +5,4 @@
   action:
     - service: notify.telegram_alle
       data_template:
-        message: Heute Nacht werden es {{ states('sensor.weather_forecast_7_hours_temperature') }}°C. (Letztes Update {{ states.sensor.weather_forecast_7_hours_temperature.last_updated }}, letzte Änderung {{ states.sensor.weather_forecast_7_hours_temperature.last_changed }})
+        message: Heute Nacht werden es {{ states('sensor.minimal_temperature_forecast') }}°C.})

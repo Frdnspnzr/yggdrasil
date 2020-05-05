@@ -16,30 +16,12 @@
     - !secret steam_id_pascal
     - !secret steam_id_andrea
 
-- platform: here_travel_time
-  api_key: !secret here_key
-  name: Andrea nach Hause
-  destination_entity_id: zone.home
-  origin_entity_id: person.andrea
-  traffic_mode: true
-  scan_interval: 300
-
-- platform: here_travel_time
-  api_key: !secret here_key
-  name: Pascal nach Hause
-  destination_entity_id: zone.home
-  origin_entity_id: person.pascal
-  traffic_mode: true
-  scan_interval: 300
-
-- platform: yr
-  name: Weather Forecast 7 Hours
-  forecast: 7
-  monitored_conditions:
-    - temperature
-    - precipitation
-    - windSpeed
-    - humidity
+- platform: min_max
+  name: Light living room
+  type: max
+  entity_ids:
+    - sensor.light_living_room_1
+    - sensor.light_living_room_2
 
 - platform: template
   sensors:
