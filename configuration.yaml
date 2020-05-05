@@ -4,12 +4,6 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
 
-fritzbox:
-  devices:
-    - host: !secret hostname_fritz_box
-      username: !secret fritz_box_username
-      password: !secret fritz_box_password
-
 group:
   bewohner:
     name: Bewohner
