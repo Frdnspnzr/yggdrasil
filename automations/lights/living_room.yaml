@@ -12,16 +12,16 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room
+      below: 10
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Gedaemmt'
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+    - condition: numeric_state
+      entity_id: sensor.light_living_room
+      below: 10
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_gedaemmt
@@ -31,16 +31,16 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
-    - platform: state
-      entity_id: sun.sun
-      to: 'above_horizon'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room
+      above: 10
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Gedaemmt'
-    - condition: state
-      entity_id: sun.sun
-      state: 'above_horizon'
+    - condition: numeric_state
+      entity_id: sensor.light_living_room
+      above: 10
   action:
     - service: scene.turn_on
       entity_id: scene.wohnzimmer_aus
@@ -59,16 +59,16 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: state
-      entity_id: sun.sun
-      to: 'above_horizon'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room
+      above: 10
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
-    - condition: state
-      entity_id: sun.sun
-      state: 'above_horizon'
+    - condition: numeric_state
+      entity_id: sensor.light_living_room
+      above: 10
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
@@ -81,16 +81,16 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room
+      below: 10
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+    - condition: numeric_state
+      entity_id: sensor.light_living_room
+      below: 10
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
