@@ -2,6 +2,7 @@
   name: Weather Forecast 1 Hours
   forecast: 1
   monitored_conditions:
+    - temperature
 
 - platform: yr
   name: Weather Forecast 2 Hours
