@@ -40,9 +40,14 @@
         - condition: state
           entity_id: input_select.state_living_room
           state: 'Bewohnt'
-    - condition: state
-      entity_id: media_player.fernseher_wohnzimmer
-      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: input_select.select_option
       data:
@@ -85,6 +90,10 @@
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'off'
+      for: '00:00:12'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
       for: '00:00:12'
   condition:
     - condition: state
@@ -208,9 +217,14 @@
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Leer'
-    - condition: state
-      entity_id: media_player.fernseher_wohnzimmer
-      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: input_select.select_option
       data:
