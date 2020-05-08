@@ -1,0 +1,181 @@
+- id: light_scheme_spring
+  alias: "Lichtschema - Frühling"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Fruehling'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Fruehling'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 147
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 62
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 23
+
+- id: light_scheme_valentines
+  alias: "Lichtschema - Valentinstag"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Valentinstag'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Valentinstag'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 327
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 29
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 286
+
+- id: light_scheme_summer
+  alias: "Lichtschema - Sommer"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Sommer'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Sommer'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 48
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 69
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 321
+
+- id: light_scheme_autumn
+  alias: "Lichtschema - Herbst"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Herbst'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Herbst'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 32
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 190
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 279
+
+- id: light_scheme_winter
+  alias: "Lichtschema - Winter"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Winter'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Winter'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 177
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 228
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 281
+
+- id: light_scheme_christmas
+  alias: "Lichtschema - Weihnachten"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Weihnachten'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Weihnachten'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 10
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 127
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 55
+
+- id: light_scheme_Silvester
+  alias: "Lichtschema - Silvester"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Silvester'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Silvester'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 293
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 92
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 23

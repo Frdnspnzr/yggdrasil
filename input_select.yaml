@@ -34,3 +34,15 @@ state_front_hallway:
   options:
     - Bewohnt
     - Leer
+
+light_scheme:
+  name: Aktuelles Lichtschema
+  options:
+    - Fruehling
+    - Valentinstag
+    - Sommer
+    - Herbst
+    - Halloween
+    - Winter
+    - Weihnachten
+    - Silvester

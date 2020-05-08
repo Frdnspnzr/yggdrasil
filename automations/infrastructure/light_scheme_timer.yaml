@@ -1,0 +1,127 @@
+- id: light_scheme_timer_spring
+  alias: "Lichtschema Timer - Frühling"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ n.month == 3 or n.month == 4 or n.month == 5 }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Fruehling'
+
+- id: light_scheme_timer_summer
+  alias: "Lichtschema Timer - Sommer"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ n.month == 6 or n.month == 7 or n.month == 8 }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Sommer'
+
+- id: light_scheme_timer_autumn
+  alias: "Lichtschema Timer - Herbst"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ (n.month == 9 or n.month == 10 or n.month == 11) and not (n.month == 10 and n.day == 31) }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Herbst'
+
+- id: light_scheme_timer_halloween
+  alias: "Lichtschema Timer - Halloween"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ n.month == 10 and n.day == 31 }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Halloween'
+
+- id: light_scheme_timer_winter
+  alias: "Lichtschema Timer - Winter"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ (n.month == 12 or n.month == 1 or n.month == 2) and not (n.month == 2 and n.day == 14) and not (n.month == 12 and n.day <= 26) and not (n.month == 12 and n.day == 31) and not (n.month == 1 and n.day == 1) }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Winter'
+
+- id: light_scheme_timer_christmas
+  alias: "Lichtschema Timer - Weihnachten"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ n.month == 12 and n.day <= 26 }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Weihnachten'
+
+- id: light_scheme_timer_new_years
+  alias: "Lichtschema Timer - Silvester"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ (n.month == 12 and n.day == 31) or  (n.month == 1 and n.day == 1)}}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Silvster'
+
+- id: light_scheme_timer_valentines
+  alias: "Lichtschema Timer - Valenstinstag"
+  trigger:
+    - platform: time
+      at: '04:00:00'
+  condition:
+  - condition: template
+    value_template: >
+      {% set n = now() %}
+      {{ n.month == 2 and n.day == 14 }}
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.light_scheme
+        option: 'Valentinstag'
