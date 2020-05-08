@@ -102,6 +102,32 @@
         entity_id: input_number.global_hue_tertiary
         value: 279
 
+- id: light_scheme_halloween
+  alias: "Lichtschema - Halloween"
+  trigger:
+    - platform: time
+      at: '04:01:00'
+    - platform: state
+      entity_id: input_select.light_scheme
+      to: 'Halloween'
+  condition:
+  - condition: state
+    entity_id: input_select.light_scheme id
+    state: 'Halloween'
+  action:
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_primary
+        value: 24
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_secondary
+        value: 146
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.global_hue_tertiary
+        value: 53
+
 - id: light_scheme_winter
   alias: "Lichtschema - Winter"
   trigger:
