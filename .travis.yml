@@ -7,4 +7,4 @@ install:
   - pip3 install homeassistant
 
 script:
-  - hass --script check_config --info all
+  - hass -c ./ --script check_config --info all
