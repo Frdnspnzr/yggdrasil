@@ -8,7 +8,7 @@
       to: 'Fruehling'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Fruehling'
   action:
     - service: input_number.set_value
@@ -34,7 +34,7 @@
       to: 'Valentinstag'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Valentinstag'
   action:
     - service: input_number.set_value
@@ -60,7 +60,7 @@
       to: 'Sommer'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Sommer'
   action:
     - service: input_number.set_value
@@ -86,7 +86,7 @@
       to: 'Herbst'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Herbst'
   action:
     - service: input_number.set_value
@@ -112,7 +112,7 @@
       to: 'Winter'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Winter'
   action:
     - service: input_number.set_value
@@ -138,7 +138,7 @@
       to: 'Weihnachten'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Weihnachten'
   action:
     - service: input_number.set_value
@@ -164,7 +164,7 @@
       to: 'Silvester'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Silvester'
   action:
     - service: input_number.set_value
