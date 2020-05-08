@@ -1,104 +1,134 @@
-- alias: Wohnzimmerlicht auf Normal schalten
+- id: living_room_light_normal
+  alias: "Wohnzimmer - Licht auf Normal schalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'An'
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_normal
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 85
+        transition: 3
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 75
+        color_temp: 350
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
 
-- alias: Wohnzimmerlicht auf Gedaemmt schalten (Nacht)
+- id: light_living_room_dimmed
+  alias: "Wohnzimmer - Licht auf Gedaemmt schalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
-    - platform: numeric_state
-      entity_id: sensor.light_living_room
-      below: 10
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
-    - condition: numeric_state
-      entity_id: sensor.light_living_room
-      below: 10
-  action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_gedaemmt
-
-- alias: Wohnzimmerlicht auf Gedaemmt schalten (Tag)
-  trigger:
     - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-    - platform: numeric_state
-      entity_id: sensor.light_living_room
-      above: 10
+      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Gedaemmt'
-    - condition: numeric_state
-      entity_id: sensor.light_living_room
-      above: 10
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_aus
+    - service: light.turn_off
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        transition: 3
+    - service: light.turn_on
+      data_template:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 75
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+    - service: switch.turn_on
+      data:
+        entity_id: switch.outlet_living_room_1
 
-- alias: Wohnzimmerlicht ausschalten
+- id: light_living_room_off
+  alias: "Wonzimmer - Licht ausschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Leer'
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_aus
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.wohnzimmer_ventilator
+          - light.living_room_tv_backlighting
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
 
-- alias: Wohnzimmerlicht Automatik (Tag)
+- id: light_living_room_automatic_day
+  alias: "Wohnzimmer - Kein automatisches Licht tagsüber"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: numeric_state
-      entity_id: sensor.light_living_room
-      above: 10
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
-    - condition: numeric_state
-      entity_id: sensor.light_living_room
-      above: 10
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_aus
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.wohnzimmer_ventilator
+          - light.living_room_tv_backlighting
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
 
-- alias: Wohnzimmerlicht Automatik (Dunkelheit)
+- id: light_living_room_automatic_evening
+  alias: "Wohnzimmer - Automatisches Licht Abends"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: numeric_state
-      entity_id: sensor.light_living_room
-      below: 10
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+    - platform: state
+      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
-    - condition: numeric_state
-      entity_id: sensor.light_living_room
-      below: 10
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_automatik
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 40
+        transition: 3
+    - service: light.turn_on
+      data_template:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 30
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
 
-- alias: Wohnzimmerlicht Automatik (Nacht)
+- id: light_living_room_automatic_night
+  alias: "Wohnzimmer - Automatisches Nachtlicht"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -108,5 +138,14 @@
       entity_id: input_select.state_house
       state: 'Nacht'
   action:
-    - service: scene.turn_on
-      entity_id: scene.wohnzimmer_nacht
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 10
+        transition: 3
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room_tv_backlighting
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
