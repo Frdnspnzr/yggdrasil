@@ -134,33 +134,6 @@
         option: 'Leer'
 
 ###
-# Coming from 'An' (On) or 'Gedaemmt' (Dimmed)
-# Event 'no one there for 20 minutes'
-###
-
-- id: state_living_room_set_to_empty_automatically_after_timeout
-  alias: "Wohnzimmer - Zustand nach Timeout auf Leer schalten"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.occupancy_living_room
-      to: 'off'
-      for: '00:20:00'
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: 'Gedaemmt'
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: 'An'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_living_room
-        option: 'Leer'
-
-###
 # Coming from either 'An' (On) or 'Gedaemmt' (Dimmed)
 # Event 'main switch'
 # No occupancy
