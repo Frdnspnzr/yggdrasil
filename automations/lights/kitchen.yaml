@@ -10,7 +10,7 @@
         transition: 1
         entity_id: light.kueche_decke
 
-- alias: Küche automatisch beleuchten (Tag)
+- alias: Küche automatisch beleuchten (Hell)
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
@@ -28,6 +28,24 @@
         brightness: 150
         transition: 1
         entity_id: light.kueche_decke
+
+- alias: Küche automatisch beleuchten (Dunkel)
+  trigger:
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+  action:
+    - service: light.turn_ff
+      data:
+        entity_id: light.kueche_decke
+        transition: 1
 
 - alias: Küche automatisch beleuchten (Nacht)
   trigger:
