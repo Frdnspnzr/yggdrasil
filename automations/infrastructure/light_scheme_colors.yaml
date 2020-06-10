@@ -112,7 +112,7 @@
       to: 'Halloween'
   condition:
   - condition: state
-    entity_id: input_select.light_scheme id
+    entity_id: input_select.light_scheme
     state: 'Halloween'
   action:
     - service: input_number.set_value
