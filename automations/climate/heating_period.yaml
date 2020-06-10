@@ -1,0 +1,59 @@
+###############################################################################
+### Start and end heating period on dates
+###############################################################################
+
+- id: heating_period_end_on_date
+  alias: "Heizperiode - Ende"
+  trigger:
+    - platform: template
+      value_template: >
+        {% set n = now() %}
+        {{ n.month == 5 and n.day == 15 }}
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heating_period
+
+- id: heating_period_start_on_date
+  alias: "Heizperiode - Start"
+  trigger:
+    - platform: template
+      value_template: >
+        {% set n = now() %}
+        {{ n.month == 9 and n.day == 15 }}
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.heating_period
+
+###############################################################################
+### Turn on and off according to temperature
+###############################################################################
+
+- id: heating_period_end_on_temperature
+  alias: "Heizperiode - Ende durch Temperatur"
+  trigger:
+    - platform: numeric_state
+      entity_id: weather.home
+      value_template: "{{ state.attributes.temperature }}"
+      above: 20
+      for:
+        days: 3
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.heating_period
+
+- id: heating_period_start_on_temperature
+  alias: "Heizperiode - Start durch Temperatur"
+  trigger:
+    - platform: numeric_state
+      entity_id: weather.home
+      value_template: "{{ state.attributes.temperature }}"
+      below: 18
+      for:
+        days: 3
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.heating_period

@@ -2,3 +2,8 @@ bedroom_mood_lights:
   name: Stimmungslicht Schlafzimmer
   initial: off
   icon: mdi:heart
+
+heating_period:
+  name: Heizperiode
+  initial: on
+  icon:  mdi:radiator

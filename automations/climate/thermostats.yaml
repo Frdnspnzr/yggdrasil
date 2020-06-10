@@ -2,7 +2,8 @@
 ### Set thermostats according to house states
 ###############################################################################
 
-- alias: Thermostate ausschalten, wenn das Haus den Zustand wechselt
+- id: thermostats_set_eco_on_house_state
+  alias: "Haus - Thermostate auf Sparmodus schalten, wenn das Haus den Zustand wechselt"
   trigger:
   - platform: state
     entity_id: input_select.state_house
@@ -13,6 +14,10 @@
   - platform: state
     entity_id: input_select.state_house
     to: 'Leerstehend'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
   action:
     - service: climate.set_preset_mode
       data:
@@ -20,7 +25,8 @@
           - group.all_thermostats
         preset_mode: 'eco'
 
-- alias: Thermostate einschalten, wenn das Haus den Zustand wechselt
+- id: thermostats_set_comfort_on_house_state
+  alias: "Haus - Thermostate auf Comfort schalten, wenn das Haus den Zustand wechselt"
   trigger:
   - platform: state
     entity_id: input_select.state_house
@@ -29,9 +35,12 @@
     entity_id: input_select.state_house
     to: 'Erwartend'
   condition:
-    condition: time
-    after: '05:00'
-    before: '22:00'
+    - condition: time
+      after: '05:00'
+      before: '22:00'
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
   action:
     - service: climate.set_preset_mode
       data:
@@ -50,6 +59,10 @@
       entity_id: binary_sensor.living_room_balcony_door
       to: 'on'
       for: '00:02:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
   action:
     - service: climate.turn_off
       data:
@@ -61,7 +74,74 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
   action:
     - service: climate.turn_on
       data:
         entity_id: group.thermostats_living_room
+
+###############################################################################
+### Turn thermostats on and off when heating period switches
+###############################################################################
+
+- id: thermostats_turn_off_when_heating_period_is_off
+  alias: "Haus - Thermostate ausschalten wenn die Heizperiode endet"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.heating_period
+      to: 'off'
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: group.all_thermostats
+
+- id: thermostats_turn_on_and_set_eco_when_heating_period_is_off
+  alias: "Haus - Thermostate ein- und auf Eco schalten wenn die Heizperiode beginnt"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.heating_period
+      to: 'on'
+  condition:
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Erwartend'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: group.all_thermostats
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - group.all_thermostats
+        preset_mode: 'eco'
+
+- id: thermostats_turn_on_and_set_comfort_when_heating_period_is_off
+  alias: "Haus - Thermostate ein- und auf Comfort schalten wenn die Heizperiode beginnt"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.heating_period
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Erwartend'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: group.all_thermostats
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - group.all_thermostats
+        preset_mode: 'comfort'
