@@ -73,11 +73,6 @@ wake_on_lan:
 http:
   server_port: 80
 
-favicon:
-  title: Yggdrasil
-  favicon: /local/favicon/favicon.ico
-  apple: /local/favicon/apple-touch-icon-180x180.png
-
 speedtestdotnet:
 
 switch:
