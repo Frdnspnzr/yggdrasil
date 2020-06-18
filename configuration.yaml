@@ -114,3 +114,5 @@ scene: !include scenes.yaml
 automation: !include_dir_merge_list automations/
 binary_sensor: !include binary_sensor.yaml
 sensor: !include_dir_merge_list sensors/
+frontend:
+  themes: !include_dir_merge_named themes
