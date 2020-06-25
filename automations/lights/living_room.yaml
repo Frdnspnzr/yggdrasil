@@ -195,6 +195,9 @@
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
   action:
     - service: light.turn_on
       data:
@@ -210,6 +213,41 @@
       data:
         entity_id: switch.outlet_living_room_1
 
+- id: light_living_room_automatic_evening_door_open
+  alias: "Wohnzimmer - Automatisches Licht Abends (Mit geöffneter Tür)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.wohnzimmer_ventilator
+    - service: light.turn_on
+      data_template:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 75
+        rgb_color: [255, 0, 0]
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
 - id: light_living_room_automatic_night
   alias: "Wohnzimmer - Automatisches Nachtlicht"
   trigger:
@@ -220,6 +258,9 @@
     - condition: state
       entity_id: input_select.state_house
       state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
   action:
     - service: light.turn_on
       data:
@@ -229,6 +270,32 @@
     - service: light.turn_off
       data:
         entity_id: light.living_room_tv_backlighting
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: light_living_room_automatic_night_door_open
+  alias: "Wohnzimmer - Automatisches Nachtlicht (Mit geöffneter Tür)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.wohnzimmer_ventilator
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 50
+        rgb_color: [255, 0, 0]
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
