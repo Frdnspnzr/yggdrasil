@@ -88,3 +88,28 @@
     - service: media_player.media_pause
       data:
         entity_id: media_player.kueche
+
+- id: kitchen_reshuffle_sonos
+  alias: "Küche - Sonos neu shufflen"
+  trigger:
+    - platform: state
+      entity_id: media_player.kueche
+      to: 'paused'
+      for: '00:10:00'
+    - platform: state
+      entity_id: media_player.kueche
+      to: 'idle'
+      for: '00:10:00'
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'paused'
+        - condition: state
+          entity_id: media_player.esszimmer
+          state: 'idle'
+  action:
+    service: script.reshuffle_media
+    data:
+      entity_id: media_player.kueche
