@@ -1,8 +1,0 @@
-- alias: Abendliche Wettervorhersage
-  trigger:
-    - platform: time
-      at: "20:00:00"
-  action:
-    - service: notify.telegram_alle
-      data_template:
-        message: "Heute Nacht werden es {{ states('sensor.minimal_temperature_forecast') }}°C."
