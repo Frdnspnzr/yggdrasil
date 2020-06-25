@@ -105,14 +105,14 @@
       entity_id: input_boolean.heating_period
       to: 'on'
   condition:
-    condition: not
-    conditions:
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Bewohnt'
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Erwartend'
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.state_house
+          state: 'Bewohnt'
+        - condition: state
+          entity_id: input_select.state_house
+          state: 'Erwartend'
   action:
     - service: climate.turn_on
       data:

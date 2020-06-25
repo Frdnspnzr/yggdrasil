@@ -11,9 +11,9 @@
       entity_id: sun.sun
       to: 'above_horizon'
   condition:
-    - platform: state
+    - condition: state
       entity_id: input_select.state_living_room
-      to: 'An'
+      state: 'An'
     - condition: or
       conditions:
       - condition: state
