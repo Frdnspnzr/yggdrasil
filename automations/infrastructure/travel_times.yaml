@@ -1,8 +1,10 @@
 - id: update_travel_time_andrea_to_home
-  alias: "Reisezeit nach Hause - Andrea updaten wenn sie unterwegs ist"
+  alias: "Reisezeit nach Hause - Andrea bei jeder Positionsänderung updaten"
   trigger:
-    - platform: time_pattern
-      minutes: '/1'
+    - platform: event
+      event_type: state_changed
+      event_data:
+        entity_id: device_tracker.andrea_7dd6c1c6_c657_444c_ba6b_d3e3bc960423
   condition:
     - condition: state
       entity_id: person.andrea
@@ -12,10 +14,12 @@
       entity_id: sensor.andrea_nach_hause
 
 - id: update_travel_time_pascal_to_home
-  alias: "Reisezeit nach Hause - Pascal updaten wenn er unterwegs ist"
+  alias: "Reisezeit nach Hause - Pascal bei jeder Positionsänderung updaten"
   trigger:
-    - platform: time_pattern
-      minutes: '/1'
+    - platform: event
+      event_type: state_changed
+      event_data:
+        entity_id: device_tracker.pascal_handy
   condition:
     - condition: state
       entity_id: person.pascal

@@ -4,6 +4,8 @@
       entity_id: person.andrea
       to: not_home
   action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.andrea_nach_hause
     - service: notify.telegram_pascal
       data_template:
         message: "Andrea hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.andrea_nach_hause') }} Minuten zu Hause sein!"
@@ -14,6 +16,8 @@
       entity_id: person.pascal
       to: not_home
   action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.pascal_nach_hause
     - service: notify.telegram_andrea
       data_template:
         message: "Pascal hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.pascal_nach_hause') }} Minuten zu Hause sein!"
