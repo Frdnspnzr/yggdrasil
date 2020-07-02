@@ -1,0 +1,36 @@
+sonos_say:
+  alias: "Sonos TTS script"
+  icon: "mdi:account-voice"
+  fields:
+    entity_id:
+      description: 'Media player entity for voice output'
+    message:
+      description: 'Message to speak'
+      example: "Hello there."
+    volume:
+      description: 'Volume for voice output (float)'
+      example: "0.3"
+    delay:
+      description: 'How long to pause before and after the voice message (seconds)'
+      example: "0.3"
+  sequence:
+    - service: sonos.snapshot
+      data_template:
+        entity_id: "{{ entity_id }}"
+    - service: sonos.unjoin
+      data_template:
+        entity_id: "{{ entity_id }}"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: "{{ entity_id }}"
+        volume_level: "{{ volume }}"
+    - delay:
+        seconds: "{{ delay }}"
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: "{{ entity_id }}"
+        message: "{{ message }}"
+    - delay: "{{ delay }}"
+    - service: sonos.restore
+      data_template:
+        entity_id: "{{ entity_id }}"
