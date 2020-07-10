@@ -25,12 +25,13 @@ sonos_say:
         entity_id: "{{ entity_id }}"
         volume_level: "{{ volume }}"
     - delay:
-        seconds: "{{ delay }}"
+        seconds: 1
     - service: tts.google_translate_say
       data_template:
         entity_id: "{{ entity_id }}"
         message: "{{ message }}"
-    - delay: "{{ delay }}"
+    - delay:
+        seconds: "{{ delay }}"
     - service: sonos.restore
       data_template:
         entity_id: "{{ entity_id }}"
