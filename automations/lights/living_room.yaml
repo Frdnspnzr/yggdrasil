@@ -261,6 +261,9 @@
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'off'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: light.turn_on
       data:
@@ -287,6 +290,9 @@
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: light.turn_off
       data:
