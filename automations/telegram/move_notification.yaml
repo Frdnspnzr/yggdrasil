@@ -7,6 +7,8 @@
     - condition: state
       entity_id: person.pascal
       state:  home
+    - condition: template
+      value_template: '{{ trigger.from_state.state != "home" }}'
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.andrea_nach_hause
@@ -23,6 +25,8 @@
     - condition: state
       entity_id: person.andrea
       state:  home
+    - condition: template
+      value_template: '{{ trigger.from_state.state != "home" }}'
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.pascal_nach_hause
