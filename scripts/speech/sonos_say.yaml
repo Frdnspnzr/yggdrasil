@@ -1,6 +1,7 @@
 sonos_say:
   alias: "Sonos TTS script"
   icon: "mdi:account-voice"
+  mode: queued
   fields:
     entity_id:
       description: 'Media player entity for voice output'
