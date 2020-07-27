@@ -1,11 +1,11 @@
 # Yggdrasil Home Automation
 
-![Last commit](https://img.shields.io/github/last-commit/Friedenspanzer/yggdrasil?style=for-the-badge)
-![Commit activity](https://img.shields.io/github/commit-activity/y/Friedenspanzer/yggdrasil?style=for-the-badge)
-![Homeassistant version](https://img.shields.io/github/pipenv/locked/dependency-version/Friedenspanzer/yggdrasil/dev/homeassistant?style=for-the-badge)
-![Travis (.org)](https://img.shields.io/travis/Friedenspanzer/yggdrasil?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/Friedenspanzer/yggdrasil?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/Friedenspanzer/yggdrasil?style=for-the-badge)
+[![Last commit](https://img.shields.io/github/last-commit/Friedenspanzer/yggdrasil?style=for-the-badge)](https://github.com/Friedenspanzer/yggdrasil/commits/master)
+[![Commit activity](https://img.shields.io/github/commit-activity/y/Friedenspanzer/yggdrasil?style=for-the-badge)](https://github.com/Friedenspanzer/yggdrasil/commits/master)
+[![Homeassistant version](https://img.shields.io/github/pipenv/locked/dependency-version/Friedenspanzer/yggdrasil/dev/homeassistant?style=for-the-badge)](https://www.home-assistant.io/blog/2020/07/22/release-113/)
+[![Travis status](https://img.shields.io/travis/Friedenspanzer/yggdrasil?style=for-the-badge)](https://travis-ci.org/github/Friedenspanzer/yggdrasil)
+[![GitHub issues](https://img.shields.io/github/issues/Friedenspanzer/yggdrasil?style=for-the-badge)](https://github.com/Friedenspanzer/yggdrasil/issues)
+[![MIT License](https://img.shields.io/github/license/Friedenspanzer/yggdrasil?style=for-the-badge)](https://github.com/Friedenspanzer/yggdrasil/blob/master/LICENSE)
 
 ## Concept
 
