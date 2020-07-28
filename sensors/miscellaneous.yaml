@@ -63,3 +63,7 @@
     occupancy_living_room_probability:
       friendly_name: ""
       value_template: "{{ state_attr('binary_sensor.occupancy_living_room', 'probability') * 100}}"
+
+    occupancy_dining_room_probability:
+      friendly_name: ""
+      value_template: "{{ state_attr('binary_sensor.occupancy_dining_room', 'probability') * 100}}"
