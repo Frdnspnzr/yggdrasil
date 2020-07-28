@@ -1,0 +1,31 @@
+- id: light_dining_room_main_turn_on_day
+  alias: "Esszimmer - Licht auf Normal schalten"
+  trigger:
+    - platform: state
+      entity_id: light.dining_room_main
+      from: 'unavailable'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.dining_room_main
+        brightness_pct: 85
+
+- id: light_dining_room_main_turn_on_night
+  alias: "Esszimmer - Licht Nachtlicht"
+  trigger:
+    - platform: state
+      entity_id: light.dining_room_main
+      from: 'unavailable'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.dining_room_main
+        brightness_pct: 10

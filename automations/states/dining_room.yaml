@@ -1,0 +1,31 @@
+- id: state_dining_room_set_to_empty_automatically
+  alias: "Esszimmer - Zustand auf Leer schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_living_room
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_select.state_dining_room
+      state: 'Bewohnt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_dining_room
+        option: 'Leer'
+
+- id: state_dining_room_set_to_occupied_on_occupancy
+  alias: "Esszimmer - Zustand auf Bewohnt schalten wenn jemand dort ist"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_dining_room
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_select.state_dining_room
+      state: 'Leer'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_dining_room
+        option: 'Bewohnt'

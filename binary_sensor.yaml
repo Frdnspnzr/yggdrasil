@@ -24,3 +24,29 @@
       to_state: 'on'
       prob_given_true: 0.9
       prob_given_false: 0.3
+    - platform: state
+      entity_id: binary_sensor.motion_dining_room_1
+      to_state: 'on'
+      prob_given_true: 0.4
+      prob_given_false: 0.7
+
+- platform: bayesian
+  name: Occupancy Dining Room
+  probability_threshold: 0.7
+  prior: 0.1
+  observations:
+    - platform: state
+      entity_id: binary_sensor.motion_dining_room_1
+      to_state: 'on'
+      prob_given_true: 0.85
+      prob_given_false: 0.1
+    - platform: state
+      entity_id: binary_sensor.motion_dining_room_2
+      to_state: 'on'
+      prob_given_true: 0.9
+      prob_given_false: 0.3
+    - platform: state
+      entity_id: binary_sensor.motion_living_room_2
+      to_state: 'on'
+      prob_given_true: 0.7
+      prob_given_false: 0.3

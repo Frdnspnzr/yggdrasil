@@ -22,6 +22,14 @@ state_living_room:
     - An
     - Gedaemmt
 
+state_dining_room:
+  name: Zustand Esszimmer
+  options:
+    - Bewohnt
+    - Leer
+    - An
+    - Gedaemmt
+
 state_kitchen:
   name: Zustand Kueche
   options:
