@@ -71,6 +71,9 @@
       event_data:
         id: tradfri_switch_wohnzimmer_2
         event: 4002
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'on'
   action:
     - service: sonos.unjoin
       data:

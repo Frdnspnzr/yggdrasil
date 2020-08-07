@@ -19,7 +19,6 @@
         entity_id: input_select.state_house
         option: 'Bewohnt'
 
-
 - alias: Haus an freien Tagen morgens einschalten
   trigger:
     - platform: time
