@@ -28,11 +28,6 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 85
         transition: 3
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
-        color_temp: 350
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -65,17 +60,6 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 15
         transition: 3
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
-        rgb_color: [255, 0, 0]
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: fire
-        intensity: 220
-        speed: 30
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -86,8 +70,6 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
-    - platform: state
-      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -101,46 +83,8 @@
       data:
         entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_dimmed_tv_backlighting
-  alias: "Wohnzimmer - Backlighting auf Gedaemmt schalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-    - platform: state
-      entity_id: input_number.global_hue_primary
-    - platform: numeric_state
-      entity_id: sensor.light_living_room_1
-      below: 15
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: numeric_state
-          entity_id: sensor.light_living_room_1
-          below: 15
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: dynamic
-        intensity: 30
-        speed: 50
-
 - id: light_living_room_off
-  alias: "Wonzimmer - Licht ausschalten"
+  alias: "Wohnzimmer - Licht ausschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -150,7 +94,6 @@
       data:
         entity_id:
           - light.wohnzimmer_ventilator
-          - light.living_room_tv_backlighting
         transition: 3
     - service: switch.turn_off
       data:
@@ -172,15 +115,11 @@
     - condition: state
       entity_id: sun.sun
       state: 'above_horizon'
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Bewohnt'
   action:
     - service: light.turn_off
       data:
         entity_id:
           - light.wohnzimmer_ventilator
-          - light.living_room_tv_backlighting
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -194,8 +133,6 @@
     - platform: state
       entity_id: sun.sun
       to: 'below_horizon'
-    - platform: state
-      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -204,27 +141,19 @@
       entity_id: sun.sun
       state: 'below_horizon'
     - condition: state
-      entity_id: input_select.state_house
-      state: 'Bewohnt'
-    - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'off'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
   action:
     - service: light.turn_on
       data:
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 40
         transition: 3
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 75
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: dynamic
-        intensity: 80
-        speed: 100
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -246,25 +175,17 @@
       entity_id: sun.sun
       state: 'below_horizon'
     - condition: state
-      entity_id: input_select.state_house
-      state: 'Bewohnt'
-    - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
   action:
     - service: light.turn_off
       data:
         entity_id: light.wohnzimmer_ventilator
-    - service: light.turn_on
-      data_template:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 75
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: fire
-        intensity: 230
-        speed: 30
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -291,9 +212,6 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 10
         transition: 3
-    - service: light.turn_off
-      data:
-        entity_id: light.living_room_tv_backlighting
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -318,11 +236,6 @@
     - service: light.turn_off
       data:
         entity_id: light.wohnzimmer_ventilator
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_tv_backlighting
-        brightness_pct: 50
-        rgb_color: [255, 0, 0]
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
