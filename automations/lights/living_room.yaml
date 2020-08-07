@@ -31,7 +31,7 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 75
+        brightness_pct: 100
         color_temp: 350
     - service: switch.turn_off
       data:
@@ -70,6 +70,12 @@
         entity_id: light.living_room_tv_backlighting
         brightness_pct: 100
         rgb_color: [255, 0, 0]
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: fire
+        intensity: 220
+        speed: 30
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -123,10 +129,15 @@
           below: 15
   action:
     - service: light.turn_on
-      data_template:
+      data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 75
-        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+        brightness_pct: 100
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: dynamic
+        intensity: 30
+        speed: 50
 
 - id: light_living_room_off
   alias: "Wonzimmer - Licht ausschalten"
@@ -205,10 +216,15 @@
         brightness_pct: 40
         transition: 3
     - service: light.turn_on
-      data_template:
+      data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 30
-        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+        brightness_pct: 75
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: dynamic
+        intensity: 80
+        speed: 100
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -243,7 +259,12 @@
       data_template:
         entity_id: light.living_room_tv_backlighting
         brightness_pct: 75
-        rgb_color: [255, 0, 0]
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: fire
+        intensity: 230
+        speed: 30
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
