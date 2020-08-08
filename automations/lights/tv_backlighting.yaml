@@ -23,6 +23,9 @@
     - platform: state
       entity_id: sun.sun
       to: 'below_horizon'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'off'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
@@ -80,6 +83,9 @@
     - platform: state
       entity_id: sun.sun
       to: 'below_horizon'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'on'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
