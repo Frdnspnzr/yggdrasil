@@ -1,5 +1,5 @@
 ######################################################
-# Mood light
+# Mood light (Closed doors)
 ######################################################
 
 - id: tv_backlighting_tv_lights
@@ -24,6 +24,9 @@
       entity_id: sun.sun
       to: 'below_horizon'
   condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
     - condition: not
       conditions:
       - condition: state
@@ -51,6 +54,63 @@
         effect: colortwinkles
         intensity: 255
         speed: 20
+
+######################################################
+# Mood light (Open doors)
+######################################################
+
+- id: tv_backlighting_tv_lights
+  alias: "Wohnzimmer TV Backlighting - Fernsehlicht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'An'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room_1
+      below: 15
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Gedaemmt'
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: numeric_state
+          entity_id: sensor.light_living_room_1
+          below: 15
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 100
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: fire flicker
+        intensity: 255
+        speed: 125
 
 ######################################################
 # TV light
