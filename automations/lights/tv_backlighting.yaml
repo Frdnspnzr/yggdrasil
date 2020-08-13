@@ -115,8 +115,8 @@
       data:
         entity_id: light.living_room_tv_backlighting
         effect: fire flicker
-        intensity: 255
-        speed: 125
+        intensity: 80
+        speed: 255
 
 ######################################################
 # TV light
@@ -182,7 +182,7 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
+        brightness_pct: 40
         rgb_color: [255, 0, 0]
     - service: wled.effect
       data:
