@@ -26,6 +26,12 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
@@ -46,6 +52,14 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           below: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -86,6 +100,12 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'on'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
@@ -106,6 +126,14 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           below: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -122,41 +150,37 @@
 # TV light
 ######################################################
 
-- id: tv_backlighting_tv_lights
-  alias: "Wohnzimmer TV Backlighting - Fernsehlicht"
+- id: tv_backlighting_receive_from_hyperion_on
+  alias: "Wohnzimmer TV Backlighting - Von Hyperion empfangen anschalten"
   trigger:
     - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-    - platform: numeric_state
-      entity_id: sensor.light_living_room_1
-      below: 15
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: numeric_state
-          entity_id: sensor.light_living_room_1
-          below: 15
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'on'
   action:
+    - service: switch.turn_on
+      entity_id: switch.wled_tv_backlighting_lor
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
     - service: wled.effect
       data:
         entity_id: light.living_room_tv_backlighting
         effect: glitter
         intensity: 0
         speed: 20
+
+- id: tv_backlighting_receive_from_hyperion_off
+  alias: "Wohnzimmer TV Backlighting - Von Hyperion empfangen ausschalten"
+  trigger:
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.wled_tv_backlighting_lor
 
 ######################################################
 # Night light (Open doors)
@@ -168,6 +192,12 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
   condition:
     - condition: state
       entity_id: input_select.state_house
@@ -178,6 +208,14 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -202,13 +240,31 @@
     - platform: state
       entity_id: input_select.state_dining_room
       to: 'Leer'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
   condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Leer'
-    - condition: state
-      entity_id: input_select.state_dining_room
-      state: 'Leer'
+    - condition: or
+      conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Leer'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: 'Leer'
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'above_horizon'
+        - condition: numeric_state
+          entity_id: sensor.light_living_room_1
+          above: 15
   action:
     - service: light.turn_off
       data:

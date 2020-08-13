@@ -80,6 +80,14 @@ switch:
     disable_brightness_adjust: true
     lights:
       - light.kueche_decke
+  - platform: rest
+    name: WLED TV Backlighting LOR
+    resource: http://192.168.178.150/json/state
+    body_on: '{"lor": 0}'
+    body_off: '{"lor": 1}'
+    is_on_template: '{{value_json.lor == 0}}'
+    headers:
+      Content-Type: application/json
 
 tts:
   - platform: google_translate
