@@ -179,7 +179,7 @@
       data:
         entity_id: media_player.esszimmer
         message: "Licht aus"
-        delay: 0
+        delay: 3
         volume: 0.3
 
 ###
@@ -289,7 +289,7 @@
       data:
         entity_id: media_player.esszimmer
         message: "Licht aus"
-        delay: 0
+        delay: 3
         volume: 0.3
 
 ###

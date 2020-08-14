@@ -58,7 +58,7 @@
       data:
         entity_id: media_player.kueche
         message: "Licht aus"
-        delay: 0
+        delay: 3
         volume: 0.3
 
 - alias: Küche auf Leer schalten wenn niemand dort ist
@@ -135,5 +135,5 @@
       data:
         entity_id: media_player.kueche
         message: "Licht aus"
-        delay: 0
+        delay: 3
         volume: 0.3
