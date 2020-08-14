@@ -64,7 +64,7 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
+        brightness_pct: 70
     - service: wled.effect
       data:
         entity_id: light.living_room_tv_backlighting
@@ -138,12 +138,13 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 100
+        brightness_pct: 70
+        rgb_color: [255, 0, 0]
     - service: wled.effect
       data:
         entity_id: light.living_room_tv_backlighting
         effect: fire flicker
-        intensity: 80
+        intensity: 150
         speed: 255
 
 ######################################################
@@ -157,8 +158,6 @@
       entity_id: media_player.fernseher_wohnzimmer
       to: 'on'
   action:
-    - service: switch.turn_on
-      entity_id: switch.wled_tv_backlighting_lor
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
@@ -167,7 +166,9 @@
         entity_id: light.living_room_tv_backlighting
         effect: glitter
         intensity: 0
-        speed: 20
+        speed: 80
+    - service: switch.turn_on
+      entity_id: switch.wled_tv_backlighting_lor
 
 - id: tv_backlighting_receive_from_hyperion_off
   alias: "Wohnzimmer TV Backlighting - Von Hyperion empfangen ausschalten"
@@ -181,6 +182,12 @@
   action:
     - service: switch.turn_off
       entity_id: switch.wled_tv_backlighting_lor
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: glitter
+        intensity: 0
+        speed: 20
 
 ######################################################
 # Night light (Open doors)
@@ -265,6 +272,14 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           above: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
   action:
     - service: light.turn_off
       data:
