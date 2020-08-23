@@ -36,14 +36,28 @@
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'Bewohnt'
     - condition: not
       conditions:
       - condition: state
         entity_id: input_select.state_living_room
         state: 'Gedaemmt'
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Nacht'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
     - condition: or
       conditions:
         - condition: state
@@ -110,14 +124,28 @@
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'Bewohnt'
     - condition: not
       conditions:
       - condition: state
         entity_id: input_select.state_living_room
         state: 'Gedaemmt'
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Nacht'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
     - condition: or
       conditions:
         - condition: state
