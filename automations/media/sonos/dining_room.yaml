@@ -27,7 +27,7 @@
         entity_id: media_player.esszimmer
         master: media_player.kueche
 
-- alias: Sonos Esszimmer - Family Mix spielen
+- alias: Sonos Esszimmer - Duo Mix spielen
   trigger:
     - platform: event
       event_type: deconz_event
@@ -62,7 +62,7 @@
     - service: media_player.select_source
       data:
         entity_id: media_player.esszimmer
-        source: Family Mix
+        source: Duo Mix
 
 - alias: Sonos Esszimmer - Entkoppeln und pausieren
   trigger:
