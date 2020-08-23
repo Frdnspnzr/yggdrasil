@@ -70,7 +70,7 @@
         entity_id: media_player.kueche
         source: Duo Mix
 
-- alias: Sonos Küche - Entkoppeln und pausieren
+- alias: Sonos Küche - Entkoppeln
   trigger:
     - platform: event
       event_type: deconz_event
@@ -83,9 +83,6 @@
       for: '00:03:00'
   action:
     - service: sonos.unjoin
-      data:
-        entity_id: media_player.kueche
-    - service: media_player.media_pause
       data:
         entity_id: media_player.kueche
 

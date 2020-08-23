@@ -64,7 +64,7 @@
         entity_id: media_player.esszimmer
         source: Duo Mix
 
-- alias: Sonos Esszimmer - Entkoppeln und pausieren
+- alias: Sonos Esszimmer - Entkoppeln
   trigger:
     - platform: event
       event_type: deconz_event
@@ -76,9 +76,6 @@
       to: 'on'
   action:
     - service: sonos.unjoin
-      data:
-        entity_id: media_player.esszimmer
-    - service: media_player.media_pause
       data:
         entity_id: media_player.esszimmer
 
