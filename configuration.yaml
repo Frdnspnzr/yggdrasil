@@ -21,6 +21,11 @@ group:
     entities:
        - climate.thermostat_living_room_1
        - climate.thermostat_living_room_2
+  all_sonos:
+    name: Alle Sonos-Geräte
+    entities:
+      - media_player.esszimmer
+      - media_player.kueche
 
 light:
 - platform: group
