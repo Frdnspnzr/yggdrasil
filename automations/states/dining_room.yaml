@@ -15,6 +15,11 @@
       domain: deconz
       device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       subtype: turn_on
+    - platform: device
+      type: remote_button_short_press
+      domain: deconz
+      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      subtype: turn_on
   condition:
     - condition: or
       conditions:
@@ -42,6 +47,11 @@
       type: remote_button_short_press
       domain: deconz
       device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
+      subtype: dim_up
+    - platform: device
+      type: remote_button_short_press
+      domain: deconz
+      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
       subtype: dim_up
   condition:
     - condition: not
@@ -72,6 +82,11 @@
       type: remote_button_short_press
       domain: deconz
       device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
+      subtype: turn_on
+    - platform: device
+      type: remote_button_short_press
+      domain: deconz
+      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
       subtype: turn_on
   condition:
     - condition: or
@@ -169,6 +184,11 @@
       domain: deconz
       device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       subtype: turn_on
+    - platform: device
+      type: remote_button_short_press
+      domain: deconz
+      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      subtype: turn_on
   condition:
     - condition: or
       conditions:
@@ -203,6 +223,11 @@
       type: remote_button_short_press
       domain: deconz
       device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
+      subtype: dim_down
+    - platform: device
+      type: remote_button_short_press
+      domain: deconz
+      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
       subtype: dim_down
   condition:
     - condition: not
