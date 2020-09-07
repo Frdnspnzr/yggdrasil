@@ -5,17 +5,6 @@
     - type: memory_use_percent
     - type: processor_use
 
-- platform: gitlab_ci
-  gitlab_id: !secret gitlab_id
-  token: !secret gitlab_token
-  scan_interval: 30
-
-- platform: steam_online
-  api_key: !secret steam_key
-  accounts:
-    - !secret steam_id_pascal
-    - !secret steam_id_andrea
-
 - platform: min_max
   name: Light living room
   type: max
