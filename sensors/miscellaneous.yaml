@@ -25,6 +25,11 @@
       unit_of_measurement: "°C"
       value_template: "{{ state_attr('switch.outlet_living_room_2', 'temperature') }}"
 
+    temperature_outside:
+      friendly_name: "Außentemperatur"
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('weather.dwd', 'temperature') }}"
+
     ha_counter_lights:
       friendly_name: "Lichter"
       value_template: "{{ states.light | count}}"
