@@ -1,0 +1,316 @@
+######################################################
+# Mood light (Closed doors)
+######################################################
+
+- id: tv_backlighting_mood_lights
+  alias: "Wohnzimmer TV Backlighting - Stimmungslicht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'An'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room_1
+      below: 15
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'Bewohnt'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Gedaemmt'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: numeric_state
+          entity_id: sensor.light_living_room_1
+          below: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 70
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: colortwinkles
+        intensity: 255
+        speed: 20
+
+######################################################
+# Mood light (Open doors)
+######################################################
+
+- id: tv_backlighting_mood_lights_open_doors
+  alias: "Wohnzimmer TV Backlighting - Stimmungslicht (Tür offen)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'An'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: numeric_state
+      entity_id: sensor.light_living_room_1
+      below: 15
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'on'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Bewohnt'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'An'
+      - condition: state
+        entity_id: input_select.state_dining_room
+        state: 'Bewohnt'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_living_room
+        state: 'Gedaemmt'
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Bewohnt'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: numeric_state
+          entity_id: sensor.light_living_room_1
+          below: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 70
+        rgb_color: [255, 0, 0]
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: fire flicker
+        intensity: 150
+        speed: 255
+
+######################################################
+# TV light
+######################################################
+
+- id: tv_backlighting_receive_from_hyperion_on
+  alias: "Wohnzimmer TV Backlighting - Von Hyperion empfangen anschalten"
+  trigger:
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: glitter
+        intensity: 0
+        speed: 80
+    - service: switch.turn_on
+      entity_id: switch.wled_tv_backlighting_lor
+
+- id: tv_backlighting_receive_from_hyperion_off
+  alias: "Wohnzimmer TV Backlighting - Von Hyperion empfangen ausschalten"
+  trigger:
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.wled_tv_backlighting_lor
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: glitter
+        intensity: 0
+        speed: 20
+
+######################################################
+# Night light (Open doors)
+######################################################
+
+- id: tv_backlighting_night_light
+  alias: "Wohnzimmer TV Backlighting - Nachtlicht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_tv_backlighting
+        brightness_pct: 40
+        rgb_color: [255, 0, 0]
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: solid
+
+######################################################
+# Off
+######################################################
+
+- id: tv_backlighting_room_off
+  alias: "Wohnzimmer TV Backlighting - Licht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Leer'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Leer'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'off'
+    - platform: state
+      entity_id: media_player.fernseher_wohnzimmer
+      to: 'unavailable'
+  condition:
+    - condition: or
+      conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Leer'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: 'Leer'
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'above_horizon'
+        - condition: numeric_state
+          entity_id: sensor.light_living_room_1
+          above: 15
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'off'
+      - condition: state
+        entity_id: media_player.fernseher_wohnzimmer
+        state: 'unavailable'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.living_room_tv_backlighting
+        transition: 3
