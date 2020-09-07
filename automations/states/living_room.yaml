@@ -57,7 +57,7 @@
       data:
         entity_id: media_player.esszimmer
         message: "Licht an"
-        delay: 0
+        delay: 3
         volume: 0.3
 
 ###
