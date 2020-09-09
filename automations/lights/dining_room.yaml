@@ -1,25 +1,60 @@
-- id: light_dining_room_main_turn_on_day
+- id: light_dining_room_main_normal
   alias: "Esszimmer - Licht auf Normal schalten"
   trigger:
     - platform: state
-      entity_id: light.dining_room_main
-      from: 'unavailable'
-  condition:
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Bewohnt'
+      entity_id: input_select.state_dining_room
+      to: 'An'
   action:
     - service: light.turn_on
       data:
         entity_id: light.dining_room_main
-        brightness_pct: 85
+        brightness_pct: 100
+        transition: 3
 
-- id: light_dining_room_main_turn_on_night
-  alias: "Esszimmer - Licht Nachtlicht"
+- id: light_dining_room_main_dimmed
+  alias: "Esszimmer - Licht auf Gedämmt schalten"
   trigger:
     - platform: state
-      entity_id: light.dining_room_main
-      from: 'unavailable'
+      entity_id: input_select.state_dining_room
+      to: 'Gedaemmt'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.dining_room_main
+        brightness_pct: 75
+        transition: 3
+
+- id: light_dining_room_main_occupied_day
+  alias: "Esszimmer - Licht auf Bewohnt schalten (Tag)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+  condition:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.dining_room_main
+        brightness_pct: 50
+        transition: 3
+
+- id: light_dining_room_main_occupied_night
+  alias: "Esszimmer - Licht auf Bewohnt schalten (Nacht)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
   condition:
     - condition: state
       entity_id: input_select.state_house
@@ -29,3 +64,36 @@
       data:
         entity_id: light.dining_room_main
         brightness_pct: 10
+        transition: 3
+
+- id: light_dining_room_main_off
+  alias: "Esszimmer - Licht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Leer'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: 'Leer'
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: input_select.state_dining_room
+            state: 'Bewohnt'
+          - condition: state
+            entity_id: sun.sun
+            state: 'above_horizon'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.dining_room_main
+        transition: 3
