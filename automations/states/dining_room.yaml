@@ -98,7 +98,7 @@
         entity_id: input_select.state_dining_room
         state: 'Gedaemmt'
     - condition: state
-      entity_id: binary_sensor.occupancy_living_room
+      entity_id: binary_sensor.occupancy_dining_room
       state: 'off'
   action:
     - service: input_select.select_option
@@ -115,7 +115,7 @@
   alias: "Esszimmer - Zustand automatisch auf Leer schalten"
   trigger:
     - platform: state
-      entity_id: binary_sensor.occupancy_living_room
+      entity_id: binary_sensor.occupancy_dining_room
       to: 'off'
   condition:
     - condition: state
@@ -199,7 +199,7 @@
         entity_id: input_select.state_dining_room
         state: 'Gedaemmt'
     - condition: state
-      entity_id: binary_sensor.occupancy_living_room
+      entity_id: binary_sensor.occupancy_dining_room
       state: 'on'
   action:
     - service: input_select.select_option
