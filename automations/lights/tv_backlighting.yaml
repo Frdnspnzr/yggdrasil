@@ -26,12 +26,6 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'off'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
@@ -50,11 +44,6 @@
       - condition: state
         entity_id: input_select.state_dining_room
         state: 'Bewohnt'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: input_select.state_living_room
-        state: 'Gedaemmt'
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
@@ -66,14 +55,6 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           below: 15
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -114,12 +95,6 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'on'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
@@ -138,11 +113,6 @@
       - condition: state
         entity_id: input_select.state_dining_room
         state: 'Bewohnt'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: input_select.state_living_room
-        state: 'Gedaemmt'
     - condition: state
       entity_id: input_select.state_house
       state: 'Bewohnt'
@@ -154,14 +124,6 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           below: 15
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -227,12 +189,6 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
   condition:
     - condition: state
       entity_id: input_select.state_house
@@ -243,14 +199,6 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
   action:
     - service: light.turn_on
       data:
@@ -275,12 +223,6 @@
     - platform: state
       entity_id: input_select.state_dining_room
       to: 'Leer'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
   condition:
     - condition: or
       conditions:
@@ -300,14 +242,6 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           above: 15
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
   action:
     - service: light.turn_off
       data:
