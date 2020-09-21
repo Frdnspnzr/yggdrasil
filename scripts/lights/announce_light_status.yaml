@@ -20,6 +20,9 @@ announce_light_status:
                 entity_id: input_select.state_living_room
                 state: 'An'
               - condition: state
+                entity_id: input_select.state_living_room
+                state: 'Gedaemmt'
+              - condition: state
                 entity_id: input_select.state_dining_room
                 state: 'An'
         sequence:
