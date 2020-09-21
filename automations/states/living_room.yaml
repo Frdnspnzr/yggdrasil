@@ -53,12 +53,6 @@
       data:
         entity_id: input_select.state_living_room
         option: 'An'
-    - service: script.sonos_say
-      data:
-        entity_id: media_player.esszimmer
-        message: "Licht an"
-        delay: 3
-        volume: 0.3
 
 ###
 # Coming from every state
@@ -175,11 +169,9 @@
       data:
         entity_id: input_select.state_living_room
         option: 'Leer'
-    - service: script.sonos_say
+    - service: script.announce_light_status
       data:
-        entity_id: media_player.esszimmer
-        message: "Licht aus"
-        delay: 3
+        media_player: media_player.esszimmer
         volume: 0.3
 
 ###
@@ -285,11 +277,9 @@
       data:
         entity_id: input_select.state_living_room
         option: 'Bewohnt'
-    - service: script.sonos_say
+    - service: script.announce_light_status
       data:
-        entity_id: media_player.esszimmer
-        message: "Licht aus"
-        delay: 3
+        media_player: media_player.esszimmer
         volume: 0.3
 
 ###

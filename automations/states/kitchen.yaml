@@ -54,12 +54,10 @@
       data:
         entity_id: input_select.state_kitchen
         option: 'Leer'
-    - service: script.sonos_say
+    - service: script.announce_light_status
       data:
-        entity_id: media_player.kueche
-        message: "Licht aus"
-        delay: 3
-        volume: 0.3
+        media_player: media_player.kueche
+        volume: 0.2
 
 - alias: Küche auf Leer schalten wenn niemand dort ist
   trigger:
@@ -131,9 +129,7 @@
       data:
         entity_id: input_select.state_kitchen
         option: 'Bewohnt'
-    - service: script.sonos_say
+    - service: script.announce_light_status
       data:
-        entity_id: media_player.kueche
-        message: "Licht aus"
-        delay: 3
-        volume: 0.3
+        media_player: media_player.kueche
+        volume: 0.2
