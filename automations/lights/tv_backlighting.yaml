@@ -59,12 +59,13 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-        brightness_pct: 70
+        brightness_pct: 100
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
     - service: wled.effect
       data:
         entity_id: light.living_room_tv_backlighting
-        effect: colortwinkles
-        intensity: 255
+        effect: "Candle Multi"
+        intensity: 60
         speed: 20
 
 ######################################################
