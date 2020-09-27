@@ -28,6 +28,12 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 85
         transition: 3
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 100
+        color_temp: 480
+        transition: 3
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -60,6 +66,12 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 15
         transition: 3
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 50
+        color_temp: 650
+        transition: 3
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -79,6 +91,12 @@
       data:
         entity_id: light.wohnzimmer_ventilator
         transition: 3
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 20
+        hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
+        transition: 3
     - service: switch.turn_on
       data:
         entity_id: switch.outlet_living_room_1
@@ -94,6 +112,7 @@
       data:
         entity_id:
           - light.wohnzimmer_ventilator
+          - light.living_room_lamp_1
         transition: 3
     - service: switch.turn_off
       data:
@@ -120,6 +139,7 @@
       data:
         entity_id:
           - light.wohnzimmer_ventilator
+          - light.living_room_lamp_1
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -154,6 +174,10 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 40
         transition: 3
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room_lamp_1
+        transition: 3
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -186,6 +210,12 @@
     - service: light.turn_off
       data:
         entity_id: light.wohnzimmer_ventilator
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 100
+        color_temp: 650
+        transition: 3
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -212,6 +242,10 @@
         entity_id: light.wohnzimmer_ventilator
         brightness_pct: 10
         transition: 3
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room_lamp_1
+        transition: 3
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
@@ -235,7 +269,9 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: light.wohnzimmer_ventilator
+        entity_id:
+          - light.wohnzimmer_ventilator
+          - light.living_room_lamp_1
     - service: switch.turn_off
       data:
         entity_id: switch.outlet_living_room_1
