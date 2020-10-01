@@ -42,6 +42,9 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: state
+      entity_id: input_select.state_dining_room
+      state: 'Bewohnt'
   action:
     - service: light.turn_on
       data:
