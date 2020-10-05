@@ -25,6 +25,11 @@
       unit_of_measurement: "°C"
       value_template: "{{ state_attr('switch.outlet_living_room_2', 'temperature') }}"
 
+    dining_room_temperature:
+      friendly_name: "Temperatur Esszimmer"
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('climate.thermostat_living_room_2', 'current_temperature') }}"
+
     temperature_outside:
       friendly_name: "Außentemperatur"
       unit_of_measurement: "°C"
