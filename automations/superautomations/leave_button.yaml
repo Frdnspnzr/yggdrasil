@@ -13,8 +13,8 @@
       type: remote_button_long_press
       subtype: turn_on
   action:
-    - service: script.living_room_off
-    - service: script.dining_room_off
+    - service: script.state_living_room_off
+    - service: script.state_dining_room_off
     - service: media_player.media_pause
       data:
         entity_id: group.all_sonos
