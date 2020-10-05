@@ -4,11 +4,11 @@
 
 - alias: Kuechenzustand mit Remote auf An schalten
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 1002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
   condition:
     condition: or
     conditions:
@@ -37,11 +37,11 @@
 - id: state_kitche_set_to_off_with_remote
   alias: Kuechenzustand mit Remote auf Leer schalten
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 1002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
   condition:
     - condition: state
       entity_id: input_select.state_kitchen
@@ -112,11 +112,11 @@
 - id: state_kitchen_set_to_occupied_with_remote
   alias: Küche - Zustand mit Remote auf Bewohnt schalten
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 1002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
   condition:
     - condition: state
       entity_id: input_select.state_kitchen

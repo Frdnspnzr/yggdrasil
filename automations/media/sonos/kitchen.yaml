@@ -1,10 +1,10 @@
 - alias: Sonos Küche - Mit Esszimmer verbinden
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 5002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'An'
@@ -35,11 +35,11 @@
 
 - alias: Sonos Küche - Duo Mix spielen
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 5002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
   condition:
     - condition: or
       conditions:
@@ -72,11 +72,11 @@
 
 - alias: Sonos Küche - Entkoppeln
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_kitchen_1
-        event: 4002
+    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: left
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Leer'

@@ -11,26 +11,26 @@
 - id: state_living_room_set_to_on_with_remote
   alias: "Wohnzimmer - Zustand mit Remote auf An schalten"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 1002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 1002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 2002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 2002
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_up
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_up
   condition:
     - condition: or
       conditions:
@@ -62,16 +62,16 @@
 - id: state_living_room_set_to_on_from_dimmed
   alias: "Wohnzimmer - Zustand auf An schalten"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 2002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 2002
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_up
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_up
   action:
     - service: input_select.select_option
       data:
@@ -142,16 +142,16 @@
 - id: state_living_room_set_to_off_with_remote_no_occupancy
   alias: "Wohnzimmer - Zustand mit Remote auf Aus schalten, wenn niemand da ist"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 1002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 1002
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
   condition:
     - condition: or
       conditions:
@@ -250,16 +250,16 @@
 - id: state_living_room_set_to_occupied_with_remote
   alias: "Wohnzimmer - Zustand mit Remote auf Bewohnt schalten"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 1002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 1002
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
   condition:
     - condition: or
       conditions:
@@ -327,16 +327,16 @@
 - id: state_living_room_set_to_dimmed
   alias: "Wohnzimmer - Zustand auf Gedämmt schalten"
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_1
-        event: 3002
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 3002
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_down
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: dim_down
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'on'

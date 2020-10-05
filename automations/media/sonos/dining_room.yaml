@@ -1,10 +1,10 @@
 - alias: Sonos Esszimmer - Mit Küche verbinden
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 5002
+    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
   condition:
     - condition: or
       conditions:
@@ -29,11 +29,11 @@
 
 - alias: Sonos Esszimmer - Duo Mix spielen
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 5002
+    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
   condition:
     - condition: or
       conditions:
@@ -66,11 +66,11 @@
 
 - alias: Sonos Esszimmer - Entkoppeln
   trigger:
-    - platform: event
-      event_type: deconz_event
-      event_data:
-        id: tradfri_switch_wohnzimmer_2
-        event: 4002
+    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: left
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'on'
