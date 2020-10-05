@@ -1,0 +1,39 @@
+
+- id: super_automation_leave
+  alias: "Super Automation - Verlassen"
+  trigger:
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_long_press
+      subtype: turn_on
+    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_long_press
+      subtype: turn_on
+  action:
+    - service: script.living_room_off
+    - service: script.dining_room_off
+    - service: media_player.media_pause
+      data:
+        entity_id: group.all_sonos
+    - service: media_player.turn_off
+      data:
+        entity_id: media_player.fernseher_wohnzimmer
+    - service: script.sonos_say
+      data:
+        entity_id: media_player.esszimmer
+        message: >
+          Alle Lichter sind aus.
+          {% set open_doors = states|selectattr('entity_id','in',state_attr('group.all_doors','entity_id'))
+            |selectattr('state','eq','on')|list|count %}
+          {% if open_doors == 0 %}
+            Keine Türen sind offen.
+          {% elif open_doors == 1 %}
+            Eine Tür ist offen.
+          {% else %}
+            {{ open_doors }} Türen sind offen.
+          {% endif %}
+        delay: 10
+        volume: 0.3

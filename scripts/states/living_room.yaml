@@ -1,0 +1,29 @@
+state_living_room_off:
+  alias: "Turn living room off"
+  icon: "mdi:power"
+  mode: single
+  max_exceeded: silent
+  sequence:
+    - choose:
+      - conditions:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.state_living_room
+              state: 'An'
+            - condition: state
+              entity_id: input_select.state_living_room
+              state: 'Gedaemmt'
+        - condition: state
+          entity_id: binary_sensor.occupancy_living_room
+          state: 'on'
+        sequence:
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.state_living_room
+              option: 'Bewohnt'
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_living_room
+            option: 'Leer'

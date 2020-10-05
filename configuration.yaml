@@ -26,6 +26,11 @@ group:
     entities:
       - media_player.esszimmer
       - media_player.kueche
+  all_doors:
+    name: Alle Türen
+    entities:
+      - binary_sensor.living_room_balcony_door
+      - binary_sensor.office_balcony_door
 
 light:
 - platform: group

@@ -171,11 +171,11 @@
         },
         "homeassistant": {
             "hashes": [
-                "sha256:a7e3b69890cc98111654a0bf8f3918e78f2b2ad3c1071f5d6b3f503e019e3a1a",
-                "sha256:c83ba6f3ef72b62e8dae0056300d571a779a4adb4659bdfc10a1cb97d2e990af"
+                "sha256:749ead9c278ca245e944bd7babc59f332b65b0caec4d3b8e4b2b4a026d7a88c9",
+                "sha256:fcbaf1b223493d80f1d9d058a73326da76bf72a5546b545b525046afeadd850b"
             ],
             "index": "pypi",
-            "version": "==0.115.2"
+            "version": "==0.115.3"
         },
         "idna": {
             "hashes": [
@@ -399,11 +399,11 @@
         },
         "zipp": {
             "hashes": [
-                "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b",
-                "sha256:c599e4d75c98f6798c509911d08a22e6c021d074469042177c8c86fb92eefd96"
+                "sha256:43f4fa8d8bb313e65d8323a3952ef8756bf40f9a5c3ea7334be23ee4ec8278b6",
+                "sha256:b52f22895f4cfce194bc8172f3819ee8de7540aa6d873535a8668b730b8b411f"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==3.1.0"
+            "version": "==3.2.0"
         }
     }
 }
