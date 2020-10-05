@@ -1,0 +1,29 @@
+state_kitchen_off:
+  alias: "Turn kitchen off"
+  icon: "mdi:power"
+  mode: single
+  max_exceeded: silent
+  sequence:
+    - choose:
+      - conditions:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.state_kitchen
+              state: 'An'
+            - condition: state
+              entity_id: input_select.state_kitchen
+              state: 'Gedaemmt'
+        - condition: state
+          entity_id: binary_sensor.motion_kitchen_1
+          state: 'on'
+        sequence:
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.state_kitchen
+              option: 'Bewohnt'
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_kitchen
+            option: 'Leer'
