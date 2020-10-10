@@ -9,6 +9,11 @@
         brightness: 255
         transition: 1
         entity_id: light.kueche_decke
+    - service: light.turn_on
+      data:
+        brightness: 255
+        transition: 1
+        entity_id: light.kitchen_under_cabinet_1
 
 - alias: Küche automatisch beleuchten (Tag)
   trigger:
@@ -28,6 +33,12 @@
         brightness: 150
         transition: 1
         entity_id: light.kueche_decke
+    - service: light.turn_on
+      data:
+        brightness_pct: 100
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+        transition: 1
+        entity_id: light.kitchen_under_cabinet_1
 
 - alias: Küche automatisch beleuchten (Nacht)
   trigger:
@@ -54,4 +65,8 @@
     - service: light.turn_off
       data:
         entity_id: light.kueche_decke
+        transition: 1
+    - service: light.turn_off
+      data:
+        entity_id: light.kitchen_under_cabinet_1
         transition: 1
