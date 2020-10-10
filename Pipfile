@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-homeassistant = "~=0.115.2"
-
+homeassistant = "~=0.116.0"
 [requires]
 python_version = "3.7"
