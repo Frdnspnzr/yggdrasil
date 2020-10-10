@@ -72,12 +72,12 @@
     - condition: or
       conditions:
       - condition: state
-        entity_id: input_select.state_house
+        entity_id: input_select.state_kitchen
         state: 'Leer'
       - condition: and
         conditions:
         - condition: state
-          entity_id: input_select.state_house
+          entity_id: input_select.state_kitchen
           state: 'Bewohnt'
         - condition: state
           entity_id: sun.sun
