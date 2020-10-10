@@ -61,6 +61,26 @@
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Leer'
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
+  condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Leer'
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: input_select.state_house
+          state: 'Bewohnt'
+        - condition: state
+          entity_id: sun.sun
+          state: 'above_horizon'
   action:
     - service: light.turn_off
       data:
