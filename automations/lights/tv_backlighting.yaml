@@ -243,6 +243,9 @@
         - condition: numeric_state
           entity_id: sensor.light_living_room_1
           above: 15
+        - condition: state
+          entity_id: media_player.fernseher_wohnzimmer
+          state: 'off'
   action:
     - service: light.turn_off
       data:
