@@ -26,6 +26,8 @@
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: 'off'
+    - platform: state
+      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
