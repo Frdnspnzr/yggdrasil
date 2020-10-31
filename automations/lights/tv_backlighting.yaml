@@ -181,9 +181,11 @@
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'off'
+      for: '00:00:25'
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
       to: 'unavailable'
+      for: '00:00:25'
   action:
     - service: switch.turn_off
       entity_id: switch.wled_tv_backlighting_lor
