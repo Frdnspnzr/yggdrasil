@@ -38,6 +38,9 @@ light:
   entities:
     - light.wohnzimmer_ventilator_1
     - light.wohnzimmer_ventilator_2
+- platform: hyperion
+  name: Hyperion Wohnzimmer
+  host: 192.168.178.151
 
 webostv:
   host: !secret ip_adress_tv_living_room
