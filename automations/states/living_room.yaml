@@ -95,6 +95,9 @@
       entity_id: media_player.fernseher_wohnzimmer
       to: 'unavailable'
       for: '00:00:12'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -181,7 +184,7 @@
 ###
 
 - id: state_living_room_set_to_empty_from_dimmed_turning_tv_off
-  alias: "Wohnzimmer - Zustand auf An schalten wenn der Fernseher ausgeschaltet wird"
+  alias: "Wohnzimmer - Zustand auf Leer schalten wenn der Fernseher ausgeschaltet wird"
   trigger:
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
@@ -200,6 +203,9 @@
       state: 'above_horizon'
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
       state: 'off'
   action:
     - service: input_select.select_option

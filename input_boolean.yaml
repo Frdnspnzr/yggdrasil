@@ -7,3 +7,52 @@ heating_period:
   name: Heizperiode
   initial: on
   icon:  mdi:radiator
+
+###
+# Disable switches for rooms
+###
+
+disable_living_room:
+  name: Wohnzimmer deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_dining_room:
+  name: Esszimmer deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_study:
+  name: Büro deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_kitchen:
+  name: Küche deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_front_hallway:
+  name: Flur vorne deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_bedroom:
+  name: Schlafzimmer deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+###
+# Disable switches for types
+###
+
+disable_nightlight:
+  name: Nachtlicht deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
+disable_occupation_lights:
+  name: Nachtlicht deaktivieren
+  initial: off
+  icon: mdi:cog-off
+

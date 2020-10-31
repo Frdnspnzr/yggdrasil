@@ -8,6 +8,9 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: 'off'
   action:
     - service: light.turn_on
       entity_id: light.front_door_1
