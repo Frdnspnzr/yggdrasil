@@ -95,9 +95,6 @@
       entity_id: media_player.fernseher_wohnzimmer
       to: 'unavailable'
       for: '00:00:12'
-    - condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -105,6 +102,9 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
