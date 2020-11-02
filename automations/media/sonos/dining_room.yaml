@@ -1,6 +1,6 @@
 - alias: Sonos Esszimmer - Mit Küche verbinden
   trigger:
-    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+    - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       domain: deconz
       platform: device
       type: remote_button_short_press
@@ -29,7 +29,7 @@
 
 - alias: Sonos Esszimmer - Duo Mix spielen
   trigger:
-    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+    - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       domain: deconz
       platform: device
       type: remote_button_short_press
@@ -66,7 +66,7 @@
 
 - alias: Sonos Esszimmer - Entkoppeln
   trigger:
-    - device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
+    - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       domain: deconz
       platform: device
       type: remote_button_short_press
