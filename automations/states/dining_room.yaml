@@ -65,6 +65,36 @@
         entity_id: input_select.state_dining_room
         option: 'An'
 
+###
+# Coming from either Leer (Empty) or Bewohnt (Occupied)
+# Event 'more than five minutes of occupancy'
+###
+
+- id: state_dining_room_set_to_on_after_five_minutes
+  alias: "Esszimmer - Nach fünf Minuten auf An schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_dining_room
+      to: 'on'
+      for: '00:05:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.disable_timeouts
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_dining_room
+      state: 'off'
+    - condition: state
+      entity_id: input_select.state_dining_room
+      state:
+        - 'Leer'
+        - 'Bewohnt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_dining_room
+        option: 'An'
+
 ###############################################################################
 ### ==> Leer
 ###############################################################################
@@ -148,6 +178,36 @@
       data:
         entity_id: input_select.state_dining_room
         option: 'Leer'
+
+###
+# Coming from either An (On) or Gedaemmt (Dimmed)
+# Event 'more than twenty minutes of no occupancy'
+###
+
+- id: state_dining_room_set_to_empty_after_twenty_minutes
+  alias: "Esszimmer - Nach zwanzig Minuten auf Leer schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_dining_room
+      to: 'off'
+      for: '00:20:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.disable_timeouts
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_dining_room
+      state: 'off'
+    - condition: state
+      entity_id: input_select.state_dining_room
+      state:
+        - 'An'
+        - 'Gedaemmt'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_dining_room
+        option: 'An'
 
 ###############################################################################
 ### ==> Bewohnt

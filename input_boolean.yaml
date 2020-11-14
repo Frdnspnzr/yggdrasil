@@ -56,3 +56,8 @@ disable_occupation_lights:
   initial: off
   icon: mdi:cog-off
 
+disable_timeouts:
+  name: Timeout deaktivieren
+  initial: off
+  icon: mdi:cog-off
+
