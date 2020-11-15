@@ -166,12 +166,6 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: glitter
-        intensity: 0
-        speed: 80
     - service: switch.turn_on
       entity_id: switch.wled_tv_backlighting_lor
 
