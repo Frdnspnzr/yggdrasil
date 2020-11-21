@@ -7,8 +7,8 @@
   action:
     - service: light.turn_on
       data:
-        brightness: 255
-        color_temp: 315
+        brightness_pct: 50
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
         transition: 1
         entity_id: light.kitchen_under_cabinet_1
 
@@ -70,3 +70,65 @@
       data:
         entity_id: light.kitchen_under_cabinet_1
         transition: 1
+
+- id: light_kitchen_under_cabinet_work_light_on
+  alias: "Küche - Unterschrankbeleuchtung Arbeitslicht anschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_2
+      to: 'on'
+  condition:
+    - condition: or
+      conditions:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: input_select.state_house
+          state: 'Nacht'
+      - condition: state
+        entity_id: input_select.state_kitchen
+        state: 'An'
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 255
+        color_temp: 315
+        transition: 1
+        entity_id: light.kitchen_under_cabinet_1
+
+- id: light_kitchen_under_cabinet_work_light_off
+  alias: "Küche - Unterschrankbeleuchtung Arbeitslicht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_2
+      to: 'off'
+  action:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.state_kitchen
+          state:
+            - 'An'
+            - 'Bewohnt'
+        - condition: or
+          conditions:
+          - condition: not
+            conditions:
+            - condition: state
+              entity_id: input_select.state_house
+              state: 'Nacht'
+          - condition: state
+            entity_id: input_select.state_kitchen
+            state: 'An'
+        sequence:
+          - service: light.turn_on
+            data:
+              brightness_pct: 50
+              hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+              transition: 1
+              entity_id: light.kitchen_under_cabinet_1
+      default:
+        - service: light.turn_off
+          data:
+            entity_id: light.kitchen_under_cabinet_1
+            transition: 1
