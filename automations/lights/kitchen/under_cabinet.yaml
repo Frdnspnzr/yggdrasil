@@ -18,6 +18,8 @@
     - platform: state
       entity_id: input_select.state_kitchen
       to: 'Bewohnt'
+    - platform: state
+      entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_house
