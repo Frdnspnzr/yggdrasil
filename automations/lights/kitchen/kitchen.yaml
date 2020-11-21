@@ -1,4 +1,5 @@
-- alias: Kuechenlicht einschalten
+- id: light_kitchen_main_on
+  alias: "Küche - Hauptlicht einschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
@@ -9,14 +10,9 @@
         brightness: 255
         transition: 1
         entity_id: light.kueche_decke
-    - service: light.turn_on
-      data:
-        brightness: 255
-        color_temp: 315
-        transition: 1
-        entity_id: light.kitchen_under_cabinet_1
 
-- alias: Küche automatisch beleuchten (Tag)
+- id: light_kitchen_main_automatic_on_day
+  alias: "Küche - Hauptlicht auf bewohnt schalten (Tag)"
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
@@ -40,14 +36,9 @@
         brightness: 150
         transition: 1
         entity_id: light.kueche_decke
-    - service: light.turn_on
-      data:
-        brightness_pct: 50
-        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-        transition: 1
-        entity_id: light.kitchen_under_cabinet_1
 
-- alias: Küche automatisch beleuchten (Nacht)
+- id: light_kitchen_main_automatic_night
+  alias: "Küche - Hauptlicht auf bewohnt schalten (Nacht)"
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
@@ -72,7 +63,8 @@
         transition: 0.5
         entity_id: light.kueche_decke
 
-- alias: Küche entleuchten
+- id: light_kitchen_main_off
+  alias: "Küche - Hauptlicht ausschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
@@ -101,8 +93,4 @@
     - service: light.turn_off
       data:
         entity_id: light.kueche_decke
-        transition: 1
-    - service: light.turn_off
-      data:
-        entity_id: light.kitchen_under_cabinet_1
         transition: 1
