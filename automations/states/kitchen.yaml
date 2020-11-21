@@ -47,7 +47,7 @@
       entity_id: input_select.state_kitchen
       state: 'An'
     - condition: state
-      entity_id: binary_sensor.motion_kitchen_1
+      entity_id: binary_sensor.occupancy_kitchen
       state: 'off'
   action:
     - service: input_select.select_option
