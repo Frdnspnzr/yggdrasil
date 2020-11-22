@@ -89,7 +89,13 @@
     - platform: state
       entity_id: binary_sensor.motion_kitchen_2
       to: 'on'
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to: 'An'
   condition:
+    - condition: state
+      entity_id: binary_sensor.motion_kitchen_2
+      state: 'on'
     - condition: or
       conditions:
       - condition: not
