@@ -9,6 +9,25 @@ heating_period:
   icon:  mdi:radiator
 
 ###
+# Darkness indicators
+###
+
+is_dark_living_room:
+  name: Wohnzimmer ist dunkel
+  initial: on
+  icon: mdi:white-balance-sunny
+
+is_dark_kitchen:
+  name: Küche ist dunkel
+  initial: on
+  icon: mdi:white-balance-sunny
+
+is_dark_dining_room:
+  name: Esszimmer ist dunkel
+  initial: on
+  icon: mdi:white-balance-sunny
+
+###
 # Disable switches for rooms
 ###
 
