@@ -7,7 +7,7 @@
   action:
     - service: input_boolean.turn_on
       data:
-        entity_id: is_dark_living_room
+        entity_id: input_boolean.is_dark_living_room
 
 - id: darkness_living_room_auto_sunrise
   alias: "Dunkelheit Wohnzimmer - Sonnenaufgang"
@@ -18,4 +18,39 @@
   action:
     - service: input_boolean.turn_off
       data:
-        entity_id: is_dark_living_room
+        entity_id: input_boolean.is_dark_living_room
+
+- id: darkness_living_room_dark
+  alias: "Dunkelheit Wohnzimmer - Dunkel"
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.lightlevel_living_room_1
+    below: 10
+  - platform: numeric_state
+    entity_id: sensor.lightlevel_living_room_2
+    below: 10
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.is_dark_living_room
+
+- id: darkness_living_room_light
+  alias: "Dunkelheit Wohnzimmer - Hell"
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.lightlevel_living_room_1
+    above: 20
+  - platform: numeric_state
+    entity_id: sensor.lightlevel_living_room_2
+    above: 20
+  condition:
+    - condition: state
+      entity_id: light.wohnzimmer_ventilator
+      state: 'off'
+    - condition: state
+      entity_id: light.dining_room_main
+      state: 'off'
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.is_dark_living_room
