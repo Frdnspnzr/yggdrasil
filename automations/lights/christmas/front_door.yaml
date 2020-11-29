@@ -19,7 +19,7 @@
       data:
         entity_id: switch.plug_christmas_lights_frontdoor
 
-- id: light_front_door_christmas_lights_on_evening
+- id: light_front_door_christmas_lights_on_morning
   alias: "Vordertür - Weihnachtsbeleuchtung morgens einschalten"
   trigger:
     - platform: time
