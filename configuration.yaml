@@ -38,6 +38,11 @@ light:
   entities:
     - light.wohnzimmer_ventilator_1
     - light.wohnzimmer_ventilator_2
+- platform: group
+  name: Front Hallway Main
+  entities:
+    - light.front_hallway_main_1
+    - light.front_hallway_main_2
 - platform: hyperion
   name: Hyperion Wohnzimmer
   host: 192.168.178.151
@@ -93,6 +98,8 @@ switch:
     disable_brightness_adjust: true
     lights:
       - light.kueche_decke
+      - light.front_hallway_main_1
+      - light.front_hallway_main_2
   - platform: rest
     name: WLED TV Backlighting LOR
     resource: http://192.168.178.150/json/state
