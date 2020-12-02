@@ -37,10 +37,16 @@
   - platform: numeric_state
     entity_id: sensor.lightlevel_kitchen_2
     above: 20
+  - platform: state
+    entity_id: light.kueche_decke
+    to: 'off'
   condition:
     - condition: state
       entity_id: light.kueche_decke
       state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.lightlevel_kitchen_2
+      above: 20
   action:
     - service: input_boolean.turn_off
       data:
