@@ -5,7 +5,7 @@
 - alias: Haus werktags morgens einschalten
   trigger:
     - platform: time
-      at: "05:30"
+      at: "06:00"
   condition:
     - condition: state
       entity_id: input_select.state_house
