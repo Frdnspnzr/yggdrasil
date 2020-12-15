@@ -43,12 +43,6 @@
   - platform: numeric_state
     entity_id: sensor.lightlevel_living_room_2
     above: 20
-  - platform: state
-    entity_id: light.wohnzimmer_ventilator
-    to: 'off'
-  - platform: state
-    entity_id: light.dining_room_main
-    to: 'off'
   condition:
     - condition: state
       entity_id: light.wohnzimmer_ventilator
@@ -56,12 +50,6 @@
     - condition: state
       entity_id: light.dining_room_main
       state: 'off'
-    - condition: numeric_state
-      entity_id: sensor.lightlevel_living_room_1
-      above: 20
-    - condition: numeric_state
-      entity_id: sensor.lightlevel_living_room_2
-      above: 20
   action:
     - service: input_boolean.turn_off
       data:
