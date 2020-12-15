@@ -22,8 +22,8 @@
       entity_id: input_select.state_house
       state: 'Bewohnt'
     - condition: state
-      entity_id: input_boolean.is_dark_kitchen
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
       state: 'off'
@@ -73,8 +73,8 @@
       entity_id: input_select.state_kitchen
       to: 'Bewohnt'
     - platform: state
-      entity_id: input_boolean.is_dark_kitchen
-      to: 'off'
+      entity_id: sun.sun
+      to: 'above_horizon'
   condition:
     - condition: or
       conditions:
@@ -87,8 +87,8 @@
           entity_id: input_select.state_kitchen
           state: 'Bewohnt'
         - condition: state
-          entity_id: input_boolean.is_dark_kitchen
-          state: 'off'
+          entity_id: sun.sun
+          state: 'above_horizon'
   action:
     - service: light.turn_off
       data:

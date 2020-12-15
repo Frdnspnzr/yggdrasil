@@ -8,8 +8,8 @@
       entity_id: binary_sensor.living_room_balcony_door
       to: 'off'
     - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'off'
+      entity_id: sun.sun
+      to: 'above_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -20,8 +20,8 @@
         entity_id: binary_sensor.living_room_balcony_door
         state: 'off'
       - condition: state
-        entity_id: input_boolean.is_dark_living_room
-        state: 'off'
+        entity_id: sun.sun
+        state: 'above_horizon'
   action:
     - service: light.turn_on
       data:
@@ -48,8 +48,8 @@
       entity_id: binary_sensor.living_room_balcony_door
       to: 'on'
     - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
+      entity_id: sun.sun
+      to: 'below_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
@@ -58,8 +58,8 @@
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: light.turn_on
       data:
@@ -125,15 +125,15 @@
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
     - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'off'
+      entity_id: sun.sun
+      to: 'above_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'off'
+      entity_id: sun.sun
+      state: 'above_horizon'
   action:
     - service: light.turn_off
       data:
@@ -151,15 +151,15 @@
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
     - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
+      entity_id: sun.sun
+      to: 'below_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'off'
@@ -195,15 +195,15 @@
       entity_id: input_select.state_living_room
       to: 'Bewohnt'
     - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
+      entity_id: sun.sun
+      to: 'below_horizon'
   condition:
     - condition: state
       entity_id: input_select.state_living_room
       state: 'Bewohnt'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
@@ -246,8 +246,8 @@
       entity_id: binary_sensor.living_room_balcony_door
       state: 'off'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
       state: 'off'
@@ -285,8 +285,8 @@
       entity_id: binary_sensor.living_room_balcony_door
       state: 'on'
     - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
+      entity_id: sun.sun
+      state: 'below_horizon'
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
       state: 'off'
