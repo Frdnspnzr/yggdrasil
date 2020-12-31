@@ -1,0 +1,23 @@
+- id: study_table_lights_on
+  alias: "Büro Tisch - Licht einschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wled_office_table
+        brightness_pct: 100
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+
+- id: study_table_lights_off
+  alias: "Büro Tisch - Licht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.wled_office_table

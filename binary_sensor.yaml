@@ -59,3 +59,9 @@
         {{ is_state('binary_sensor.motion_kitchen_1', 'on')
         or is_state('binary_sensor.motion_kitchen_2', 'on')
         or is_state('binary_sensor.motion_kitchen_3', 'on') }}
+
+- platform: ping
+  host: 192.168.178.80
+  name: ping_pc_pascal
+  scan_interval: 10
+  count: 1
