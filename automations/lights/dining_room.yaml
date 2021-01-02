@@ -31,8 +31,8 @@
       entity_id: input_select.state_dining_room
       to: 'Bewohnt'
     - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
+      entity_id: input_boolean.is_dark_dining_room
+      to: 'on'
   condition:
     - condition: not
       conditions:
@@ -40,8 +40,8 @@
         entity_id: input_select.state_house
         state: 'Nacht'
     - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+      entity_id: input_boolean.is_dark_dining_room
+      state: 'on'
     - condition: state
       entity_id: input_select.state_dining_room
       state: 'Bewohnt'
@@ -94,8 +94,8 @@
       entity_id: input_select.state_dining_room
       to: 'Bewohnt'
     - platform: state
-      entity_id: sun.sun
-      to: 'above_horizon'
+      entity_id: input_boolean.is_dark_dining_room
+      to: 'off'
   condition:
     - condition: or
       conditions:
@@ -108,8 +108,8 @@
             entity_id: input_select.state_dining_room
             state: 'Bewohnt'
           - condition: state
-            entity_id: sun.sun
-            state: 'above_horizon'
+            entity_id: input_boolean.is_dark_dining_room
+            state: 'off'
   action:
     - service: light.turn_off
       data:
