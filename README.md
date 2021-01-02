@@ -46,7 +46,7 @@ The light under the bed for example is directly controlled by the motion sensors
 
 | Device | Quantity | Connectivity | Integration | Notes |
 | -------| :------: | ------------ | ----------- | ----- |
-| Aqara Human Motion Sensor | 6 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | These are pretty great. I order them exclusively from Hong Kong so they are also cheap. The motion and brightness detection work like a charm but the temperature sensors on all my devices register values slightly off. Best thing is how small and unobstrusive they are.
+| Aqara Human Motion Sensor | 8 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | These are pretty great. I order them exclusively from Hong Kong so they are also cheap. The motion and brightness detection work like a charm but the temperature sensors on all my devices register values slightly off. Best thing is how small and unobstrusive they are.
 | IKEA Trådfri Motion Sensor | 3 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | With things like the Aqara motion sensor I get to choose between them beeing cheap or easily available. With the Trådfri motion sensors I can get a dozen in the next twenty minutes if I really want to. I can drop five of those in a single room and still not break the bank. For being cheap and easy to aquire they get a free pass of not being *that* great after all. They take a few seconds to trigger after walking past them and have a very long reset time to trigger again after they stopped detecting motion.
 
 ### Security
@@ -59,13 +59,14 @@ The light under the bed for example is directly controlled by the motion sensors
 
 | Device | Quantity | Connectivity | Integration | Notes |
 | -------| :------: | ------------ | ----------- | ----- |
-| IKEA Trådfri Remote Control | 3 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | They are nice. I like them. I'll plaster all the walls with them. |
+| IKEA Trådfri Remote Control | 5 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | They are nice. I like them. I'll plaster all the walls with them. |
 
 ### Outlets
 
 | Device | Quantity | Connectivity | Integration | Notes |
 | -------| :------: | ------------ | ----------- | ----- |
 | FRITZ!DECT 200 | 3 | DECT | [AVM FRITZ!Box](https://www.home-assistant.io/integrations/fritz/) | Smart Plugs by AVM made to be used with a FRITZ!Box. They are very clunky and take up much more space than other plugs I've seen but they double down as easy to use temperature sensors for the AVM thermostats. As with the thermostats I don't like that these are pretty much useless without a FRITZ!Box because I have never seen DECT used anywhere else. But at the same time I hope my FRITZ!Box is around for at least a few years so that shouldn't be an issue.
+| OSRAM Smart+ Plug | 4 | ZigBee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | Got them pretty cheap in a sale. I'd like them a bit less bulky but overall they're pretty nice even though they don't support output readings. One is solely used as a ZigBee range extension right now.
 
 ### Climate
 
