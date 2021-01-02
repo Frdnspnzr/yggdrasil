@@ -166,6 +166,14 @@
     - service: light.turn_on
       data:
         entity_id: light.living_room_tv_backlighting
+        brightness_pct: 100
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
+    - service: wled.effect
+      data:
+        entity_id: light.living_room_tv_backlighting
+        effect: "Candle Multi"
+        intensity: 60
+        speed: 20
     - service: switch.turn_on
       entity_id: switch.wled_tv_backlighting_lor
 
@@ -183,12 +191,6 @@
   action:
     - service: switch.turn_off
       entity_id: switch.wled_tv_backlighting_lor
-    - service: wled.effect
-      data:
-        entity_id: light.living_room_tv_backlighting
-        effect: glitter
-        intensity: 0
-        speed: 20
 
 ######################################################
 # Night light (Open doors)
