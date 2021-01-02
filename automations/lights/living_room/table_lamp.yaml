@@ -1,5 +1,5 @@
-- id: living_room_light_normal
-  alias: "Wohnzimmer - Licht auf Normal schalten"
+- id: living_room_table_light_normal
+  alias: "Wohnzimmer - Tischlampe auf Normal schalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -25,21 +25,13 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: light.wohnzimmer_ventilator
-        brightness_pct: 85
-        transition: 3
-    - service: light.turn_on
-      data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 100
         color_temp: 480
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: living_room_light_normal_door_open
-  alias: "Wohnzimmer - Licht auf Normal schalten (Mit geöffneter Tür)"
+- id: living_room_table_light_normal_door_open
+  alias: "Wohnzimmer - Tischlampe auf Normal schalten (Mit geöffneter Tür)"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -63,21 +55,15 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: light.wohnzimmer_ventilator
-        brightness_pct: 15
-        transition: 3
-    - service: light.turn_on
-      data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 50
-        color_temp: 650
+        rgb_color: [255, 0, 0]
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_dimmed
-  alias: "Wohnzimmer - Licht auf Gedaemmt schalten"
+# TODO
+
+- id: living_room_table_light_mood_light
+  alias: "Wohnzimmer - Tischlampe auf Stimmungslicht schalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -87,22 +73,15 @@
       entity_id: input_select.state_living_room
       state: 'Gedaemmt'
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.wohnzimmer_ventilator
-        transition: 3
     - service: light.turn_on
       data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 20
         hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
         transition: 3
-    - service: switch.turn_on
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_off
-  alias: "Wohnzimmer - Licht ausschalten"
+- id: living_room_table_light_off
+  alias: "Wohnzimmer - Tischlampe ausschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -111,15 +90,11 @@
     - service: light.turn_off
       data:
         entity_id:
-          - light.wohnzimmer_ventilator
           - light.living_room_lamp_1
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_automatic_day
-  alias: "Wohnzimmer - Kein automatisches Licht tagsüber"
+- id: living_room_table_light_automatic_day
+  alias: "Wohnzimmer - Tischlampe Automatik tagsüber"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -138,14 +113,10 @@
     - service: light.turn_off
       data:
         entity_id:
-          - light.wohnzimmer_ventilator
           - light.living_room_lamp_1
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_automatic_evening
-  alias: "Wohnzimmer - Automatisches Licht Abends"
+- id: living_room_table_light_automatic_evening
+  alias: "Wohnzimmer - Tischlampe abends automatisch einschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -175,21 +146,13 @@
       entity_id: input_boolean.disable_living_room
       state: 'off'
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.wohnzimmer_ventilator
-        brightness_pct: 40
-        transition: 3
     - service: light.turn_off
       data:
         entity_id: light.living_room_lamp_1
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_automatic_evening_door_open
-  alias: "Wohnzimmer - Automatisches Licht Abends (Mit geöffneter Tür)"
+- id: living_room_table_light_automatic_evening_door_open
+  alias: "Wohnzimmer - Tischlampe abends automatisch einschalten (Mit geöffneter Tür)"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -219,21 +182,15 @@
         entity_id: input_select.state_house
         state: 'Nacht'
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.wohnzimmer_ventilator
     - service: light.turn_on
       data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 100
-        color_temp: 650
+        rgb_color: [255, 0, 0]
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_automatic_night
-  alias: "Wohnzimmer - Automatisches Nachtlicht"
+- id: living_room_table_light_automatic_night
+  alias: "Wohnzimmer - Tischlampe nachts automatisch einschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -258,21 +215,13 @@
       entity_id: input_boolean.disable_nightlight
       state: 'off'
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.wohnzimmer_ventilator
-        brightness_pct: 10
-        transition: 3
     - service: light.turn_off
       data:
         entity_id: light.living_room_lamp_1
         transition: 3
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1
 
-- id: light_living_room_automatic_night_door_open
-  alias: "Wohnzimmer - Automatisches Nachtlicht (Mit geöffneter Tür)"
+- id: living_room_table_light_automatic_night_door_open
+  alias: "Wohnzimmer - Tischlampe nachts automatisch einschalten (Mit geöffneter Tür)"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
@@ -300,8 +249,4 @@
     - service: light.turn_off
       data:
         entity_id:
-          - light.wohnzimmer_ventilator
           - light.living_room_lamp_1
-    - service: switch.turn_off
-      data:
-        entity_id: switch.outlet_living_room_1

@@ -1,0 +1,272 @@
+- id: living_room_main_light_normal
+  alias: "Wohnzimmer - Hauptlicht auf Normal schalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'off'
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.living_room_balcony_door
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.is_dark_living_room
+        state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 85
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_normal_door_open
+  alias: "Wohnzimmer - Hauptlicht auf Normal schalten (Mit geöffneter Tür)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'An'
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: 'on'
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'An'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 15
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_dimmed
+  alias: "Wohnzimmer - Hauptlicht auf Gedaemmt schalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Gedaemmt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Gedaemmt'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        transition: 3
+    - service: switch.turn_on
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_off
+  alias: "Wohnzimmer - Hauptlicht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Leer'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.wohnzimmer_ventilator
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_automatic_day
+  alias: "Wohnzimmer - Kein automatisches Hauptlicht tagsüber"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.wohnzimmer_ventilator
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_automatic_evening
+  alias: "Wohnzimmer - Automatisches Hauptlicht Abends"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 40
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_automatic_evening_door_open
+  alias: "Wohnzimmer - Automatisches Hauptlicht Abends (Mit geöffneter Tür)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_select.state_living_room
+      state: 'Bewohnt'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: input_select.state_house
+        state: 'Nacht'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.wohnzimmer_ventilator
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_automatic_night
+  alias: "Wohnzimmer - Automatisches Nachtlicht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_nightlight
+      state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wohnzimmer_ventilator
+        brightness_pct: 10
+        transition: 3
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
+
+- id: living_room_main_light_automatic_night_door_open
+  alias: "Wohnzimmer - Automatisches Nachtlicht (Mit geöffneter Tür)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: 'Bewohnt'
+  condition:
+    - condition: state
+      entity_id: input_select.state_house
+      state: 'Nacht'
+    - condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_nightlight
+      state: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.wohnzimmer_ventilator
+    - service: switch.turn_off
+      data:
+        entity_id: switch.outlet_living_room_1
