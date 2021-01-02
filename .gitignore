@@ -1,2 +1,4 @@
 .ssh/
 secrets.yaml
+.pip_progress
+out.txt
