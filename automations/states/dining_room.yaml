@@ -311,24 +311,3 @@
       data:
         entity_id: input_select.state_dining_room
         option: 'Gedaemmt'
-
-###
-# Coming from An (On)
-# Event 'living room going to dimmed'
-###
-
-- id: state_dining_room_set_to_dimmed_with_living_room
-  alias: "Esszimmer - Zustand zusammen mit Wohnzimmer auf Gedaemmt schalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-  condition:
-    - condition: state
-      entity_id: input_select.state_dining_room
-      state: 'An'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_dining_room
-        option: 'Gedaemmt'
