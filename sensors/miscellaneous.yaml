@@ -66,3 +66,19 @@
     occupancy_dining_room_probability:
       friendly_name: ""
       value_template: "{{ state_attr('binary_sensor.occupancy_dining_room', 'probability') * 100}}"
+
+    teams:
+      friendly_name: "Microsoft Teams"
+      unique_id: sensor.teams
+      value_template: >-
+          {% if states("sensor.teams_raw") in ["Available"] %}
+            Available
+          {% elif states("sensor.teams_raw") in ["DoNotDisturb","Presenting","Focusing"] %}
+            Do not disturb
+          {% elif states("sensor.teams_raw") in ["Busy","OnThePhone","DoNotDisturb","Presenting","Focusing","InAMeeting"] %}
+            Busy
+          {% elif states("sensor.teams_raw") in ["Away","BeRightBack"] %}
+            Away
+          {% else %}
+            {{ states("sensor.teams_raw") }}
+          {% endif %}

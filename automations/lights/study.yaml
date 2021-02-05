@@ -21,3 +21,58 @@
     - service: light.turn_off
       data:
         entity_id: light.wled_office_table
+
+- id: study_table_lights_teams_status_busy
+  alias: "Büro Tisch - Licht auf Beschäftigt schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - 'Busy'
+        - 'Do not disturb'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wled_office_table
+        brightness_pct: 100
+        rgb_color: [255, 0, 0]
+
+- id: study_table_lights_teams_status_away
+  alias: "Büro Tisch - Licht auf Abwesend schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - 'Away'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wled_office_table
+        brightness_pct: 100
+        rgb_color: [255, 190, 0]
+
+- id: study_table_lights_teams_status_available
+  alias: "Büro Tisch - Licht auf Anwesend schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - 'Available'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wled_office_table
+        brightness_pct: 100
+        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
