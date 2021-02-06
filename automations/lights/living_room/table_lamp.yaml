@@ -250,3 +250,75 @@
       data:
         entity_id:
           - light.living_room_lamp_1
+
+- id: living_room_table_light_occupied
+  alias: "Wohnzimmer - Tischlampe auf Beschäftigt schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - 'Busy'
+        - 'Do not disturb'
+  condition:
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+    - condition: state
+      entity_id: person.pascal
+      state: 'home'
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 30
+        rgb_color: [255, 0, 0]
+        transition: 1
+
+- id: living_room_table_light_unoccupied
+  alias: "Wohnzimmer - Tischlampe auf Nicht beschäftigt schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - 'Available'
+  condition:
+    - condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+    - condition: state
+      entity_id: person.pascal
+      state: 'home'
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
+  action:
+  - choose:
+    - conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'Gedaemmt'
+      sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.living_room_lamp_1
+          brightness_pct: 20
+          hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
+          transition: 1
+    - conditions:
+        - condition: state
+          entity_id: input_select.state_living_room
+          state: 'An'
+      sequence:
+        - service: light.turn_on
+          data:
+            entity_id: light.living_room_lamp_1
+            brightness_pct: 100
+            color_temp: 480
+            transition: 1
+    default:
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room_lamp_1
