@@ -60,18 +60,12 @@
         rgb_color: [255, 0, 0]
         transition: 3
 
-# TODO
-
 - id: living_room_table_light_mood_light
   alias: "Wohnzimmer - Tischlampe auf Stimmungslicht schalten"
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
   action:
     - service: light.turn_on
       data:
