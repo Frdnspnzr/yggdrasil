@@ -47,6 +47,13 @@ light:
   name: Hyperion Wohnzimmer
   host: 192.168.178.151
 
+cover:
+  - platform: group
+    name: Study Door
+    entities:
+      - cover.study_door_1
+      - cover.study_door_2
+
 webostv:
   host: !secret ip_adress_tv_living_room
   name: Fernseher Wohnzimmer
