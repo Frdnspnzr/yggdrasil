@@ -1,3 +1,25 @@
+- id: study_door_cover_close_on_sunset
+  alias: Büro - Rollos bei Sonnenuntergang herunterfahren
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "00:00:00"
+  action:
+    - service: cover.close_cover
+      data:
+        entity_id: cover.study_door
+
+- id: study_door_cover_open_on_sunrise
+  alias: Büro - Rollos bei Sonnenaufgang herauffahren
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "00:00:00"
+  action:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.study_door
+
 - id: study_door_cover_block_sun
   alias: Büro - Rollos herunterfahren wenn die Sonne zum Schreibtisch scheint
   trigger:
