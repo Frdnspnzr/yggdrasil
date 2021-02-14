@@ -1,35 +1,35 @@
 - id: study_door_cover_block_sun
   alias: Büro - Rollos herunterfahren wenn die Sonne zum Schreibtisch scheint
   trigger:
-    - platform: state
+    - platform: numeric_state
       entity_id: sun.sun
       attribute: azimuth
-      above: '170'
-      below: '190'
-    - platform: state
+      above: 170
+      below: 190
+    - platform: numeric_state
       entity_id: sun.sun
       attribute: elevation
-      below: '25'
+      below: 25
   condition:
     - condition: numeric_state
       entity_id: sun.sun
       attribute: azimuth
-      above: '170'
-      below: '190'
+      above: 170
+      below: 190
     - condition: numeric_state
       entity_id: sun.sun
       attribute: elevation
-      below: '25'
+      below: 25
     - condition: or
       conditions:
       - condition: numeric_state
         entity_id: cover.study_door_1
         attribute: current_position
-        above: '50'
+        above: 50
       - condition: numeric_state
         entity_id: cover.study_door_2
         attribute: current_position
-        above: '50'
+        above: 50
     - condition: state
       entity_id: weather.dwd
       state: 'sunny'
