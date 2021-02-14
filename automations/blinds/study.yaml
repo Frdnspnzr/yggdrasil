@@ -7,7 +7,10 @@
   action:
     - service: cover.close_cover
       data:
-        entity_id: cover.study_door
+        entity_id: cover.study_door_1
+    - service: cover.close_cover
+      data:
+        entity_id: cover.study_door_2
 
 - id: study_door_cover_open_on_sunrise
   alias: Büro - Rollos bei Sonnenaufgang herauffahren
@@ -18,7 +21,10 @@
   action:
     - service: cover.open_cover
       data:
-        entity_id: cover.study_door
+        entity_id: cover.study_door_1
+    - service: cover.open_cover
+      data:
+        entity_id: cover.study_door_2
 
 - id: study_door_cover_block_sun
   alias: Büro - Rollos herunterfahren wenn die Sonne zum Schreibtisch scheint
@@ -58,5 +64,9 @@
   action:
     - service: cover.set_cover_position
       data:
-        entity_id: cover.study_door
+        entity_id: cover.study_door_1
+        position: 50
+    - service: cover.set_cover_position
+      data:
+        entity_id: cover.study_door_2
         position: 50
