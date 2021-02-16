@@ -119,6 +119,21 @@
     - condition: state
       entity_id: input_boolean.is_dark_living_room
       state: 'off'
+    - condition: or
+      conditions:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: person.pascal
+          state: 'home'
+      - condition: state
+        entity_id: binary_sensor.ping_pc_pascal
+        state: 'off'
+      - condition: state
+        entity_id: sensor.teams
+        state:
+        - 'Available'
+        - 'Unknown'
   action:
     - service: light.turn_off
       data:
