@@ -38,6 +38,9 @@
       entity_id: sun.sun
       attribute: elevation
       below: 25
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: 'on'
   condition:
     - condition: numeric_state
       entity_id: sun.sun
@@ -59,8 +62,8 @@
         attribute: current_position
         above: 50
     - condition: state
-      entity_id: weather.dwd
-      state: 'sunny'
+      entity_id: binary_sensor.ping_pc_pascal
+      state: 'on'
   action:
     - service: cover.set_cover_position
       data:
