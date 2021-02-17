@@ -73,3 +73,33 @@
       data:
         entity_id: cover.study_door_2
         position: 50
+
+- id: study_door_cover_unblock_sun
+  alias: Büro - Rollos herauffahren wenn die Sonne nicht mehr zum Schreibtisch scheint
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 190
+      below: 170
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 25
+  condition:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 190
+      below: 170
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 25
+  action:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.study_door_1
+    - service: cover.open_cover
+      data:
+        entity_id: cover.study_door_2
