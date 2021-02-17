@@ -100,10 +100,10 @@
         entity_id: sun.sun
         attribute: azimuth
         above: 190
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      above: 25
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        above: 25
   action:
     - service: cover.open_cover
       data:
