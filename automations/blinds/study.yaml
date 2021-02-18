@@ -33,7 +33,7 @@
       entity_id: sun.sun
       attribute: azimuth
       above: 170
-      below: 190
+      below: 210
     - platform: numeric_state
       entity_id: sun.sun
       attribute: elevation
@@ -46,7 +46,7 @@
       entity_id: sun.sun
       attribute: azimuth
       above: 170
-      below: 190
+      below: 210
     - condition: numeric_state
       entity_id: sun.sun
       attribute: elevation
@@ -80,7 +80,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       attribute: azimuth
-      above: 190
+      above: 210
     - platform: numeric_state
       entity_id: sun.sun
       attribute: azimuth
@@ -99,7 +99,7 @@
       - condition: numeric_state
         entity_id: sun.sun
         attribute: azimuth
-        above: 190
+        above: 210
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
