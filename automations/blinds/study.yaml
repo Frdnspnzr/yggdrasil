@@ -37,7 +37,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       attribute: elevation
-      below: 30
+      below: 31
     - platform: state
       entity_id: binary_sensor.ping_pc_pascal
       to: 'on'
@@ -50,7 +50,7 @@
     - condition: numeric_state
       entity_id: sun.sun
       attribute: elevation
-      below: 30
+      below: 31
     - condition: or
       conditions:
       - condition: numeric_state
@@ -88,7 +88,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       attribute: elevation
-      above: 30
+      above: 31
   condition:
     - condition: or
       conditions:
@@ -103,7 +103,7 @@
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
-        above: 30
+        above: 31
   action:
     - service: cover.open_cover
       data:
