@@ -128,7 +128,7 @@
 ###############################################################################
 
 - id: thermostats_study_turn_off_with_computer
-  alias: "Büro - Thermostate mit dem Computer einschalten"
+  alias: "Büro - Thermostate mit dem Computer ausschalten"
   trigger:
     - platform: state
       entity_id: binary_sensor.ping_pc_pascal
