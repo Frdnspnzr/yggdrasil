@@ -60,7 +60,7 @@
 ### Turn up study thermostats on non working days
 ###############################################################################
 
-- id: thermostats_study_turn_on_workdays
+- id: thermostats_study_turn_on_non_workdays
   alias: "Büro - Thermostate an freien Tagen einschalten"
   trigger:
     - platform: time
@@ -83,7 +83,7 @@
 ### Turn up study thermostats when computer is turned on
 ###############################################################################
 
-- id: thermostats_study_turn_on_workdays
+- id: thermostats_study_turn_on_with_computer
   alias: "Büro - Thermostate mit dem Computer einschalten"
   trigger:
     - platform: state
@@ -104,7 +104,7 @@
 ### Turn down study thermostats
 ###############################################################################
 
-- id: thermostats_study_turn_on_workdays
+- id: thermostats_study_turn_off_at_time
   alias: "Büro - Thermostate plamäßig ausschalten"
   trigger:
     - platform: time
@@ -127,7 +127,7 @@
 ### Turn down study thermostats when computer is turned off
 ###############################################################################
 
-- id: thermostats_study_turn_on_workdays
+- id: thermostats_study_turn_off_with_computer
   alias: "Büro - Thermostate mit dem Computer einschalten"
   trigger:
     - platform: state
