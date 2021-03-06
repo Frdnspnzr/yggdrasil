@@ -22,7 +22,7 @@
     - service: climate.set_preset_mode
       data:
         entity_id:
-          - group.all_thermostats
+          - group.thermostats_house_state
         preset_mode: 'eco'
 
 - id: thermostats_set_comfort_on_house_state
@@ -45,43 +45,8 @@
     - service: climate.set_preset_mode
       data:
         entity_id:
-          - group.all_thermostats
+          - group.thermostats_house_state
         preset_mode: 'comfort'
-
-###############################################################################
-### Switch living room thermostats according to balcony doors
-###############################################################################
-
-- id: thermostats_living_room_turn_off_balcony_open
-  alias: "Wohnzimmer - Thermostate ausschalten wenn der Balkon offen ist"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.living_room_balcony_door
-      to: 'on'
-      for: '00:02:00'
-  condition:
-    - condition: state
-      entity_id: input_boolean.heating_period
-      state: 'on'
-  action:
-    - service: climate.turn_off
-      data:
-        entity_id: group.thermostats_living_room
-
-- id: thermostats_living_room_turn_on_balcony_closed
-  alias: "Wohnzimmer - Thermostate einschalten wenn der Balkon geschlossen ist"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.living_room_balcony_door
-      to: 'off'
-  condition:
-    - condition: state
-      entity_id: input_boolean.heating_period
-      state: 'on'
-  action:
-    - service: climate.turn_on
-      data:
-        entity_id: group.thermostats_living_room
 
 ###############################################################################
 ### Turn thermostats on and off when heating period switches

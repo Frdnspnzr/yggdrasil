@@ -1,0 +1,147 @@
+###############################################################################
+### Switch study thermostats according to balcony doors
+###############################################################################
+
+- id: thermostats_study_turn_off_balcony_open
+  alias: "Büro - Thermostate ausschalten wenn der Balkon offen ist"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.office_balcony_door
+      to: 'on'
+      for: '00:02:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.thermostat_study_1
+
+- id: thermostats_study_turn_on_balcony_closed
+  alias: "Büro - Thermostate einschalten wenn der Balkon geschlossen ist"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.office_balcony_door
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.thermostat_study_1
+
+###############################################################################
+### Turn up study thermostats on workdays
+###############################################################################
+
+- id: thermostats_study_turn_on_workdays
+  alias: "Büro - Thermostate an Arbeitstagen einschalten"
+  trigger:
+    - platform: time
+      at: "07:00:00"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_today
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.heating_period
+    state: 'on'
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id:
+        - climate.thermostat_study_1
+      preset_mode: 'comfort'
+
+###############################################################################
+### Turn up study thermostats on non working days
+###############################################################################
+
+- id: thermostats_study_turn_on_workdays
+  alias: "Büro - Thermostate an freien Tagen einschalten"
+  trigger:
+    - platform: time
+      at: "10:30:00"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_today
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.heating_period
+    state: 'on'
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id:
+        - climate.thermostat_study_1
+      preset_mode: 'comfort'
+
+###############################################################################
+### Turn up study thermostats when computer is turned on
+###############################################################################
+
+- id: thermostats_study_turn_on_workdays
+  alias: "Büro - Thermostate mit dem Computer einschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: 'on'
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id:
+        - climate.thermostat_study_1
+      preset_mode: 'comfort'
+
+###############################################################################
+### Turn down study thermostats
+###############################################################################
+
+- id: thermostats_study_turn_on_workdays
+  alias: "Büro - Thermostate plamäßig ausschalten"
+  trigger:
+    - platform: time
+      at: "20:00:00"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.ping_pc_pascal
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.heating_period
+    state: 'on'
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id:
+        - climate.thermostat_study_1
+      preset_mode: 'eco'
+
+###############################################################################
+### Turn down study thermostats when computer is turned off
+###############################################################################
+
+- id: thermostats_study_turn_on_workdays
+  alias: "Büro - Thermostate mit dem Computer einschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: 'off'
+  condition:
+  - condition: time
+    after: "18:00:00"
+  - condition: state
+    entity_id: input_boolean.heating_period
+    state: 'on'
+  action:
+  - service: climate.set_preset_mode
+    data:
+      entity_id:
+        - climate.thermostat_study_1
+      preset_mode: 'comfort'
