@@ -144,4 +144,4 @@
     data:
       entity_id:
         - climate.thermostat_study_1
-      preset_mode: 'comfort'
+      preset_mode: 'eco'
