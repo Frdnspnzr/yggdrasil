@@ -66,6 +66,12 @@
     - platform: state
       entity_id: input_select.state_living_room
       to: 'Gedaemmt'
+  condition:
+    - condition: state
+      entity_id: sensor.teams
+      state:
+      - 'Available'
+      - 'Unknown'
   action:
     - service: light.turn_on
       data:
