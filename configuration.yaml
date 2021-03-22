@@ -16,6 +16,13 @@ group:
        - climate.badezimmer_1
        - climate.thermostat_living_room_1
        - climate.thermostat_living_room_2
+       - climate.thermostat_study_1
+  thermostats_house_state:
+    name: Thermostate mit Hauszustand
+    entities:
+       - climate.badezimmer_1
+       - climate.thermostat_living_room_1
+       - climate.thermostat_living_room_2
   thermostats_living_room:
     name: Thermostate Wohnzimmer
     entities:
