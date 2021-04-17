@@ -1,0 +1,100 @@
+- id: living_room_sonos_play
+  alias: Sonos Wohnzimmer - Starten
+  trigger:
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Wohnzimmer 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Wohnzimmer 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: right
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.beam
+          state: "playing"
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: media_player.esszimmer
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.beam
+                volume_level: 0.10
+            - service: sonos.join
+              data:
+                entity_id: media_player.beam
+                master: media_player.esszimmer
+        - conditions:
+            - condition: state
+              entity_id: media_player.kitchen
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.beam
+                volume_level: 0.10
+            - service: sonos.join
+              data:
+                entity_id: media_player.beam
+                master: media_player.kitchen
+      default:
+        - service: sonos.unjoin
+          data:
+            entity_id: media_player.beam
+        - service: media_player.volume_set
+          data:
+            entity_id: media_player.beam
+            volume_level: 0.10
+        - service: media_player.select_source
+          data:
+            entity_id: media_player.beam
+            source: Duo Mix
+
+- id: living_room_sonos_stop
+  alias: Sonos Wohnzimmer - Stop
+  trigger:
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Wohnzimmer 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: left
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Wohnzimmer 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: left
+  condition:
+    - condition: state
+      entity_id: media_player.fernseher_wohnzimmer
+      state: "off"
+  action:
+    - service: sonos.unjoin
+      data:
+        entity_id: media_player.beam
+    - service: media_player.media_stop
+      data:
+        entity_id: media_player.beam
+
+- id: living_room_reshuffle_sonos
+  alias: "Wohnzimmer - Sonos neu shufflen"
+  trigger:
+    - platform: state
+      entity_id: media_player.beam
+      to: "paused"
+      for: "00:10:00"
+    - platform: state
+      entity_id: media_player.beam
+      to: "idle"
+      for: "00:10:00"
+  action:
+    service: script.reshuffle_media
+    data:
+      entity_id: media_player.beam

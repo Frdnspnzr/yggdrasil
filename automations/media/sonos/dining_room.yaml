@@ -1,4 +1,5 @@
-- alias: Sonos Esszimmer - Mit Küche verbinden
+- id: dining_room_sonos_play
+  alias: Sonos Esszimmer - Starten
   trigger:
     - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       domain: deconz
@@ -10,61 +11,53 @@
       conditions:
         - condition: state
           entity_id: media_player.esszimmer
-          state: 'paused'
+          state: "paused"
         - condition: state
           entity_id: media_player.esszimmer
-          state: 'idle'
-    - condition: state
-      entity_id: media_player.kueche
-      state: 'playing'
+          state: "idle"
   action:
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.kueche
-        volume_level: 0.1
-    - service: sonos.join
-      data:
-        entity_id: media_player.esszimmer
-        master: media_player.kueche
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: media_player.beam
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.esszimmer
+                volume_level: 0.1
+            - service: sonos.join
+              data:
+                entity_id: media_player.esszimmer
+                master: media_player.beam
+        - conditions:
+            - condition: state
+              entity_id: media_player.kitchen
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.esszimmer
+                volume_level: 0.1
+            - service: sonos.join
+              data:
+                entity_id: media_player.esszimmer
+                master: media_player.kitchen
+      default:
+        - service: sonos.unjoin
+          data:
+            entity_id: media_player.esszimmer
+        - service: media_player.volume_set
+          data:
+            entity_id: media_player.esszimmer
+            volume_level: 0.1
+        - service: media_player.select_source
+          data:
+            entity_id: media_player.beam
+            source: Duo Mix
 
-- alias: Sonos Esszimmer - Duo Mix spielen
-  trigger:
-    - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: right
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: media_player.esszimmer
-          state: 'paused'
-        - condition: state
-          entity_id: media_player.esszimmer
-          state: 'idle'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: media_player.kueche
-          state: 'paused'
-        - condition: state
-          entity_id: media_player.kueche
-          state: 'idle'
-  action:
-    - service: sonos.unjoin
-      data:
-        entity_id: media_player.esszimmer
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.kueche
-        volume_level: 0.1
-    - service: media_player.select_source
-      data:
-        entity_id: media_player.esszimmer
-        source: Duo Mix
-
-- alias: Sonos Esszimmer - Entkoppeln
+- id: dining_room_sonos_stop
+  alias: Sonos Esszimmer - Stop
   trigger:
     - device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
       domain: deconz
@@ -73,9 +66,12 @@
       subtype: left
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'on'
+      to: "on"
   action:
     - service: sonos.unjoin
+      data:
+        entity_id: media_player.esszimmer
+    - service: media_player.media_stop
       data:
         entity_id: media_player.esszimmer
 
@@ -84,21 +80,21 @@
   trigger:
     - platform: state
       entity_id: media_player.esszimmer
-      to: 'paused'
-      for: '00:10:00'
+      to: "paused"
+      for: "00:10:00"
     - platform: state
       entity_id: media_player.esszimmer
-      to: 'idle'
-      for: '00:10:00'
+      to: "idle"
+      for: "00:10:00"
   condition:
     - condition: or
       conditions:
         - condition: state
           entity_id: media_player.kueche
-          state: 'paused'
+          state: "paused"
         - condition: state
           entity_id: media_player.kueche
-          state: 'idle'
+          state: "idle"
   action:
     service: script.reshuffle_media
     data:
