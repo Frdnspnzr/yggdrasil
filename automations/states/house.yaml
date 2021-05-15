@@ -146,7 +146,7 @@
 - alias: Haus auf Nacht schalten, wenn der aktuelle Tag ein Werktag ist
   trigger:
     - platform: time
-      at: "00:00"
+      at: "00:00:00"
   condition:
     - condition: state
       entity_id: binary_sensor.workday_today
@@ -160,7 +160,7 @@
 - alias: Haus auf Nacht schalten, wenn der aktuelle Tag kein Werktag ist
   trigger:
     - platform: time
-      at: "02:00"
+      at: "02:00:00"
   condition:
     - condition: state
       entity_id: binary_sensor.workday_today
@@ -174,10 +174,11 @@
 - id: house_state_set_night_with_button
   alias: Zustand Haus - Mit Button auf Nacht schalten
   trigger:
-    - device_id: 8e9305d9f10fe031de40d1a64e419fe0 #Tradfri Shortcut Button Goodnight
-      event_type: deconz_event
-      platform: event
-      event: 1002
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "8e9305d9f10fe031de40d1a64e419fe0" #Tradfri Shortcut Button Goodnight
+        event: 1002
   action:
     - alias: "Haus auf Nacht schalten"
       service: input_select.select_option
