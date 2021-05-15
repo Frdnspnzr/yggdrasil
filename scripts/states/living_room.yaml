@@ -7,11 +7,6 @@ state_living_room_off:
     - choose:
       - conditions:
         - condition: state
-          entity_id: input_select.state_living_room
-          state:
-            - 'An'
-            - 'Gedaemmt'
-        - condition: state
           entity_id: binary_sensor.occupancy_living_room
           state: 'on'
         sequence:

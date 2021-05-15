@@ -7,11 +7,6 @@ state_kitchen_off:
     - choose:
       - conditions:
         - condition: state
-          entity_id: input_select.state_kitchen
-          state:
-            - 'An'
-            - 'Gedaemmt'
-        - condition: state
           entity_id: binary_sensor.motion_kitchen_1
           state: 'on'
         sequence:
