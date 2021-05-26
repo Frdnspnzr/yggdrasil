@@ -1,0 +1,24 @@
+- id: bedroom_tv_turn_off_plug
+  alias: "Schlafzimmer - Zwischenstecker am Fernseher ausschalten"
+  trigger:
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "2c91ef867ba2e9bc78a027c328040143" #Tradfri Shortcut Button Bedroom TV
+        event: 1002
+  action:
+    - alias: "Zwischenstecker ausschalten"
+      service: switch.turn_off
+      target:
+        entity_id: switch.plug_bedroom_tv
+
+- id: bedroom_tv_turn_on_plug_timer
+  alias: "Schlafzimmer - Zwischenstecker am Fernseher mittags einschalten"
+  trigger:
+    - platform: time
+      at: "12:00:00"
+  action:
+    - alias: "Zwischenstecker einschalten"
+      service: switch.turn_on
+      target:
+        entity_id: switch.plug_bedroom_tv
