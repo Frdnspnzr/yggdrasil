@@ -34,32 +34,32 @@ is_dark_dining_room:
 disable_living_room:
   name: Wohnzimmer deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_dining_room:
   name: Esszimmer deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_study:
   name: Büro deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_kitchen:
   name: Küche deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_front_hallway:
   name: Flur vorne deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_bedroom:
   name: Schlafzimmer deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 ###
 # Disable switches for types
@@ -68,15 +68,15 @@ disable_bedroom:
 disable_nightlight:
   name: Nachtlicht deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_occupation_lights:
-  name: Nachtlicht deaktivieren
+  name: Bewegungsmelder deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
 disable_timeouts:
-  name: Timeout deaktivieren
+  name: Timeouts deaktivieren
   initial: off
-  icon: mdi:cog-off
+  icon: mdi:electric-switch
 
