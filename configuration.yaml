@@ -101,15 +101,8 @@ http:
   server_port: 80
 
 speedtestdotnet:
-circadian_lighting:
 
 switch:
-  - platform: circadian_lighting
-    disable_brightness_adjust: true
-    lights_ct:
-      - light.kueche_decke
-      - light.front_hallway_main_1
-      - light.front_hallway_main_2
   - platform: rest
     name: WLED TV Backlighting LOR
     resource: http://192.168.178.150/json/state
