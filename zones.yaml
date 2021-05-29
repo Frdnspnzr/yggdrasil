@@ -8,10 +8,10 @@
   latitude: !secret zone_work_pascal_lat
   longitude: !secret zone_work_pascal_lon
   radius: 1000
-  icon: mdi:worker
+  icon: mdi:account-hard-hat
 
 - name: work_andrea
   latitude: !secret zone_work_andrea_lat
   longitude: !secret zone_work_andrea_lon
   radius: 500
-  icon: mdi:worker
+  icon: mdi:account-hard-hat
