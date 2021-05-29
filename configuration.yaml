@@ -1,9 +1,3 @@
-device_tracker:
-  - platform: fritz
-    host: !secret hostname_fritz_box
-    new_device_defaults:
-      track_new_devices: false
-
 group:
   bewohner:
     name: Bewohner
