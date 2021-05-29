@@ -8,6 +8,11 @@ heating_period:
   initial: on
   icon:  mdi:radiator
 
+holiday_mode:
+  name: Urlaub
+  initial: off
+  icon: mdi:island
+
 ###
 # Darkness indicators
 ###

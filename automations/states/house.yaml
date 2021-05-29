@@ -13,6 +13,9 @@
     - condition: state
       entity_id: binary_sensor.workday_today
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.holiday_mode
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
@@ -27,9 +30,14 @@
     - condition: state
       entity_id: input_select.state_house
       state: 'Nacht'
-    - condition: state
-      entity_id: binary_sensor.workday_today
-      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_today
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: 'on'
   action:
     - service: input_select.select_option
       data:
@@ -108,6 +116,9 @@
     - condition: state
       entity_id: binary_sensor.workday_today
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.holiday_mode
+      state: 'off'
     - condition: time
       after: '15:00:00'
       before: '18:00:00'
@@ -130,6 +141,9 @@
     - condition: state
       entity_id: binary_sensor.workday_today
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.holiday_mode
+      state: 'off'
     - condition: time
       after: '16:00:00'
       before: '19:00:00'
@@ -151,6 +165,9 @@
     - condition: state
       entity_id: binary_sensor.workday_today
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.holiday_mode
+      state: 'off'
   action:
     - service: input_select.select_option
       data:
@@ -162,9 +179,14 @@
     - platform: time
       at: "02:00:00"
   condition:
-    - condition: state
-      entity_id: binary_sensor.workday_today
-      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_today
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: 'on'
   action:
     - service: input_select.select_option
       data:
