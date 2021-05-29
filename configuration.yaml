@@ -27,6 +27,7 @@ group:
     entities:
       - media_player.esszimmer
       - media_player.kueche
+      - media_player.beam
   all_doors:
     name: Alle Türen
     entities:
