@@ -11,14 +11,3 @@
       service: switch.turn_off
       target:
         entity_id: switch.plug_bedroom_tv
-
-- id: bedroom_tv_turn_on_plug_timer
-  alias: "Schlafzimmer - Zwischenstecker am Fernseher mittags einschalten"
-  trigger:
-    - platform: time
-      at: "12:00:00"
-  action:
-    - alias: "Zwischenstecker einschalten"
-      service: switch.turn_on
-      target:
-        entity_id: switch.plug_bedroom_tv
