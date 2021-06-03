@@ -8,6 +8,21 @@ heating_period:
   initial: on
   icon:  mdi:radiator
 
+living_room_worklight:
+  name: Arbeitslicht Wohnzimmer
+  initial: off
+  icon: mdi:lightbulb-on
+
+living_room_insect_light:
+  name: Insektenlicht Wohnzimmer
+  initial: off
+  icon: mdi:bee
+
+pascal_occupied:
+  name: Pascal beschäftigt
+  initial: off
+  icon: mdi:minus-circle
+
 holiday_mode:
   name: Urlaub
   initial: off

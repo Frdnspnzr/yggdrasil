@@ -1,0 +1,130 @@
+- id: miscellaneous_input_boolean_set_pascal_occupied
+  alias: "Sonstige Input Boolean - Pascal auf beschäftigt schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - "Busy"
+        - "Do not disturb"
+  condition:
+    - alias: "Teams-Status ist Beschäftigt oder Bitte Nicht Stören"
+      condition: state
+      entity_id: sensor.teams
+      state:
+        - "Busy"
+        - "Do not disturb"
+    - alias: "Pascal ist zuhause"
+      condition: state
+      entity_id: person.pascal
+      state: "home"
+    - alias: "Pascals Computer ist an"
+      condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: "on"
+  action:
+    - alias: "Pascal auf beschäftigt schalten"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.pascal_occupied
+
+- id: miscellaneous_input_boolean_set_pascal_not_occupied
+  alias: "Sonstige Input Boolean - Pascal auf nicht beschäftigt schalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.teams
+      to:
+        - "Available"
+        - "Away"
+    - platform: state
+      entity_id: person.pascal
+      from: "home"
+    - platform: state
+      entity_id: binary_sensor.ping_pc_pascal
+      to: "off"
+  action:
+    - alias: "Pascal auf nicht beschäftigt schalten"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.pascal_occupied
+
+- id: miscellaneous_input_boolean_set_living_room_insect_light_on
+  alias: "Sonstige Input Boolean - Insektenlicht im Wohnzimmer einschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "on"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "Bewohnt"
+        - "An"
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: "An"
+  condition:
+    - alias: "Balkontür im Wohnzimmer ist offen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "on"
+    - condition: or
+      conditions:
+        - alias: "Wohnzimmer ist An oder Bewohnt"
+          condition: state
+          entity_id: input_select.state_living_room
+          state:
+            - "An"
+            - "Bewohnt"
+        - alias: "Esszimmer ist An"
+          condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
+    - alias: "Im Wohnzimmer ist es dunkel"
+      condition: state
+      entity_id: input_boolean.is_dark_living_room
+      state: "on"
+  action:
+    - alias: "Insektenlicht im Wohnzimmer einschalten"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.living_room_insect_light
+
+- id: miscellaneous_input_boolean_set_living_room_insect_light_off
+  alias: "Sonstige Input Boolean - Insektenlicht im Wohnzimmer ausschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "Leer"
+        - "Gedaemmt"
+    - platform: state
+      entity_id: input_select.state_dining_room
+      from: "An"
+  condition:
+    - condition: or
+      conditions:
+        - alias: "Balkontür im Wohnzimmer ist geschlossen"
+          condition: state
+          entity_id: binary_sensor.living_room_balcony_door
+          state: "off"
+        - condition: and
+          conditions:
+            - alias: "Wohnzimmer ist Leer oder Gedämmt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state:
+                - "Leer"
+                - "Gedaemmt"
+            - condition: not
+              conditions:
+                - alias: "Esszimmer ist nicht An"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+  action:
+    - alias: "Insektenlicht im Wohnzimmer ausschalten"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.living_room_insect_light

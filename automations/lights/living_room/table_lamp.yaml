@@ -1,355 +1,246 @@
-- id: living_room_table_light_normal
-  alias: "Wohnzimmer - Tischlampe auf Normal schalten"
+- id: living_room_table_lamp_worklight
+  alias: "Wohnzimmer - Tischlampe auf Arbeitslicht schalten"
   trigger:
     - platform: state
-      entity_id: input_select.state_living_room
-      to: 'An'
-    - platform: state
-      entity_id: binary_sensor.living_room_balcony_door
-      to: 'off'
-    - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'off'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.living_room_balcony_door
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.is_dark_living_room
-        state: 'off'
+      entity_id: input_boolean.living_room_worklight
+      to: "on"
   action:
-    - service: light.turn_on
+    - alias: "Arbeitslicht einschalten"
+      service: light.turn_on
       data:
         entity_id: light.living_room_lamp_1
-        brightness_pct: 100
-        color_temp: 480
-        transition: 3
+        brightness: 160
+        color_temp: 405
+        transition: 2
 
-- id: living_room_table_light_normal_door_open
-  alias: "Wohnzimmer - Tischlampe auf Normal schalten (Mit geöffneter Tür)"
+- id: living_room_table_lamp_status_light
+  alias: "Wohnzimmer - Tischlampe auf Statusanzeige schalten"
   trigger:
     - platform: state
-      entity_id: input_select.state_living_room
-      to: 'An'
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
     - platform: state
-      entity_id: binary_sensor.living_room_balcony_door
-      to: 'on'
-    - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
+      entity_id: input_boolean.pascal_occupied
+      to: "on"
   condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'An'
-    - condition: state
-      entity_id: binary_sensor.living_room_balcony_door
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_lamp_1
-        brightness_pct: 50
-        rgb_color: [255, 0, 0]
-        transition: 3
-
-- id: living_room_table_light_mood_light
-  alias: "Wohnzimmer - Tischlampe auf Stimmungslicht schalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-  condition:
-    - condition: state
-      entity_id: sensor.teams
-      state:
-      - 'Available'
-      - 'Unknown'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_lamp_1
-        brightness_pct: 20
-        hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
-        transition: 3
-
-- id: living_room_table_light_off
-  alias: "Wohnzimmer - Tischlampe ausschalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Leer'
-  condition:
-    - condition: or
-      conditions:
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: person.pascal
-          state: 'home'
-      - condition: state
-        entity_id: binary_sensor.ping_pc_pascal
-        state: 'off'
-      - condition: state
-        entity_id: sensor.teams
-        state:
-        - 'Available'
-        - 'Unknown'
-  action:
-    - service: light.turn_off
-      data:
-        entity_id:
-          - light.living_room_lamp_1
-        transition: 3
-
-- id: living_room_table_light_automatic_day
-  alias: "Wohnzimmer - Tischlampe Automatik tagsüber"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
-    - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'off'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'off'
-    - condition: or
-      conditions:
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: person.pascal
-          state: 'home'
-      - condition: state
-        entity_id: binary_sensor.ping_pc_pascal
-        state: 'off'
-      - condition: state
-        entity_id: sensor.teams
-        state:
-        - 'Available'
-        - 'Unknown'
-  action:
-    - service: light.turn_off
-      data:
-        entity_id:
-          - light.living_room_lamp_1
-
-- id: living_room_table_light_automatic_evening
-  alias: "Wohnzimmer - Tischlampe abends automatisch einschalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
-    - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
-    - condition: state
-      entity_id: binary_sensor.living_room_balcony_door
-      state: 'off'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Nacht'
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
-    - condition: state
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "on"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
       entity_id: input_boolean.disable_living_room
       state: 'off'
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.living_room_lamp_1
-        transition: 3
-
-- id: living_room_table_light_automatic_evening_door_open
-  alias: "Wohnzimmer - Tischlampe abends automatisch einschalten (Mit geöffneter Tür)"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
-    - platform: state
-      entity_id: input_boolean.is_dark_living_room
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: input_select.state_living_room
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
-    - condition: state
-      entity_id: binary_sensor.living_room_balcony_door
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Nacht'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room_lamp_1
-        brightness_pct: 100
-        rgb_color: [255, 0, 0]
-        transition: 3
-
-- id: living_room_table_light_automatic_night
-  alias: "Wohnzimmer - Tischlampe nachts automatisch einschalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
-  condition:
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Nacht'
-    - condition: state
-      entity_id: binary_sensor.living_room_balcony_door
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.disable_nightlight
-      state: 'off'
-  action:
-    - service: light.turn_off
-      data:
-        entity_id: light.living_room_lamp_1
-        transition: 3
-
-- id: living_room_table_light_automatic_night_door_open
-  alias: "Wohnzimmer - Tischlampe nachts automatisch einschalten (Mit geöffneter Tür)"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_living_room
-      to: 'Bewohnt'
-  condition:
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Nacht'
-    - condition: state
-      entity_id: binary_sensor.living_room_balcony_door
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.is_dark_living_room
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.disable_nightlight
-      state: 'off'
-  action:
-    - service: light.turn_off
-      data:
-        entity_id:
-          - light.living_room_lamp_1
-
-- id: living_room_table_light_occupied
-  alias: "Wohnzimmer - Tischlampe auf Beschäftigt schalten"
-  trigger:
-    - platform: state
-      entity_id: sensor.teams
-      to:
-        - 'Busy'
-        - 'Do not disturb'
-  condition:
-    - condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
-    - condition: state
-      entity_id: person.pascal
-      state: 'home'
-    - condition: state
-      entity_id: binary_sensor.ping_pc_pascal
-      state: 'on'
-  action:
-    - service: light.turn_on
+    - alias: "Statuslicht einschalten"
+      service: light.turn_on
       data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 30
         rgb_color: [255, 0, 0]
-        transition: 1
+        transition: 2
 
-- id: living_room_table_light_unoccupied
-  alias: "Wohnzimmer - Tischlampe auf Nicht beschäftigt schalten"
+- id: living_room_table_lamp_insect_light
+  alias: "Wohnzimmer - Tischlampe auf Insektenschutzlicht schalten"
   trigger:
     - platform: state
-      entity_id: sensor.teams
-      to:
-        - 'Available'
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.pascal_occupied
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.living_room_insect_light
+      to: "on"
   condition:
-    - condition: state
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist nicht beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "off"
+    - alias: "Insektenlicht ist eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_insect_light
+      state: "on"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
       entity_id: input_boolean.disable_living_room
       state: 'off'
-    - condition: state
-      entity_id: person.pascal
-      state: 'home'
-    - condition: state
-      entity_id: binary_sensor.ping_pc_pascal
-      state: 'on'
   action:
-  - choose:
-    - conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: 'Gedaemmt'
-      sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.living_room_lamp_1
-          brightness_pct: 20
-          hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
-          transition: 1
-    - conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: 'An'
-      sequence:
-        - service: light.turn_on
-          data:
-            entity_id: light.living_room_lamp_1
-            brightness_pct: 100
-            color_temp: 480
-            transition: 1
-    default:
-    - service: light.turn_off
+    - alias: "Insektenlicht einschalten"
+      service: light.turn_on
       data:
         entity_id: light.living_room_lamp_1
+        brightness_pct: 50
+        rgb_color: [255, 0, 0]
+        transition: 2
+
+- id: living_room_table_lamp_normal_light
+  alias: "Wohnzimmer - Tischlampe auf normales Licht schalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.pascal_occupied
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.living_room_insect_light
+      to: "off"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: "An"
+  condition:
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist nicht beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "off"
+    - alias: "Insektenlicht ist ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_insect_light
+      state: "off"
+    - alias: "Wohnzimmer ist An"
+      condition: state
+      entity_id: input_select.state_living_room
+      state: "An"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+  action:
+    - alias: "Normales Licht einschalten"
+      service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 100
+        color_temp: 480
+        transition: 2
+
+- id: living_room_table_lamp_mood_light
+  alias: "Wohnzimmer - Tischlampe auf Stimmungslicht schalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.pascal_occupied
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.living_room_insect_light
+      to: "off"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to: "Gedaemmt"
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: "An"
+  condition:
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist nicht beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "off"
+    - alias: "Insektenlicht ist ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_insect_light
+      state: "off"
+    - condition: or
+      conditions:
+      - alias: "Wohnzimmer ist Gedämmt"
+        condition: state
+        entity_id: input_select.state_living_room
+        state: "Gedaemmt"
+      - condition: and
+        conditions:
+        - alias: "Esszimmer ist An"
+          condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
+        - condition: not
+          conditions:
+          - alias: "Wohnzimmer ist An"
+            condition: state
+            entity_id: input_select.state_living_room
+            state: "An"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+  action:
+    - alias: "Stimmungslicht einschalten"
+      service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 20
+        hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
+        transition: 2
+
+- id: living_room_table_lamp_off
+  alias: "Wohnzimmer - Tischlampe ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.pascal_occupied
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.living_room_insect_light
+      to: "off"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - 'Leer'
+        - 'Bewohnt'
+    - platform: state
+      entity_id: input_select.state_dining_room
+      from: "An"
+  condition:
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist nicht beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "off"
+    - alias: "Insektenlicht ist ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_insect_light
+      state: "off"
+    - alias: "Wohnzimmer ist Leer oder Bewohnt"
+      condition: state
+      entity_id: input_select.state_living_room
+      state:
+        - 'Leer'
+        - 'Bewohnt'
+    - condition: not
+      conditions:
+      - alias: "Esszimmer ist An"
+        condition: state
+        entity_id: input_select.state_dining_room
+        state: "An"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.disable_living_room
+      state: 'off'
+  action:
+    - alias: "Licht ausschalten"
+      service: light.turn_off
+      data:
+        entity_id: light.living_room_lamp_1
+        transition: 2
