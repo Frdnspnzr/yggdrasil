@@ -100,8 +100,6 @@ wake_on_lan:
 http:
   server_port: 80
 
-speedtestdotnet:
-
 switch:
   - platform: rest
     name: WLED TV Backlighting LOR
