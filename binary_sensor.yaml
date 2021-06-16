@@ -9,56 +9,24 @@
   country: DE
   province: RP
 
-- platform: bayesian
-  name: Occupancy Living Room
-  probability_threshold: 0.7
-  prior: 0.1
-  observations:
-    - platform: state
-      entity_id: binary_sensor.motion_living_room_1
-      to_state: 'on'
-      prob_given_true: 0.85
-      prob_given_false: 0.1
-    - platform: state
-      entity_id: binary_sensor.motion_living_room_2
-      to_state: 'on'
-      prob_given_true: 0.9
-      prob_given_false: 0.3
-    - platform: state
-      entity_id: binary_sensor.motion_dining_room_2
-      to_state: 'on'
-      prob_given_true: 0.5
-      prob_given_false: 0.4
-
-- platform: bayesian
-  name: Occupancy Dining Room
-  probability_threshold: 0.7
-  prior: 0.1
-  observations:
-    - platform: state
-      entity_id: binary_sensor.motion_dining_room_1
-      to_state: 'on'
-      prob_given_true: 0.85
-      prob_given_false: 0.1
-    - platform: state
-      entity_id: binary_sensor.motion_dining_room_2
-      to_state: 'on'
-      prob_given_true: 0.9
-      prob_given_false: 0.3
-    - platform: state
-      entity_id: binary_sensor.motion_living_room_2
-      to_state: 'on'
-      prob_given_true: 0.7
-      prob_given_false: 0.3
-
 - platform: template
   sensors:
     occupancy_kitchen:
-      friendly_name: ""
+      friendly_name: "Anwesenheit Küche"
       value_template: >-
         {{ is_state('binary_sensor.motion_kitchen_1', 'on')
         or is_state('binary_sensor.motion_kitchen_2', 'on')
         or is_state('binary_sensor.motion_kitchen_3', 'on') }}
+    occupancy_dining_room:
+      friendly_name: "Anwesenheit Esszimmer"
+      value_template: >-
+        {{ is_state('binary_sensor.motion_dining_room_1', 'on')
+        or is_state('binary_sensor.motion_dining_room_2', 'on') }}
+    occupancy_living_room:
+      friendly_name: "Anwesenheit Wohnzimmer"
+      value_template: >-
+        {{ is_state('binary_sensor.motion_living_room_1', 'on')
+        or is_state('binary_sensor.motion_living_room_2', 'on') }}
 
 - platform: ping
   host: 192.168.178.80
