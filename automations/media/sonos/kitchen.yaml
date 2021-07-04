@@ -60,7 +60,7 @@
         - service: media_player.select_source
           data:
             entity_id: media_player.kueche
-            source: Duo Mix
+            source: Family Mix
 
 - id: kitchen_sonos_stop
   alias: Sonos Küche - Stop
@@ -93,15 +93,6 @@
       entity_id: media_player.kueche
       to: "idle"
       for: "00:10:00"
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: media_player.kueche
-          state: "paused"
-        - condition: state
-          entity_id: media_player.kueche
-          state: "idle"
   action:
     service: script.reshuffle_media
     data:

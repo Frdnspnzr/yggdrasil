@@ -27,24 +27,24 @@
             - service: media_player.volume_set
               data:
                 entity_id: media_player.beam
-                volume_level: 0.10
+                volume_level: 0.1
             - service: sonos.join
               data:
                 entity_id: media_player.beam
                 master: media_player.esszimmer
         - conditions:
             - condition: state
-              entity_id: media_player.kitchen
+              entity_id: media_player.kueche
               state: "playing"
           sequence:
             - service: media_player.volume_set
               data:
                 entity_id: media_player.beam
-                volume_level: 0.10
+                volume_level: 0.1
             - service: sonos.join
               data:
                 entity_id: media_player.beam
-                master: media_player.kitchen
+                master: media_player.kueche
       default:
         - service: sonos.unjoin
           data:
@@ -52,11 +52,11 @@
         - service: media_player.volume_set
           data:
             entity_id: media_player.beam
-            volume_level: 0.10
+            volume_level: 0.1
         - service: media_player.select_source
           data:
             entity_id: media_player.beam
-            source: Duo Mix
+            source: Family Mix
 
 - id: living_room_sonos_stop
   alias: Sonos Wohnzimmer - Stop
