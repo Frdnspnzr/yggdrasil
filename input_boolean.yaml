@@ -1,7 +1,7 @@
-bedroom_mood_lights:
-  name: Stimmungslicht Schlafzimmer
+bedroom_dim_light:
+  name: Gedämmtes Licht Schlafzimmer
   initial: off
-  icon: mdi:heart
+  icon: mdi:wall-sconce-flat-variant
 
 heating_period:
   name: Heizperiode
