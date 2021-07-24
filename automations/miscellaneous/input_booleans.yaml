@@ -131,3 +131,16 @@
       service: input_boolean.turn_off
       target:
         entity_id: input_boolean.living_room_insect_light
+
+- id: miscellaneous_input_boolean_toggle_living_room_worklight
+  alias: "Sonstiges Input Boolean - Arbeitslicht im Wohnzimmer umschalten"
+  trigger:
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "2ff63208bd17dc8c79a2786ff6aadf02" #Tradfri Shortcut Button Bedroom Lights
+        event: 1002
+  action:
+    - service: input_boolean.toggle
+      data:
+        entity_id: input_boolean.living_room_worklight
