@@ -1,4 +1,4 @@
-- id: kitchen_sonos_join
+- id: kitchen_sonos_start
   alias: Sonos Küche - Starten
   trigger:
     - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
@@ -6,6 +6,50 @@
       platform: device
       type: remote_button_short_press
       subtype: right
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: media_player.esszimmer
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.kueche
+                volume_level: 0.05
+            - service: sonos.join
+              data:
+                entity_id: media_player.kueche
+                master: media_player.esszimmer
+        - conditions:
+            - condition: state
+              entity_id: media_player.beam
+              state: "playing"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.kueche
+                volume_level: 0.05
+            - service: sonos.join
+              data:
+                entity_id: media_player.kueche
+                master: media_player.beam
+      default:
+        - service: sonos.unjoin
+          data:
+            entity_id: media_player.kueche
+        - service: media_player.volume_set
+          data:
+            entity_id: media_player.kueche
+            volume_level: 0.1
+        - service: media_player.select_source
+          data:
+            entity_id: media_player.kueche
+            source: Family Mix
+
+- id: kitchen_sonos_join_automatically
+  alias: Sonos Küche - Automatisch joinen
+  trigger:
     - platform: state
       entity_id: input_select.state_kitchen
       to: "An"
@@ -49,18 +93,6 @@
               data:
                 entity_id: media_player.kueche
                 master: media_player.beam
-      default:
-        - service: sonos.unjoin
-          data:
-            entity_id: media_player.kueche
-        - service: media_player.volume_set
-          data:
-            entity_id: media_player.kueche
-            volume_level: 0.1
-        - service: media_player.select_source
-          data:
-            entity_id: media_player.kueche
-            source: Family Mix
 
 - id: kitchen_sonos_stop
   alias: Sonos Küche - Stop
