@@ -61,6 +61,9 @@
     - platform: state
       entity_id: input_select.state_dining_room
       to: "An"
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+      to: "on"
   condition:
     - alias: "Balkontür im Wohnzimmer ist offen"
       condition: state
