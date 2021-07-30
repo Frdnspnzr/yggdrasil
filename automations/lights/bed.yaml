@@ -2,28 +2,23 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_bedroom_under_bed_1
-      to: 'on'
+      to: "on"
     - platform: state
       entity_id: binary_sensor.motion_bedroom_under_bed_2
-      to: 'on'
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.bedroom_dim_light
-      state: 'off'
-    - condition: or
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.light_bedroom_under_bed_1
-          below: 5
-        - condition: numeric_state
-          entity_id: sensor.light_bedroom_under_bed_2
-          below: 5
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.is_dark_bedroom
+      state: "on"
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_bedroom
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:

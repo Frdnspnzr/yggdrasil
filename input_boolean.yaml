@@ -47,6 +47,11 @@ is_dark_dining_room:
   initial: on
   icon: mdi:white-balance-sunny
 
+is_dark_bedroom:
+  name: Schlafzimmer ist dunkel
+  initial: on
+  icon: mdi:white-balance-sunny
+
 ###
 # Disable switches for rooms
 ###
