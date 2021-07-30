@@ -2,3 +2,9 @@
 secrets.yaml
 .pip_progress
 out.txt
+custom_components/
+.storage/
+*.db
+themes/
+www/
+*google_translate.mp3
