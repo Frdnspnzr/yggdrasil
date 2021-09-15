@@ -43,6 +43,14 @@ state_front_hallway:
     - Bewohnt
     - Leer
 
+state_bedroom:
+  name: Zustand Schlafzimmer
+  options:
+    - Bewohnt
+    - Leer
+    - An
+    - Gedaemmt
+
 light_scheme:
   name: Aktuelles Lichtschema
   options:

@@ -1,0 +1,162 @@
+- id: state_bedroom_set_to_on_with_remote
+  alias: "Schlafzimmer - Zustand mit Schalter auf An schalten"
+  trigger:
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "a1cb5017a4d12478847bde6dc73c1e1f" #Tradfri Shortcut Button Bedroom Lights
+        event: 1002 # Single press
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "Leer"
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "Bewohnt"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_bedroom
+        option: "An"
+
+- id: state_bedroom_turn_off_with_remote
+  alias: "Schlafzimmer - Zustand mit Schalter auf Leer oder Bewohnt schalten"
+  trigger:
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "a1cb5017a4d12478847bde6dc73c1e1f" #Tradfri Shortcut Button Bedroom Lights
+        event: 1002 # Single press
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "An"
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "Gedaemmt"
+  action:
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.motion_bedroom_under_bed_1
+                  state: "on"
+                - condition: state
+                  entity_id: binary_sensor.motion_bedroom_under_bed_2
+                  state: "on"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_bedroom
+                option: "Bewohnt"
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_bedroom
+            option: "Leer"
+
+- id: state_bedroom_toggle_with_remote
+  alias: "Schlafzimmer - Zustand mit Schalter umschalten"
+  trigger:
+    - platform: event
+      event_type: "deconz_event"
+      event_data:
+        device_id: "a1cb5017a4d12478847bde6dc73c1e1f" #Tradfri Shortcut Button Bedroom Lights
+        event: 1001 # Continous press start
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "An"
+        - condition: state
+          entity_id: input_select.state_bedroom
+          state: "Gedaemmt"
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_bedroom
+              state: "An"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_bedroom
+                option: "Gedaemmt"
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_bedroom
+              state: "Gedaemmt"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_bedroom
+                option: "An"
+
+- id: state_bedroom_set_to_occupied_on_occupancy
+  alias: "Schlafzimmer - Zustand auf Bewohnt schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_1
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_2
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_select.state_bedroom
+      state: "Leer"
+    - condition: state
+      entity_id: input_boolean.is_dark_bedroom
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.disable_bedroom
+      state: "off"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_bedroom
+        option: "Bewohnt"
+
+- id: state_bedroom_set_to_empty_on_occupancy_end
+  alias: "Schlafzimmer - Zustand auf Bewohnt schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_1
+      to: "off"
+    - platform: state
+      entity_id: binary_sensor.motion_bedroom_under_bed_2
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: input_select.state_bedroom
+      state: "Bewohnt"
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.motion_bedroom_under_bed_1
+          state: "on"
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.motion_bedroom_under_bed_2
+          state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_occupation_lights
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.disable_bedroom
+      state: "off"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_bedroom
+        option: "Leer"

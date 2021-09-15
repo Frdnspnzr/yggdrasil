@@ -1,84 +1,25 @@
-- alias: Unter dem Bett Licht einschalten
+- id: bedroom_bed_light_turn_on
+  alias: "Schlafzimmer - Unter dem Bett Licht einschalten (An)"
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_bedroom_under_bed_1
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.motion_bedroom_under_bed_2
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: input_boolean.bedroom_dim_light
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.is_dark_bedroom
-      state: "on"
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_bedroom
-      state: "off"
+      entity_id: input_select.state_bedroom
+      to: "An"
   action:
     - service: light.turn_on
       data:
-        entity_id: light.bedroom_under_bed_1
-        brightness: 33
-        rgb_color:
-          - 255
-          - 190
-          - 0
-
-- alias: Unter dem Bett Licht ausschalten
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_bedroom_under_bed_1
-      to: 'off'
-    - platform: state
-      entity_id: binary_sensor.motion_bedroom_under_bed_2
-      to: 'off'
-  condition:
-    - condition: state
-      entity_id: input_boolean.bedroom_dim_light
-      state: 'off'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.motion_bedroom_under_bed_1
-        state: 'on'
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.motion_bedroom_under_bed_2
-        state: 'on'
-  action:
-    - service: light.turn_off
-      data:
-        entity_id: light.bedroom_under_bed_1
-
-- alias: Unter dem Bett gedämmtes Licht einschalten
-  trigger:
-    - platform: state
-      entity_id: input_boolean.bedroom_dim_light
-      to: 'on'
-    - platform: state
-      entity_id: input_number.global_hue_primary
-  condition:
-    - condition: state
-      entity_id: input_boolean.bedroom_dim_light
-      state: 'on'
-  action:
-    - service: light.turn_on
-      data_template:
         entity_id: light.bedroom_under_bed_1
         brightness: 33
         color_temp: 149
 
-- alias: Unter dem Bett gedämmtes Licht ausschalten
+- id: bedroom_bed_light_turn_dimmed_or_occpuied
+  alias: "Schlafzimmer - Unter dem Bett Licht einschalten (Bewohnt oder Gedämmt)"
   trigger:
     - platform: state
-      entity_id: input_boolean.bedroom_dim_light
-      to: 'off'
+      entity_id: input_select.state_bedroom
+      to: "Bewohnt"
+    - platform: state
+      entity_id: input_select.state_bedroom
+      to: "Gedaemmt"
   action:
     - service: light.turn_on
       data:
@@ -88,20 +29,14 @@
           - 255
           - 190
           - 0
-    - delay: '00:00:01'
+
+- id: bedroom_bed_light_turn_off
+  alias: "Schlafzimmer - Unter dem Bett Licht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_bedroom
+      to: "Leer"
+  action:
     - service: light.turn_off
       data:
         entity_id: light.bedroom_under_bed_1
-
-- id: bedroom_toggle_dimmed_light
-  alias: Unter dem Bett gedämmtes Licht umschalten
-  trigger:
-    - platform: event
-      event_type: "deconz_event"
-      event_data:
-        device_id: "a1cb5017a4d12478847bde6dc73c1e1f" #Tradfri Shortcut Button Bedroom Lights
-        event: 1002
-  action:
-    - service: input_boolean.toggle
-      data:
-        entity_id: input_boolean.bedroom_dim_light
