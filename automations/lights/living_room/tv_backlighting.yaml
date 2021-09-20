@@ -13,11 +13,6 @@
       entity_id: input_select.state_dining_room
     - platform: state
       entity_id: input_select.state_house
-  condition:
-    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
-      condition: state
-      entity_id: input_boolean.disable_living_room
-      state: 'off'
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:
@@ -73,14 +68,6 @@
               condition: state
               entity_id: input_select.state_dining_room
               state: "An"
-            - alias: "Wohnzimmer ist Bewohnt"
-              condition: state
-              entity_id: input_select.state_living_room
-              state: "Bewohnt"
-            - alias: "Esszimmer ist Bewohnt"
-              condition: state
-              entity_id: input_select.state_dining_room
-              state: "Bewohnt"
           - alias: "Insektenlicht ist an"
             condition: state
             entity_id: input_boolean.living_room_insect_light
@@ -115,14 +102,22 @@
               condition: state
               entity_id: input_select.state_dining_room
               state: "An"
-            - alias: "Wohnzimmer ist Bewohnt"
-              condition: state
-              entity_id: input_select.state_living_room
-              state: "Bewohnt"
-            - alias: "Esszimmer ist Bewohnt"
-              condition: state
-              entity_id: input_select.state_dining_room
-              state: "Bewohnt"
+            - condition: and
+              conditions:
+                - alias: "Beweungsmelder nicht ausgeschaltet"
+                  condition: state
+                  entity_id: input_boolean.disable_occupation_lights
+                  state: 'off'
+                - condition: or
+                  conditions:
+                  - alias: "Wohnzimmer ist Bewohnt"
+                    condition: state
+                    entity_id: input_select.state_living_room
+                    state: "Bewohnt"
+                  - alias: "Esszimmer ist Bewohnt"
+                    condition: state
+                    entity_id: input_select.state_dining_room
+                    state: "Bewohnt"
           - alias: "Haus ist Bewohnt"
             condition: state
             entity_id: input_select.state_house
