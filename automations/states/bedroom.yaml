@@ -29,9 +29,9 @@
       event_data:
         device_id: "a1cb5017a4d12478847bde6dc73c1e1f" #Tradfri Shortcut Button Bedroom Lights
         event: 1002 # Single press
-    - platform: state
-      entity_id: input_select.state_house
-      from: "Nacht"
+    - platform: sun
+      event: sunrise
+      offset: "01:00:00"
   condition:
     - condition: or
       conditions:
