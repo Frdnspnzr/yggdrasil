@@ -51,6 +51,14 @@ state_bedroom:
     - An
     - Gedaemmt
 
+state_changing_table:
+  name: Zustand Wickeltisch
+  options:
+    - An
+    - Gedaemmt
+    - Party
+    - Aus
+
 light_scheme:
   name: Aktuelles Lichtschema
   options:
