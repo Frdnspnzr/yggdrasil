@@ -1,0 +1,86 @@
+- id: light_stairs_default_animation_downstairs
+  alias: "Treppen - Licht von unten animieren (Standard)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_stairs
+      to: "An (Unten)"
+  action:
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_1
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_2
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_3
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_4
+
+- id: light_stairs_default_animation_upstairs
+  alias: "Treppen - Licht von oben animieren (Standard)"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_stairs
+      to: "An (Oben)"
+  action:
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_4
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_3
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_2
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 3
+        rgb_color: [255, 160, 0]
+      target:
+        entity_id: light.wled_stairs_1
+
+- id: light_stairs_off
+  alias: "Treppen - Licht ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_stairs
+      to: "Leer"
+  action:
+    - service: light.turn_off
+      data:
+        transition: 3
+      target:
+        entity_id:
+          - light.wled_stairs_1
+          - light.wled_stairs_2
+          - light.wled_stairs_3
+          - light.wled_stairs_4

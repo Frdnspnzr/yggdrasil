@@ -59,6 +59,13 @@ state_changing_table:
     - Party
     - Aus
 
+state_stairs:
+  name: Zustand Treppe
+  options:
+    - An (Oben)
+    - An (Unten)
+    - Leer
+
 light_scheme:
   name: Aktuelles Lichtschema
   options:

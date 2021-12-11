@@ -1,0 +1,61 @@
+- id: state_stairs_set_to_on_upstairs_on_occupancy
+  alias: "Treppen - Zustand bei Bewegung auf An (Oben) schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_stairs_middle
+      to: "on"
+  condition:
+    - alias: "Treppe ist derzeit leer"
+      condition: state
+      entity_id: input_select.state_stairs
+      state: "Leer"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_stairs
+        option: "An (Oben)"
+
+- id: state_stairs_set_to_on_downstairs_on_door_open
+  alias: "Treppen - Zustand mit Tür auf An (Unten) schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: "on"
+  condition:
+    - alias: "Treppe ist derzeit leer"
+      condition: state
+      entity_id: input_select.state_stairs
+      state: "Leer"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_stairs
+        option: "An (Unten)"
+
+- id: state_stairs_set_to_empty
+  alias: "Treppen - Zustand auf Leer schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_stairs_middle
+      to: "off"
+      for: "00:05:00"
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: "off"
+      for: "00:05:00"
+  condition:
+    - alias: "Keine Bewegung seit fünf Minuten"
+      condition: state
+      entity_id: binary_sensor.motion_stairs_middle
+      state: "off"
+      for: "00:05:00"
+    - alias: "Tür seit fünf Minuten zu"
+      condition: state
+      entity_id: binary_sensor.front_door
+      state: "off"
+      for: "00:05:00"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_stairs
+        option: "An (Unten)"
