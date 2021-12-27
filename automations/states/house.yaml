@@ -2,87 +2,59 @@
 ### ==> Bewohnt
 ###############################################################################
 
-- alias: Haus werktags morgens einschalten
+- alias: Haus morgens einschalten
   trigger:
     - platform: time
       at: "06:00"
   condition:
     - condition: state
       entity_id: input_select.state_house
-      state: 'Nacht'
-    - condition: state
-      entity_id: binary_sensor.workday_today
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.holiday_mode
-      state: 'off'
+      state: "Nacht"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Bewohnt'
-
-- alias: Haus an freien Tagen morgens einschalten
-  trigger:
-    - platform: time
-      at: "08:00"
-  condition:
-    - condition: state
-      entity_id: input_select.state_house
-      state: 'Nacht'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.workday_today
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.holiday_mode
-        state: 'on'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_house
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 - alias: Haus einschalten wenn jemand nach Hause kommt
   trigger:
-  - platform: state
-    entity_id: group.bewohner
-    to: 'home'
+    - platform: state
+      entity_id: group.bewohner
+      to: "home"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 - alias: Haus einschalten wenn jemand in einem Raum ist
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
-      to: 'On'
+      to: "On"
     - platform: state
       entity_id: input_select.state_living_room
-      to: 'Bewohnt'
+      to: "Bewohnt"
     - platform: state
       entity_id: input_select.state_front_hallway
-      to: 'Bewohnt'
+      to: "Bewohnt"
   condition:
     condition: or
     conditions:
       - condition: state
         entity_id: input_select.state_house
-        state: 'Leer'
+        state: "Leer"
       - condition: state
         entity_id: input_select.state_house
-        state: 'Leerstehend'
+        state: "Leerstehend"
       - condition: state
         entity_id: input_select.state_house
-        state: 'Erwartend'
+        state: "Erwartend"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 ###############################################################################
 ### ==> Leer
@@ -90,14 +62,14 @@
 
 - alias: Haus ausschalten wenn niemand mehr zu Hause ist
   trigger:
-  - platform: state
-    entity_id: group.bewohner
-    to: 'not_home'
+    - platform: state
+      entity_id: group.bewohner
+      to: "not_home"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Leer'
+        option: "Leer"
 
 ###############################################################################
 ### ==> Erwartend
@@ -105,53 +77,53 @@
 
 - alias: Haus auf erwartend schalten wenn Andrea die Arbeit verlässt
   trigger:
-  - platform: zone
-    entity_id: person.andrea
-    zone: zone.work_andrea
-    event: leave
+    - platform: zone
+      entity_id: person.andrea
+      zone: zone.work_andrea
+      event: leave
   condition:
     - condition: state
       entity_id: input_select.state_house
-      state: 'Leer'
+      state: "Leer"
     - condition: state
       entity_id: binary_sensor.workday_today
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: input_boolean.holiday_mode
-      state: 'off'
+      state: "off"
     - condition: time
-      after: '15:00:00'
-      before: '18:00:00'
+      after: "15:00:00"
+      before: "18:00:00"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Erwartend'
+        option: "Erwartend"
 
 - alias: Haus auf erwartend schalten wenn Pascal die Arbeit verlässt
   trigger:
-  - platform: zone
-    entity_id: person.andrea
-    zone: zone.work_pascal
-    event: leave
+    - platform: zone
+      entity_id: person.andrea
+      zone: zone.work_pascal
+      event: leave
   condition:
     - condition: state
       entity_id: input_select.state_house
-      state: 'Leer'
+      state: "Leer"
     - condition: state
       entity_id: binary_sensor.workday_today
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: input_boolean.holiday_mode
-      state: 'off'
+      state: "off"
     - condition: time
-      after: '16:00:00'
-      before: '19:00:00'
+      after: "16:00:00"
+      before: "19:00:00"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Erwartend'
+        option: "Erwartend"
 
 ###############################################################################
 ### ==> Nacht
@@ -164,15 +136,15 @@
   condition:
     - condition: state
       entity_id: binary_sensor.workday_today
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: input_boolean.holiday_mode
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Nacht'
+        option: "Nacht"
 
 - alias: Haus auf Nacht schalten, wenn der aktuelle Tag kein Werktag ist
   trigger:
@@ -181,17 +153,17 @@
   condition:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: binary_sensor.workday_today
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.holiday_mode
-        state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.holiday_mode
+          state: "on"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Nacht'
+        option: "Nacht"
 
 - id: house_state_set_night_with_button
   alias: Zustand Haus - Mit Button auf Nacht schalten
@@ -206,7 +178,7 @@
       service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Nacht'
+        option: "Nacht"
     - alias: "Esszimmer ausschalten"
       service: script.state_dining_room_off
     - alias: "Küche ausschalten"
