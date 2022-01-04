@@ -1,0 +1,86 @@
+- id: childrens_room_changing_table_light_every_automation
+  alias: "Kinderzimmer - Licht am Wickeltisch umschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_changing_table
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+  action:
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        ################################################################# Alarm
+        - conditions:
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: wled.effect
+              data:
+                effect: Solid
+              target:
+                entity_id: light.wled_wickeltisch
+            - service: light.turn_on
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 0, 0]
+              target:
+                entity_id: light.wled_wickeltisch
+        ################################################################# An
+        - conditions:
+            - alias: "Zustand ist An"
+              condition: state
+              entity_id: input_select.state_changing_table
+              state: "An"
+          sequence:
+            - service: wled.effect
+              data:
+                effect: Solid
+              target:
+                entity_id: light.wled_wickeltisch
+            - service: light.turn_on
+              data:
+                brightness_pct: 80
+                color_temp: 350
+              target:
+                entity_id: light.wled_wickeltisch
+        ################################################################# Gedämmt
+        - conditions:
+            - alias: "Zustand ist Gedaemmt"
+              condition: state
+              entity_id: input_select.state_changing_table
+              state: "Gedaemmt"
+          sequence:
+            - service: wled.effect
+              data:
+                effect: Solid
+              target:
+                entity_id: light.wled_wickeltisch
+            - service: light.turn_on
+              data:
+                brightness_pct: 3
+                color_temp: 500
+              target:
+                entity_id: light.wled_wickeltisch
+        ################################################################# Party
+        - conditions:
+            - alias: "Zustand ist Party"
+              condition: state
+              entity_id: input_select.state_changing_table
+              state: "Party"
+          sequence:
+            - service: wled.effect
+              data:
+                effect: Chunchun
+              target:
+                entity_id: light.wled_wickeltisch
+            - service: light.turn_on
+              data:
+                brightness_pct: 100
+              target:
+                entity_id: light.wled_wickeltisch
+      ################################################################# Aus
+      default:
+        - service: light.turn_off
+          data:
+            entity_id: light.wled_wickeltisch

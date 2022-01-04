@@ -1,0 +1,61 @@
+- id: childrens_room_thermostat_set_eco_on_house_state
+  alias: "Kinderzimmer - Thermostat auf Sparmodus schalten, wenn das Haus den Zustand wechselt"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_house
+      to: "Leer"
+    - platform: state
+      entity_id: input_select.state_house
+      to: "Leerstehend"
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: "on"
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_children_s_room_1
+        preset_mode: "eco"
+
+- id: childrens_room_thermostat_set_eco_on_timer_end
+  alias: "Kinderzimmer - Thermostat auf Sparmodus schalten, wenn der Timer abläuft"
+  trigger:
+    - platform: time
+      at: input_datetime.timer_thermostat_childrens_room
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: "on"
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_children_s_room_1
+        preset_mode: "eco"
+
+- id: childrens_room_thermostat_set_comfort_on_button
+  alias: "Kinderzimmer - Thermostat auf Komfort schalten, wenn Taste gedrückt wird"
+  trigger:
+    - device_id: 122363df282b3a8f5e5d1c6b883e6d92
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: ""
+  condition:
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: "on"
+  action:
+    - alias: "Thermostat auf Komfort schalten"
+      service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_children_s_room_1
+        preset_mode: "comfort"
+    - alias: "Timer setzen"
+      service: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.timer_thermostat_childrens_room
+      data:
+        timestamp: "{{ as_timestamp(now() + timedelta(hours=1)) }}"
