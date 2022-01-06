@@ -15,15 +15,11 @@
               entity_id: input_boolean.alarm_mode
               state: "on"
           sequence:
-            - service: wled.effect
-              data:
-                effect: Solid
-              target:
-                entity_id: light.wled_wickeltisch
             - service: light.turn_on
               data:
                 brightness_pct: 100
                 rgb_color: [255, 0, 0]
+                effect: "Solid"
               target:
                 entity_id: light.wled_wickeltisch
         ################################################################# An
@@ -33,15 +29,11 @@
               entity_id: input_select.state_changing_table
               state: "An"
           sequence:
-            - service: wled.effect
-              data:
-                effect: Solid
-              target:
-                entity_id: light.wled_wickeltisch
             - service: light.turn_on
               data:
                 brightness_pct: 80
                 color_temp: 350
+                effect: "Solid"
               target:
                 entity_id: light.wled_wickeltisch
         ################################################################# Gedämmt
@@ -51,15 +43,11 @@
               entity_id: input_select.state_changing_table
               state: "Gedaemmt"
           sequence:
-            - service: wled.effect
-              data:
-                effect: Solid
-              target:
-                entity_id: light.wled_wickeltisch
             - service: light.turn_on
               data:
                 brightness_pct: 3
                 color_temp: 500
+                effect: "Solid"
               target:
                 entity_id: light.wled_wickeltisch
         ################################################################# Party
@@ -69,14 +57,10 @@
               entity_id: input_select.state_changing_table
               state: "Party"
           sequence:
-            - service: wled.effect
-              data:
-                effect: Chunchun
-              target:
-                entity_id: light.wled_wickeltisch
             - service: light.turn_on
               data:
                 brightness_pct: 100
+                effect: "Chunchun"
               target:
                 entity_id: light.wled_wickeltisch
       ################################################################# Aus

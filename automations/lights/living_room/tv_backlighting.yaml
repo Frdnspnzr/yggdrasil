@@ -16,110 +16,132 @@
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:
-      #################################################################
-      - conditions:
-          - alias: "Alarm ist an"
-            condition: state
-            entity_id: input_boolean.alarm_mode
-            state: "on"
-        sequence:
-          - service: switch.turn_off
-            entity_id: switch.wled_tv_backlighting_lor
-          - service: light.turn_on
-            data:
-              entity_id: light.living_room_tv_backlighting
-              brightness_pct: 100
-              rgb_color: [255, 0, 0]
-          - service: wled.effect
-            data:
-              entity_id: light.living_room_tv_backlighting
-              effect: "Chase"
-              intensity: 255
-              speed: 255
-      #################################################################
-      - conditions:
-          - alias: "Fernseher ist an"
-            condition: state
-            entity_id: media_player.fernseher_wohnzimmer
-            state: "on"
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.living_room_tv_backlighting
-              brightness_pct: 100
-              hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-          - service: wled.effect
-            data:
-              entity_id: light.living_room_tv_backlighting
-              effect: "Candle Multi"
-              intensity: 60
-              speed: 20
-          - service: switch.turn_on
-            entity_id: switch.wled_tv_backlighting_lor
-      #################################################################
-      - conditions:
-          - condition: or
-            conditions:
-            - alias: "Wohnzimmer ist An"
+        #################################################################
+        - conditions:
+            - alias: "Alarm ist an"
               condition: state
-              entity_id: input_select.state_living_room
-              state: "An"
-            - alias: "Esszimmer ist An"
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.wled_tv_backlighting_lor
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_tv_backlighting
+                brightness_pct: 100
+                rgb_color: [255, 0, 0]
+                efect: "Chase"
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_speed
+              data:
+                value: 255
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_intensity
+              data:
+                value: 255
+        #################################################################
+        - conditions:
+            - alias: "Fernseher ist an"
               condition: state
-              entity_id: input_select.state_dining_room
-              state: "An"
-          - alias: "Insektenlicht ist an"
-            condition: state
-            entity_id: input_boolean.living_room_insect_light
-            state: "on"
-          - alias: "Haus ist Bewohnt"
-            condition: state
-            entity_id: input_select.state_house
-            state: "Bewohnt"
-        sequence:
-          - service: switch.turn_off
-            entity_id: switch.wled_tv_backlighting_lor
-          - service: light.turn_on
-            data:
-              entity_id: light.living_room_tv_backlighting
-              brightness_pct: 70
-              rgb_color: [255, 0, 0]
-          - service: wled.effect
-            data:
-              entity_id: light.living_room_tv_backlighting
-              effect: fire flicker
-              intensity: 150
-              speed: 255
-      #################################################################
-      - conditions:
-          - condition: or
-            conditions:
-            - alias: "Wohnzimmer ist An"
+              entity_id: media_player.fernseher_wohnzimmer
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_tv_backlighting
+                brightness_pct: 100
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Candle Multi"
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_speed
+              data:
+                value: 20
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_intensity
+              data:
+                value: 60
+            - service: switch.turn_on
+              entity_id: switch.wled_tv_backlighting_lor
+        #################################################################
+        - conditions:
+            - condition: or
+              conditions:
+                - alias: "Wohnzimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
+                - alias: "Esszimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+            - alias: "Insektenlicht ist an"
               condition: state
-              entity_id: input_select.state_living_room
-              state: "An"
-            - alias: "Esszimmer ist An"
+              entity_id: input_boolean.living_room_insect_light
+              state: "on"
+            - alias: "Haus ist Bewohnt"
               condition: state
-              entity_id: input_select.state_dining_room
-              state: "An"
-          - alias: "Haus ist Bewohnt"
-            condition: state
-            entity_id: input_select.state_house
-            state: "Bewohnt"
-        sequence:
-          - service: switch.turn_off
-            entity_id: switch.wled_tv_backlighting_lor
-          - service: light.turn_on
-            data:
-              entity_id: light.living_room_tv_backlighting
-              brightness_pct: 100
-              hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-          - service: wled.effect
-            data:
-              entity_id: light.living_room_tv_backlighting
-              effect: "Candle Multi"
-              intensity: 60
-              speed: 20
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.wled_tv_backlighting_lor
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_tv_backlighting
+                brightness_pct: 70
+                rgb_color: [255, 0, 0]
+                effect: "Fire Flicker"
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_speed
+              data:
+                value: 255
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_intensity
+              data:
+                value: 150
+        #################################################################
+        - conditions:
+            - condition: or
+              conditions:
+                - alias: "Wohnzimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
+                - alias: "Esszimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.wled_tv_backlighting_lor
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_tv_backlighting
+                brightness_pct: 100
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Candle Multi"
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_speed
+              data:
+                value: 20
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_intensity
+              data:
+                value: 60
       #################################################################
       default:
         - service: switch.turn_off
