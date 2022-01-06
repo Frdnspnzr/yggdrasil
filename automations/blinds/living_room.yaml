@@ -1,0 +1,200 @@
+- id: living_room_cover_close_with_lights_on
+  alias: Wohnzimmer - Rollladen bei Sonnenuntergang mit Bewohnern herunterfahren
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+      for: "00:01:00"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+  condition:
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "off"
+      for: "00:01:00"
+    - alias: "Wohnzimmer ist Bewohnt oder An"
+      condition: state
+      entity_id: input_select.state_living_room
+      state:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+    - alias: "Mindestens 30 Minuten vor Sonnenuntergang"
+      condition: sun
+      after: sunset
+      after_offset: "-00:30:00"
+  action:
+    - service: cover.set_cover_position
+      data:
+        position: 40
+      target:
+        entity_id: cover.wohnzimmer
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.living_room_cover_close_with_lights_on
+          - automation.living_room_cover_close_evening
+
+- id: living_room_cover_close_evening
+  alias: Wohnzimmer - Rollladen nach Sonnenuntergang herunterfahren
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "01:00:00"
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+      for: "00:01:00"
+  condition:
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "off"
+      for: "00:01:00"
+    - alias: "Mindestens eine Stunde nach Sonnenuntergang"
+      condition: sun
+      after: sunset
+      after_offset: "01:00:00"
+  action:
+    - service: cover.set_cover_position
+      data:
+        position: 40
+      target:
+        entity_id: cover.wohnzimmer
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.living_room_cover_close_with_lights_on
+          - automation.living_room_cover_close_evening
+
+- id: living_room_cover_close_night
+  alias: Wohnzimmer - Rollladen nachts schließen
+  trigger:
+    - platform: state
+      entity_id: input_select.state_house
+      to: "Nacht"
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+      for: "01:00:00"
+  condition:
+    - alias: "Hauszustand ist Nacht"
+      condition: state
+      entity_id: input_select.state_house
+      state: "Nacht"
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "off"
+      for: "01:00:00"
+  action:
+    - alias: "Rollladen schließen"
+      service: cover.close_cover
+      target:
+        entity_id: cover.wohnzimmer
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.living_room_cover_close_with_lights_on
+          - automation.living_room_cover_close_evening
+          - automation.living_room_cover_close_night
+
+- id: living_room_cover_open_morning_on_movement
+  alias: Wohnzimmer - Rollladen bei Betreten hochfahren
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+      for: "00:01:00"
+    - platform: sun
+      event: sunrise
+      offset: "-01:00:00"
+  condition:
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "off"
+      for: "00:01:00"
+    - alias: "Höchstens eine Stunde bis Sonnenaufgang"
+      condition: sun
+      after: sunrise
+      after_offset: "-01:00:00"
+    - alias: "Vormittags"
+      condition: time
+      before: "12:00:00"
+    - alias: "Wohnzimmer ist Bewohnt oder An"
+      condition: state
+      entity_id: input_select.state_living_room
+      state:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+  action:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.wohnzimmer
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.living_room_cover_open_morning_on_movement
+          - automation.living_room_cover_open_morning
+
+- id: living_room_cover_open_morning
+  alias: Wohnzimmer - Rollladen nach Sonnenaufgang hochfahren
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "01:30:00"
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "off"
+      for: "00:01:00"
+  condition:
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.living_room_balcony_door
+      state: "off"
+      for: "00:01:00"
+    - alias: "Mindestens 90 Minuten nach Sonnenaufgang"
+      condition: sun
+      after: sunrise
+      after_offset: "01:30:00"
+  action:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.wohnzimmer
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.living_room_cover_open_morning_on_movement
+          - automation.living_room_cover_open_morning
+
+- id: living_room_reset_cover_automations
+  alias: Wohnzimmer - Rollladensteuerung zurücksetzen
+  trigger:
+    - platform: time
+      at: "04:00:00"
+  action:
+    - alias: "Automatisierungen reaktivieren"
+      service: automation.turn_on
+      target:
+        entity_id:
+          - automation.living_room_cover_open_morning_on_movement
+          - automation.living_room_cover_open_morning
+          - automation.living_room_cover_close_with_lights_on
+          - automation.living_room_cover_close_evening
+          - automation.living_room_cover_close_night
