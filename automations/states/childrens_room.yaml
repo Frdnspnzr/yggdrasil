@@ -1,0 +1,59 @@
+- id: state_changing_table_turn_off
+  alias: "Wickeltisch - Zustand auf Aus schalten"
+  trigger:
+    - device_id: 2ff63208bd17dc8c79a2786ff6aadf02 #Tradfri Shortcut Button Changing Table
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: ""
+  condition:
+    - alias: "Wickeltisch ist An, Gedämmt oder Party"
+      condition: state
+      entity_id: input_select.state_changing_table
+      state:
+        - "An"
+        - "Gedaemmt"
+        - "Party"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_changing_table
+        option: "Aus"
+
+- id: state_changing_table_turn_dimmed
+  alias: "Wickeltisch - Zustand auf Gedämmt schalten"
+  trigger:
+    - device_id: 2ff63208bd17dc8c79a2786ff6aadf02 #Tradfri Shortcut Button Changing Table
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: ""
+  condition:
+    - alias: "Wickeltisch ist Aus"
+      condition: state
+      entity_id: input_select.state_changing_table
+      state: "Aus"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_changing_table
+        option: "Gedaemmt"
+
+- id: state_changing_table_turn_party
+  alias: "Wickeltisch - Zustand auf Party schalten"
+  trigger:
+    - device_id: 2ff63208bd17dc8c79a2786ff6aadf02 #Tradfri Shortcut Button Changing Table
+      domain: deconz
+      platform: device
+      type: remote_button_long_release
+      subtype: ""
+  condition:
+    - alias: "Wickeltisch ist Aus"
+      condition: state
+      entity_id: input_select.state_changing_table
+      state: "Aus"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_changing_table
+        option: "Party"
