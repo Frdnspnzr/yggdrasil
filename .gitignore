@@ -8,3 +8,6 @@ custom_components/
 themes/
 www/
 *google_translate.mp3
+webostv.conf
+*.db*
+*.log*
