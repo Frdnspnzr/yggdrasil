@@ -4,8 +4,6 @@
     - platform: state
       entity_id: input_boolean.alarm_mode
     - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-    - platform: state
       entity_id: input_boolean.living_room_insect_light
     - platform: state
       entity_id: input_select.state_living_room
@@ -43,10 +41,10 @@
                 value: 255
         #################################################################
         - conditions:
-            - alias: "Fernseher ist an"
+            - alias: "Kinomodus ist an"
               condition: state
-              entity_id: media_player.fernseher_wohnzimmer
-              state: "on"
+              entity_id: input_select.state_living_room
+              state: "Kino"
           sequence:
             - service: light.turn_on
               data:
@@ -131,6 +129,35 @@
                 brightness_pct: 100
                 hs_color:
                   ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Candle Multi"
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_speed
+              data:
+                value: 20
+            - service: number.set_value
+              target:
+                entity_id: number.living_room_tv_backlighting_intensity
+              data:
+                value: 60
+        #################################################################
+        - conditions:
+            - alias: "Wohnzimmer ist Gedämmt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Gedaemmt"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.wled_tv_backlighting_lor
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_tv_backlighting
+                brightness_pct: 50
+                rgb_color: [227, 156, 36]
                 effect: "Candle Multi"
             - service: number.set_value
               target:

@@ -34,7 +34,7 @@
     - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
       condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - alias: "Statuslicht einschalten"
       service: light.turn_on
@@ -72,7 +72,7 @@
     - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
       condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - alias: "Insektenlicht einschalten"
       service: light.turn_on
@@ -117,7 +117,7 @@
     - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
       condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - alias: "Normales Licht einschalten"
       service: light.turn_on
@@ -125,6 +125,56 @@
         entity_id: light.living_room_lamp_1
         brightness_pct: 100
         color_temp: 480
+        transition: 2
+
+- id: living_room_table_lamp_movie_light
+  alias: "Wohnzimmer - Tischlampe auf Kinomodus schalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.living_room_worklight
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.pascal_occupied
+      to: "off"
+    - platform: state
+      entity_id: input_boolean.living_room_insect_light
+      to: "off"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "Gedaemmt"
+        - "Kino"
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to: "An"
+  condition:
+    - alias: "Arbeitslicht ist nicht eingeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_worklight
+      state: "off"
+    - alias: "Pascal ist nicht beschäftigt"
+      condition: state
+      entity_id: input_boolean.pascal_occupied
+      state: "off"
+    - alias: "Insektenlicht ist ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.living_room_insect_light
+      state: "off"
+    - alias: "Wohnzimmer ist im Kinomodus"
+      condition: state
+      entity_id: input_select.state_living_room
+      state: "Kino"
+    - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
+      condition: state
+      entity_id: input_boolean.disable_living_room
+      state: "off"
+  action:
+    - alias: "Kinolampe einschalten"
+      service: light.turn_on
+      data:
+        entity_id: light.living_room_lamp_1
+        brightness_pct: 20
+        hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
         transition: 2
 
 - id: living_room_table_lamp_mood_light
@@ -141,7 +191,9 @@
       to: "off"
     - platform: state
       entity_id: input_select.state_living_room
-      to: "Gedaemmt"
+      to:
+        - "Gedaemmt"
+        - "Kino"
     - platform: state
       entity_id: input_select.state_dining_room
       to: "An"
@@ -160,26 +212,26 @@
       state: "off"
     - condition: or
       conditions:
-      - alias: "Wohnzimmer ist Gedämmt"
-        condition: state
-        entity_id: input_select.state_living_room
-        state: "Gedaemmt"
-      - condition: and
-        conditions:
-        - alias: "Esszimmer ist An"
+        - alias: "Wohnzimmer ist Gedämmt"
           condition: state
-          entity_id: input_select.state_dining_room
-          state: "An"
-        - condition: not
+          entity_id: input_select.state_living_room
+          state: "Gedaemmt"
+        - condition: and
           conditions:
-          - alias: "Wohnzimmer ist An"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "An"
+            - alias: "Esszimmer ist An"
+              condition: state
+              entity_id: input_select.state_dining_room
+              state: "An"
+            - condition: not
+              conditions:
+                - alias: "Wohnzimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
     - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
       condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - alias: "Stimmungslicht einschalten"
       service: light.turn_on
@@ -204,8 +256,8 @@
     - platform: state
       entity_id: input_select.state_living_room
       to:
-        - 'Leer'
-        - 'Bewohnt'
+        - "Leer"
+        - "Bewohnt"
     - platform: state
       entity_id: input_select.state_dining_room
       from: "An"
@@ -226,18 +278,18 @@
       condition: state
       entity_id: input_select.state_living_room
       state:
-        - 'Leer'
-        - 'Bewohnt'
+        - "Leer"
+        - "Bewohnt"
     - condition: not
       conditions:
-      - alias: "Esszimmer ist An"
-        condition: state
-        entity_id: input_select.state_dining_room
-        state: "An"
+        - alias: "Esszimmer ist An"
+          condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
     - alias: "Wohnzimmerautomatisierungen nicht ausgeschaltet"
       condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - alias: "Licht ausschalten"
       service: light.turn_off

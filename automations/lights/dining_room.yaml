@@ -21,7 +21,7 @@
     - service: light.turn_on
       data:
         entity_id: light.dining_room_main
-        brightness_pct: 75
+        brightness_pct: 30
         transition: 3
 
 - id: light_dining_room_main_occupied_day

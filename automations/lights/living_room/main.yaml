@@ -14,117 +14,132 @@
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:
-      ################################################################# Alarm
-      - conditions:
-          - alias: "Alarm ist an"
-            condition: state
-            entity_id: input_boolean.alarm_mode
-            state: "on"
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.wohnzimmer_ventilator
-              brightness_pct: 100
-          - service: switch.turn_on
-            data:
-              entity_id: switch.living_room_small_lamp
-      ################################################################# Insektenlicht
-      - conditions:
-          - alias: "Wohnzimmer ist An"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "An"
-          - alias: "Insektenlicht ist an"
-            condition: state
-            entity_id: input_boolean.living_room_insect_light
-            state: "on"
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.wohnzimmer_ventilator
-              brightness_pct: 15
-              transition: 3
-          - service: switch.turn_off
-            data:
-              entity_id: switch.living_room_small_lamp
-      ################################################################# Normales Licht
-      - conditions:
-          - alias: "Wohnzimmer ist An"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "An"
-        sequence:
-        - service: light.turn_on
-          data:
-            entity_id: light.wohnzimmer_ventilator
-            brightness_pct: 100
-            transition: 3
-        - service: switch.turn_on
-          data:
-            entity_id: switch.living_room_small_lamp
-      ################################################################# Gedämmtes Licht
-      - conditions:
-          - alias: "Wohnzimmer ist Gedämmt"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "Gedaemmt"
-        sequence:
-          - service: light.turn_off
-            data:
-              entity_id: light.wohnzimmer_ventilator
-          - service: switch.turn_off
-            data:
-              entity_id: switch.living_room_small_lamp
-      ################################################################# Bewegungslicht
-      - conditions:
-          - alias: "Wohnzimmer ist Bewohnt"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "Bewohnt"
-          - alias: "Haus ist Bewohnt"
-            condition: state
-            entity_id: input_select.state_house
-            state: "Bewohnt"
-          - alias: "Im Wohnzimmer ist es dunkel"
-            condition: state
-            entity_id: input_boolean.is_dark_living_room
-            state: "on"
-          - alias: "Beweungsmelder nicht ausgeschaltet"
-            condition: state
-            entity_id: input_boolean.disable_occupation_lights
-            state: 'off'
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.wohnzimmer_ventilator
-              brightness_pct: 40
-              transition: 3
-          - service: switch.turn_off
-            data:
-              entity_id: switch.living_room_small_lamp
-      ################################################################# Nachtlicht
-      - conditions:
-          - alias: "Wohnzimmer ist Bewohnt"
-            condition: state
-            entity_id: input_select.state_living_room
-            state: "Bewohnt"
-          - alias: "Haus ist Nacht"
-            condition: state
-            entity_id: input_select.state_house
-            state: "Nacht"
-          - alias: "Nachtlicht nicht ausgeschaltet"
-            condition: state
-            entity_id: input_boolean.disable_nightlight
-            state: 'off'
-        sequence:
-          - service: light.turn_on
-            data:
-              entity_id: light.wohnzimmer_ventilator
-              brightness_pct: 15
-              transition: 3
-          - service: switch.turn_off
-            data:
-              entity_id: switch.living_room_small_lamp
+        ################################################################# Alarm
+        - conditions:
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 100
+            - service: switch.turn_on
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Insektenlicht
+        - conditions:
+            - alias: "Wohnzimmer ist An"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "An"
+            - alias: "Insektenlicht ist an"
+              condition: state
+              entity_id: input_boolean.living_room_insect_light
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 15
+                transition: 3
+            - service: switch.turn_off
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Normales Licht
+        - conditions:
+            - alias: "Wohnzimmer ist An"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "An"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 100
+                transition: 3
+            - service: switch.turn_on
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Gedämmtes Licht
+        - conditions:
+            - alias: "Wohnzimmer ist Gedämmt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Gedaemmt"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 20
+                transition: 3
+            - service: switch.turn_on
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Gedämmtes Licht
+        - conditions:
+            - alias: "Wohnzimmer ist im Kinomodus"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Kino"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: light.wohnzimmer_ventilator
+            - service: switch.turn_off
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Bewegungslicht
+        - conditions:
+            - alias: "Wohnzimmer ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Bewohnt"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+            - alias: "Im Wohnzimmer ist es dunkel"
+              condition: state
+              entity_id: input_boolean.is_dark_living_room
+              state: "on"
+            - alias: "Beweungsmelder nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_occupation_lights
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 40
+                transition: 3
+            - service: switch.turn_off
+              data:
+                entity_id: switch.living_room_small_lamp
+        ################################################################# Nachtlicht
+        - conditions:
+            - alias: "Wohnzimmer ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Bewohnt"
+            - alias: "Haus ist Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
+            - alias: "Nachtlicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_nightlight
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wohnzimmer_ventilator
+                brightness_pct: 15
+                transition: 3
+            - service: switch.turn_off
+              data:
+                entity_id: switch.living_room_small_lamp
       ################################################################# Aus
       default:
         - service: light.turn_off

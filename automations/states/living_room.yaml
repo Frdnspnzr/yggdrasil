@@ -36,30 +36,30 @@
       conditions:
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Leer'
+          state: "Leer"
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Bewohnt'
+          state: "Bewohnt"
     - condition: or
       conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
+        - condition: state
+          entity_id: media_player.fernseher_wohnzimmer
+          state: "off"
+        - condition: state
+          entity_id: media_player.fernseher_wohnzimmer
+          state: "unavailable"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'An'
+        option: "An"
 
 ###
 # Coming from every state
 # Event either 'up button' (2002) or TV turning off
 ###
 
-- id: state_living_room_set_to_on_from_dimmed
+- id: state_living_room_set_to_on_from_movie
   alias: "Wohnzimmer - Zustand auf An schalten"
   trigger:
     - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
@@ -76,40 +76,40 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'An'
+        option: "An"
 
 ###
-# Coming from 'Gedaemmt' (Dimmed)
+# Coming from 'Kino' (Movie)
 # Event TV turning off
 # Sun is down
 ###
 
-- id: state_living_room_set_to_on_from_dimmed_turning_tv_off
+- id: state_living_room_set_to_on_from_movie_turning_tv_off
   alias: "Wohnzimmer - Zustand auf An schalten wenn der Fernseher ausgeschaltet wird"
   trigger:
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-      for: '00:00:12'
+      to: "off"
+      for: "00:00:12"
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
-      for: '00:00:12'
+      to: "unavailable"
+      for: "00:00:12"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
+      state: "Kino"
     - condition: state
       entity_id: sun.sun
-      state: 'below_horizon'
+      state: "below_horizon"
     - condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'An'
+        option: "An"
 
 ###
 # Coming from either Leer (Empty) or Bewohnt (Occupied)
@@ -121,28 +121,28 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      to: 'on'
-      for: '00:05:00'
+      to: "on"
+      for: "00:05:00"
   condition:
     - condition: state
       entity_id: input_boolean.disable_timeouts
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: sun.sun
-      state: 'below_horizon'
+      state: "below_horizon"
     - condition: state
       entity_id: input_select.state_living_room
       state:
-        - 'Leer'
-        - 'Bewohnt'
+        - "Leer"
+        - "Bewohnt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'An'
+        option: "An"
 
 ###############################################################################
 ### ==> Leer
@@ -158,19 +158,19 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Bewohnt'
+      state: "Bewohnt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Leer'
+        option: "Leer"
 
 ###
-# Coming from either 'An' (On) or 'Gedaemmt' (Dimmed)
+# Coming from either 'An' (On) or 'Kino' (Movie)
 # Event 'main switch'
 # No occupancy
 ###
@@ -193,61 +193,61 @@
       conditions:
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Gedaemmt'
+          state: "Kino"
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'An'
+          state: "An"
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Leer'
+        option: "Leer"
     - service: script.announce_light_status
       data:
         media_player: media_player.esszimmer
         volume: 0.3
 
 ###
-# Coming from 'Gedaemmt' (Dimmed)
+# Coming from 'Kino' (Movie)
 # Event 'TV turning off'
 # Occupancy
 ###
 
-- id: state_living_room_set_to_empty_from_dimmed_turning_tv_off
+- id: state_living_room_set_to_empty_from_movie_turning_tv_off
   alias: "Wohnzimmer - Zustand auf Leer schalten wenn der Fernseher ausgeschaltet wird"
   trigger:
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-      for: '00:00:12'
+      to: "off"
+      for: "00:00:12"
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
-      for: '00:00:12'
+      to: "unavailable"
+      for: "00:00:12"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
+      state: "Kino"
     - condition: state
       entity_id: sun.sun
-      state: 'above_horizon'
+      state: "above_horizon"
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Leer'
+        option: "Leer"
 
 ###
-# Coming from either An (On) or Gedaemmt (Dimmed)
+# Coming from either An (On) or Kino (Movie)
 # Event 'more than twenty minutes of no occupancy'
 ###
 
@@ -256,28 +256,28 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      to: 'off'
-      for: '00:20:00'
+      to: "off"
+      for: "00:20:00"
   condition:
     - condition: state
       entity_id: input_boolean.disable_timeouts
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_living_room
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_select.state_living_room
       state:
-        - 'An'
-        - 'Gedaemmt'
+        - "An"
+        - "Kino"
     - condition: state
       entity_id: media_player.fernseher_wohnzimmer
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Leer'
+        option: "Leer"
 
 ###############################################################################
 ### ==> Bewohnt
@@ -294,27 +294,27 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      to: 'on'
+      to: "on"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Leer'
+      state: "Leer"
     - condition: or
       conditions:
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'off'
-      - condition: state
-        entity_id: media_player.fernseher_wohnzimmer
-        state: 'unavailable'
+        - condition: state
+          entity_id: media_player.fernseher_wohnzimmer
+          state: "off"
+        - condition: state
+          entity_id: media_player.fernseher_wohnzimmer
+          state: "unavailable"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 ###
-# Coming from either 'An' (On) or 'Gedaemmt' (Dimmed)
+# Coming from either 'An' (On) or 'Kino' (Movie)
 # Event 'main switch'
 # Occupancy
 ###
@@ -337,58 +337,58 @@
       conditions:
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'An'
+          state: "An"
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Gedaemmt'
+          state: "Kino"
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
-      state: 'on'
+      state: "on"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Bewohnt'
+        option: "Bewohnt"
     - service: script.announce_light_status
       data:
         media_player: media_player.esszimmer
         volume: 0.3
 
 ###
-# Coming from 'Gedaemmt' (Dimmed)
+# Coming from 'Kino' (Movie)
 # Event 'TV turning off'
 # Occupancy
 ###
 
-- id: state_living_room_set_to_occupied_from_dimmed_turning_tv_off
+- id: state_living_room_set_to_occupied_from_movie_turning_tv_off
   alias: "Wohnzimmer - Zustand auf An schalten wenn der Fernseher ausgeschaltet wird"
   trigger:
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'off'
-      for: '00:00:12'
+      to: "off"
+      for: "00:00:12"
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'unavailable'
-      for: '00:00:12'
+      to: "unavailable"
+      for: "00:00:12"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Gedaemmt'
+      state: "Kino"
     - condition: state
       entity_id: sun.sun
-      state: 'above_horizon'
+      state: "above_horizon"
     - condition: state
       entity_id: binary_sensor.occupancy_living_room
-      state: 'on'
+      state: "on"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 ###############################################################################
-### ==> Gedaemmt
+### ==> Kino
 ###############################################################################
 
 ###
@@ -396,8 +396,8 @@
 # Event either 'TV turning on' or 'down button' (3002)
 ###
 
-- id: state_living_room_set_to_dimmed
-  alias: "Wohnzimmer - Zustand auf Gedämmt schalten"
+- id: state_living_room_set_to_movie
+  alias: "Wohnzimmer - Zustand auf Kinomodus schalten"
   trigger:
     - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
       domain: deconz
@@ -411,45 +411,45 @@
       subtype: dim_down
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: 'on'
+      to: "on"
   condition:
     - condition: or
       conditions:
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Bewohnt'
+          state: "Bewohnt"
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'An'
+          state: "An"
         - condition: state
           entity_id: input_select.state_living_room
-          state: 'Leer'
+          state: "Leer"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Gedaemmt'
+        option: "Kino"
 
 ###
 # Coming from 'Leer' (Empty)
 # Event either 'TV turning on' or 'down button' (3002)
 ###
 
-- id: state_living_room_set_to_dimmed_on_occupancy_with_tv_on
-  alias: "Wohnzimmer - Zustand auf Gedämmt schalten wenn jemand dort ist und der Fernseher läuft"
+- id: state_living_room_set_to_movie_on_occupancy_with_tv_on
+  alias: "Wohnzimmer - Zustand auf Kinomodus schalten wenn jemand dort ist und der Fernseher läuft"
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_living_room
-      to: 'on'
+      to: "on"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
-      state: 'Leer'
+      state: "Leer"
     - condition: state
       entity_id: media_player.fernseher_wohnzimmer
-      state: 'on'
+      state: "on"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_living_room
-        option: 'Gedaemmt'
+        option: "Kino"
