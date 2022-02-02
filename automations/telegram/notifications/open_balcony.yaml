@@ -1,0 +1,16 @@
+- alias: Telegram Benachrichtigung - Bei Kälte Balkontür offen
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_balcony_door
+      to: "on"
+      for: "00:15:00"
+  condition:
+    - alias: "Weniger als 12 Grad"
+      condition: numeric_state
+      entity_id: weather.dwd
+      attribute: temperature
+      below: 12
+  action:
+    - service: notify.telegram_alle
+      data:
+        message: "🥶 Es ist ganz schön kalt, ihr wollt vielleicht die Balkontür schließen."
