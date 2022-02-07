@@ -21,6 +21,7 @@ state_living_room:
     - Leer
     - An
     - Gedaemmt
+    - Kino
 
 state_dining_room:
   name: Zustand Esszimmer
