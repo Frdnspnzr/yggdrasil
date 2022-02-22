@@ -1,5 +1,5 @@
 - id: state_bedroom_set_to_on_with_remote
-  alias: "Schlafzimmer - Zustand mit Schalter auf An schalten"
+  alias: "Schlafzimmer - Zustand mit Schalter auf Gedämmt schalten"
   trigger:
     - platform: event
       event_type: "deconz_event"
@@ -19,7 +19,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.state_bedroom
-        option: "An"
+        option: "Gedaemmt"
 
 - id: state_bedroom_turn_off_with_remote
   alias: "Schlafzimmer - Zustand mit Schalter auf Leer oder Bewohnt schalten"
