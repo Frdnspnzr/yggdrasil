@@ -63,6 +63,12 @@
                 effect: "Chunchun"
               target:
                 entity_id: light.wled_wickeltisch
+            - service: input_select.select_option
+              target:
+                entity_id: select.wled_wickeltisch_color_palette
+              data:
+                option: Rainbow
+
       ################################################################# Aus
       default:
         - service: light.turn_off
