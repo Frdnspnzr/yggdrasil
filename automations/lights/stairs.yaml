@@ -8,28 +8,32 @@
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_1
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_2
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_3
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_4
 
@@ -43,28 +47,32 @@
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_4
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_3
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_2
     - delay: 2
     - service: light.turn_on
       data:
         transition: 3
-        rgb_color: [255, 160, 0]
+        effect: Stream 2
+        brightness_pct: 100
       target:
         entity_id: light.wled_stairs_1
 
