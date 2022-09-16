@@ -1,0 +1,69 @@
+- id: state_front_garden_set_movement
+  alias: Vorgarten - Bewegung anschalten wenn jemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_front_door_1
+      to: "on"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_front_garden
+        option: "Bewegung"
+
+- id: state_front_garden_remove_movement
+  alias: Vorgarten - Bewegung abschalten wenn niemand dort ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_front_door_1
+      to: "off"
+  action:
+    - if:
+        - or:
+            - alias: "Nach Sonnenuntergang"
+              condition: sun
+              after: sunset
+            - alias: "Vor Sonnenaufgang"
+              condition: sun
+              before: sunrise
+      then:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_front_garden
+            option: "Nacht"
+      else:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_front_garden
+            option: "Aus"
+
+- id: state_front_garden_set_night_at_time
+  alias: Vorgarten - Nacht setzen wenn die Sonne untergeht
+  trigger:
+    - platform: sun
+      event: sunset
+  condition:
+    - not:
+        - condition: state
+          entity_id: input_select.state_front_garden
+          state: "Bewegung"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_front_garden
+        option: "Nacht"
+
+- id: state_front_garden_unset_night_at_time
+  alias: Vorgarten - Nacht entfernen bei Sonnenaufgang
+  trigger:
+    - platform: sun
+      event: sunrise
+  condition:
+    - not:
+        - condition: state
+          entity_id: input_select.state_front_garden
+          state: "Bewegung"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_front_garden
+        option: "Aus"

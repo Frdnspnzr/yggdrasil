@@ -67,6 +67,21 @@ state_stairs:
     - An (Unten)
     - Leer
 
+state_study:
+  name: Zustand Büro
+  options:
+    - Bewohnt
+    - Leer
+    - An
+    - Gedaemmt
+
+state_front_garden:
+  name: Zustand Vorgarten
+  options:
+    - Aus
+    - Bewegung
+    - Nacht
+
 light_scheme:
   name: Aktuelles Lichtschema
   options:
