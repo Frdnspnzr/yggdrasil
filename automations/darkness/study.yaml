@@ -1,0 +1,21 @@
+- id: darkness_study_auto_sunset
+  alias: "Dunkelheit Büro - Sonnenuntergang"
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.is_dark_study
+
+- id: darkness_study_auto_sunrise
+  alias: "Dunkelheit Büro - Sonnenaufgang"
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "00:30:00"
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.is_dark_study
