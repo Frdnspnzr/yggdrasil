@@ -3,7 +3,7 @@
   trigger:
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'An'
+      to: "An"
   action:
     - service: light.turn_on
       data:
@@ -16,7 +16,7 @@
   trigger:
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'Gedaemmt'
+      to: "Gedaemmt"
   action:
     - service: light.turn_on
       data:
@@ -29,28 +29,28 @@
   trigger:
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'Bewohnt'
+      to: "Bewohnt"
     - platform: state
       entity_id: input_boolean.is_dark_dining_room
-      to: 'on'
+      to: "on"
   condition:
     - condition: not
       conditions:
-      - condition: state
-        entity_id: input_select.state_house
-        state: 'Nacht'
+        - condition: state
+          entity_id: input_select.state_house
+          state: "Nacht"
     - condition: state
       entity_id: input_boolean.is_dark_dining_room
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: input_select.state_dining_room
-      state: 'Bewohnt'
+      state: "Bewohnt"
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_dining_room
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -63,20 +63,20 @@
   trigger:
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'Bewohnt'
+      to: "Bewohnt"
   condition:
     - condition: state
       entity_id: input_select.state_house
-      state: 'Nacht'
+      state: "Nacht"
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_nightlight
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_dining_room
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -89,27 +89,27 @@
   trigger:
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'Leer'
+      to: "Leer"
     - platform: state
       entity_id: input_select.state_dining_room
-      to: 'Bewohnt'
+      to: "Bewohnt"
     - platform: state
       entity_id: input_boolean.is_dark_dining_room
-      to: 'off'
+      to: "off"
   condition:
     - condition: or
       conditions:
         - condition: state
           entity_id: input_select.state_dining_room
-          state: 'Leer'
+          state: "Leer"
         - condition: and
           conditions:
-          - condition: state
-            entity_id: input_select.state_dining_room
-            state: 'Bewohnt'
-          - condition: state
-            entity_id: input_boolean.is_dark_dining_room
-            state: 'off'
+            - condition: state
+              entity_id: input_select.state_dining_room
+              state: "Bewohnt"
+            - condition: state
+              entity_id: input_boolean.is_dark_dining_room
+              state: "off"
   action:
     - service: light.turn_off
       data:

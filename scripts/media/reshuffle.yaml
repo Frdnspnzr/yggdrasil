@@ -3,13 +3,13 @@ reshuffle_media:
   icon: "mdi:shuffle"
   fields:
     entity_id:
-      description: 'Media player entity to reshuffle'
+      description: "Media player entity to reshuffle"
   sequence:
     - service: media_player.shuffle_set
-      data_template:
+      data:
         entity_id: "{{entity_id}}"
         shuffle: false
     - service: media_player.shuffle_set
-      data_template:
+      data:
         entity_id: "{{entity_id}}"
         shuffle: true

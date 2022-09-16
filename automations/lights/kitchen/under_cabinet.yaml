@@ -3,11 +3,11 @@
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
-      to: 'An'
+      to: "An"
   condition:
     - condition: state
       entity_id: binary_sensor.motion_kitchen_2
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -21,25 +21,25 @@
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
-      to: 'Bewohnt'
+      to: "Bewohnt"
     - platform: state
       entity_id: input_number.global_hue_primary
   condition:
     - condition: state
       entity_id: input_select.state_house
-      state: 'Bewohnt'
+      state: "Bewohnt"
     - condition: state
       entity_id: input_boolean.is_dark_kitchen
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: binary_sensor.motion_kitchen_2
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_kitchen
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -53,30 +53,30 @@
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
-      to: 'Leer'
+      to: "Leer"
     - platform: state
       entity_id: input_select.state_kitchen
-      to: 'Bewohnt'
+      to: "Bewohnt"
     - platform: state
       entity_id: input_boolean.is_dark_kitchen
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: binary_sensor.motion_kitchen_2
-      state: 'off'
+      state: "off"
     - condition: or
       conditions:
-      - condition: state
-        entity_id: input_select.state_kitchen
-        state: 'Leer'
-      - condition: and
-        conditions:
         - condition: state
           entity_id: input_select.state_kitchen
-          state: 'Bewohnt'
-        - condition: state
-          entity_id: input_boolean.is_dark_kitchen
-          state: 'off'
+          state: "Leer"
+        - condition: and
+          conditions:
+            - condition: state
+              entity_id: input_select.state_kitchen
+              state: "Bewohnt"
+            - condition: state
+              entity_id: input_boolean.is_dark_kitchen
+              state: "off"
   action:
     - service: light.turn_off
       data:
@@ -88,30 +88,30 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_kitchen_2
-      to: 'on'
+      to: "on"
     - platform: state
       entity_id: input_select.state_kitchen
-      to: 'An'
+      to: "An"
   condition:
     - condition: state
       entity_id: binary_sensor.motion_kitchen_2
-      state: 'on'
+      state: "on"
     - condition: or
       conditions:
-      - condition: not
-        conditions:
+        - condition: not
+          conditions:
+            - condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
         - condition: state
-          entity_id: input_select.state_house
-          state: 'Nacht'
-      - condition: state
-        entity_id: input_select.state_kitchen
-        state: 'An'
+          entity_id: input_select.state_kitchen
+          state: "An"
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_kitchen
-      state: 'off'
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -125,39 +125,40 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_kitchen_2
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_kitchen
-      state: 'off'
+      state: "off"
   action:
     - choose:
-      - conditions:
-        - condition: state
-          entity_id: input_select.state_kitchen
-          state:
-            - 'An'
-            - 'Bewohnt'
-        - condition: or
-          conditions:
-          - condition: not
-            conditions:
+        - conditions:
             - condition: state
-              entity_id: input_select.state_house
-              state: 'Nacht'
-          - condition: state
-            entity_id: input_select.state_kitchen
-            state: 'An'
-        sequence:
-          - service: light.turn_on
-            data:
-              brightness_pct: 50
-              hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-              transition: 1
-              entity_id: light.kitchen_under_cabinet_1
+              entity_id: input_select.state_kitchen
+              state:
+                - "An"
+                - "Bewohnt"
+            - condition: or
+              conditions:
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: input_select.state_house
+                      state: "Nacht"
+                - condition: state
+                  entity_id: input_select.state_kitchen
+                  state: "An"
+          sequence:
+            - service: light.turn_on
+              data:
+                brightness_pct: 50
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                transition: 1
+                entity_id: light.kitchen_under_cabinet_1
       default:
         - service: light.turn_off
           data:

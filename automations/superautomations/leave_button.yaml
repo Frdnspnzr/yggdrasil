@@ -1,4 +1,3 @@
-
 - id: super_automation_leave
   alias: "Super Automation - Verlassen"
   trigger:

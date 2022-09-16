@@ -16,8 +16,8 @@
   sensors:
     thermostat_bathroom_1_battery_level:
       friendly_name: "Batterie Thermostat Badezimmer"
-      unit_of_measurement: '%'
-      device_class: 'battery'
+      unit_of_measurement: "%"
+      device_class: "battery"
       value_template: "{{ state_attr('climate.badezimmer_1', 'battery_level') }}"
 
     living_room_temperature:

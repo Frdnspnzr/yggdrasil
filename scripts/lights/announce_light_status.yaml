@@ -4,38 +4,38 @@ announce_light_status:
   mode: queued
   fields:
     media_player:
-      description: 'Media player entity for voice output'
+      description: "Media player entity for voice output"
     volume:
-      description: 'Volume for voice output (float)'
+      description: "Volume for voice output (float)"
       example: "0.3"
   sequence:
     - choose:
-      - conditions:
-          - condition: not
-            conditions:
-              - condition: state
-                entity_id: input_select.state_kitchen
-                state: 'An'
-              - condition: state
-                entity_id: input_select.state_living_room
-                state: 'An'
-              - condition: state
-                entity_id: input_select.state_living_room
-                state: 'Gedaemmt'
-              - condition: state
-                entity_id: input_select.state_dining_room
-                state: 'An'
-        sequence:
-          - service: script.sonos_say
-            data:
-              entity_id: '{{ media_player }}'
-              message: "Alle Lichter aus"
-              delay: 5
-              volume: '{{ volume }}'
+        - conditions:
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: input_select.state_kitchen
+                  state: "An"
+                - condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
+                - condition: state
+                  entity_id: input_select.state_living_room
+                  state: "Gedaemmt"
+                - condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+          sequence:
+            - service: script.sonos_say
+              data:
+                entity_id: "{{ media_player }}"
+                message: "Alle Lichter aus"
+                delay: 5
+                volume: "{{ volume }}"
       default:
-      - service: script.sonos_say
-        data:
-          entity_id: '{{ media_player }}'
-          message: "Licht aus"
-          delay: 3
-          volume: '{{ volume }}'
+        - service: script.sonos_say
+          data:
+            entity_id: "{{ media_player }}"
+            message: "Licht aus"
+            delay: 3
+            volume: "{{ volume }}"

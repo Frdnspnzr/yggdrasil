@@ -6,9 +6,10 @@
       event_data:
         entity_id: device_tracker.andrea_7dd6c1c6_c657_444c_ba6b_d3e3bc960423
   condition:
-    - condition: state
-      entity_id: person.andrea
-      state: not_home
+    - not:
+        - condition: state
+          entity_id: person.andrea
+          state: "Home"
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.andrea_nach_hause
@@ -21,9 +22,10 @@
       event_data:
         entity_id: device_tracker.pascal_handy
   condition:
-    - condition: state
-      entity_id: person.pascal
-      state: not_home
+    - not:
+        - condition: state
+          entity_id: person.pascal
+          state: "Home"
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.pascal_nach_hause
