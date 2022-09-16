@@ -9,5 +9,10 @@ themes/
 www/
 *google_translate.mp3
 webostv.conf
+_webostv.conf
 *.db*
 *.log*
+diyhue/
+blueprints/
+esphome/
+.vscode/
