@@ -7,12 +7,12 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.office_balcony_door
-      to: 'on'
-      for: '00:02:00'
+      to: "on"
+      for: "00:02:00"
   condition:
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
   action:
     - service: climate.turn_off
       data:
@@ -23,11 +23,11 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.office_balcony_door
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
   action:
     - service: climate.turn_on
       data:
@@ -45,19 +45,19 @@
   condition:
     - condition: state
       entity_id: binary_sensor.workday_today
-      state: 'on'
+      state: "on"
     - condition: state
       entity_id: input_boolean.holiday_mode
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
   action:
     - service: climate.set_preset_mode
       data:
         entity_id:
           - climate.thermostat_study_1
-        preset_mode: 'comfort'
+        preset_mode: "comfort"
 
 ###############################################################################
 ### Turn up study thermostats on non working days
@@ -71,21 +71,24 @@
   condition:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: binary_sensor.workday_today
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.holiday_mode
-        state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.holiday_mode
+          state: "on"
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - service: climate.set_preset_mode
       data:
         entity_id:
           - climate.thermostat_study_1
-        preset_mode: 'comfort'
+        preset_mode: "comfort"
 
 ###############################################################################
 ### Turn up study thermostats when computer is turned on
@@ -96,17 +99,20 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.ping_pc_pascal
-      to: 'on'
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
-  - service: climate.set_preset_mode
-    data:
-      entity_id:
-        - climate.thermostat_study_1
-      preset_mode: 'comfort'
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_study_1
+        preset_mode: "comfort"
 
 ###############################################################################
 ### Turn down study thermostats
@@ -118,18 +124,21 @@
     - platform: time
       at: "20:00:00"
   condition:
-  - condition: state
-    entity_id: binary_sensor.ping_pc_pascal
-    state: 'off'
-  - condition: state
-    entity_id: input_boolean.heating_period
-    state: 'on'
+    - condition: state
+      entity_id: binary_sensor.ping_pc_pascal
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
-  - service: climate.set_preset_mode
-    data:
-      entity_id:
-        - climate.thermostat_study_1
-      preset_mode: 'eco'
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_study_1
+        preset_mode: "eco"
 
 ###############################################################################
 ### Turn down study thermostats when computer is turned off
@@ -140,16 +149,19 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.ping_pc_pascal
-      to: 'off'
+      to: "off"
   condition:
-  - condition: time
-    after: "18:00:00"
-  - condition: state
-    entity_id: input_boolean.heating_period
-    state: 'on'
+    - condition: time
+      after: "18:00:00"
+    - condition: state
+      entity_id: input_boolean.heating_period
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
-  - service: climate.set_preset_mode
-    data:
-      entity_id:
-        - climate.thermostat_study_1
-      preset_mode: 'eco'
+    - service: climate.set_preset_mode
+      data:
+        entity_id:
+          - climate.thermostat_study_1
+        preset_mode: "eco"

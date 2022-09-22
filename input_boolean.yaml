@@ -6,7 +6,7 @@ bedroom_dim_light:
 heating_period:
   name: Heizperiode
   initial: on
-  icon:  mdi:radiator
+  icon: mdi:radiator
 
 living_room_worklight:
   name: Arbeitslicht Wohnzimmer
@@ -110,3 +110,7 @@ disable_timeouts:
   initial: off
   icon: mdi:electric-switch
 
+disable_thermostat_control:
+  name: Thermostatsteuerung deaktivieren
+  initial: off
+  icon: mdi:electric-switch

@@ -11,6 +11,9 @@
     - condition: state
       entity_id: input_boolean.heating_period
       state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - service: climate.set_preset_mode
       data:
@@ -27,6 +30,9 @@
     - condition: state
       entity_id: input_boolean.heating_period
       state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - service: climate.set_preset_mode
       data:
@@ -46,6 +52,9 @@
     - condition: state
       entity_id: input_boolean.heating_period
       state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - alias: "Thermostat auf Komfort schalten"
       service: climate.set_preset_mode

@@ -7,12 +7,15 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
-      to: 'on'
-      for: '00:02:00'
+      to: "on"
+      for: "00:02:00"
   condition:
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - service: climate.turn_off
       data:
@@ -23,11 +26,14 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: input_boolean.heating_period
-      state: 'on'
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
   action:
     - service: climate.turn_on
       data:
