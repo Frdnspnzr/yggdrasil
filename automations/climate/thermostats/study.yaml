@@ -9,10 +9,6 @@
       entity_id: binary_sensor.office_balcony_door
       to: "on"
       for: "00:02:00"
-  condition:
-    - condition: state
-      entity_id: input_boolean.heating_period
-      state: "on"
   action:
     - service: climate.turn_off
       data:
@@ -24,10 +20,6 @@
     - platform: state
       entity_id: binary_sensor.office_balcony_door
       to: "off"
-  condition:
-    - condition: state
-      entity_id: input_boolean.heating_period
-      state: "on"
   action:
     - service: climate.turn_on
       data:
