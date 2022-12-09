@@ -36,6 +36,9 @@
       at: "07:00:00"
   condition:
     - condition: state
+      entity_id: input_boolean.disable_thermostat_control
+      state: "off"
+    - condition: state
       entity_id: binary_sensor.workday_today
       state: "on"
     - condition: state
