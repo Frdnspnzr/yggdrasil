@@ -15,6 +15,8 @@
     - alias: "Korrekte Beleuchtung auswählen"
       choose:
         #################################################################
+        ### Alarmodus
+        #################################################################
         - conditions:
             - alias: "Alarm ist an"
               condition: state
@@ -25,7 +27,7 @@
               entity_id: switch.wled_tv_backlighting_lor
             - service: light.turn_on
               data:
-                entity_id: light.living_room_tv_backlighting
+                entity_id: light.living_room_tv_backlighting_left
                 brightness_pct: 100
                 rgb_color: [255, 0, 0]
                 efect: "Chase"
@@ -40,6 +42,8 @@
               data:
                 value: 255
         #################################################################
+        ### Kinomodus
+        #################################################################
         - conditions:
             - alias: "Kinomodus ist an"
               condition: state
@@ -48,7 +52,11 @@
           sequence:
             - service: light.turn_on
               data:
-                entity_id: light.living_room_tv_backlighting
+                entity_id:
+                  - light.living_room_tv_backlighting_left
+                  - light.living_room_tv_backlighting_right
+                  - light.living_room_tv_backlighting_top
+                  - light.living_room_tv_backlighting_bottom
                 brightness_pct: 5
                 rgb_color: [242, 186, 75]
                 effect: "Solid"
@@ -64,6 +72,8 @@
                 value: 60
             - service: switch.turn_on
               entity_id: switch.wled_tv_backlighting_lor
+        #################################################################
+        ### Insektenlicht
         #################################################################
         - conditions:
             - condition: or
@@ -89,20 +99,16 @@
               entity_id: switch.wled_tv_backlighting_lor
             - service: light.turn_on
               data:
-                entity_id: light.living_room_tv_backlighting
+                entity_id:
+                  - light.living_room_tv_backlighting_left
+                  - light.living_room_tv_backlighting_right
+                  - light.living_room_tv_backlighting_top
+                  - light.living_room_tv_backlighting_bottom
                 brightness_pct: 70
                 rgb_color: [255, 0, 0]
-                effect: "Fire Flicker"
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_speed
-              data:
-                value: 255
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_intensity
-              data:
-                value: 150
+                effect: "Solid"
+        #################################################################
+        ### Farben
         #################################################################
         - conditions:
             - condition: or
@@ -124,21 +130,24 @@
               entity_id: switch.wled_tv_backlighting_lor
             - service: light.turn_on
               data:
-                entity_id: light.living_room_tv_backlighting
+                entity_id:
+                  - light.living_room_tv_backlighting_left
+                  - light.living_room_tv_backlighting_right
                 brightness_pct: 100
                 hs_color:
                   ['{{states("input_number.global_hue_primary")|float}}', 100]
-                effect: "Candle Multi"
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_speed
+                effect: "Solid"
+            - service: light.turn_on
               data:
-                value: 20
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_intensity
-              data:
-                value: 60
+                entity_id:
+                  - light.living_room_tv_backlighting_top
+                  - light.living_room_tv_backlighting_bottom
+                brightness_pct: 100
+                hs_color:
+                  ['{{states("input_number.global_hue_secondary")|float}}', 100]
+                effect: "Solid"
+        #################################################################
+        ### Wohnzimmer Gedämmt
         #################################################################
         - conditions:
             - alias: "Wohnzimmer ist Gedämmt"
@@ -154,25 +163,25 @@
               entity_id: switch.wled_tv_backlighting_lor
             - service: light.turn_on
               data:
-                entity_id: light.living_room_tv_backlighting
+                entity_id:
+                  - light.living_room_tv_backlighting_bottom
                 brightness_pct: 50
                 rgb_color: [227, 156, 36]
-                effect: "Candle Multi"
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_speed
+                effect: "Solid"
+            - service: light.turn_off
               data:
-                value: 20
-            - service: number.set_value
-              target:
-                entity_id: number.living_room_tv_backlighting_intensity
-              data:
-                value: 60
-      #################################################################
+                entity_id:
+                  - light.living_room_tv_backlighting_left
+                  - light.living_room_tv_backlighting_right
+                  - light.living_room_tv_backlighting_top
+        #################################################################
       default:
         - service: switch.turn_off
           entity_id: switch.wled_tv_backlighting_lor
         - service: light.turn_off
           data:
             entity_id:
-              - light.living_room_tv_backlighting
+              - light.living_room_tv_backlighting_left
+              - light.living_room_tv_backlighting_right
+              - light.living_room_tv_backlighting_top
+              - light.living_room_tv_backlighting_bottom
