@@ -1,5 +1,7 @@
 - id: childrens_room_changing_table_light_every_automation
   alias: "Kinderzimmer - Licht am Wickeltisch umschalten"
+  mode: restart
+  max_exceeded: silent
   trigger:
     - platform: state
       entity_id: input_select.state_changing_table
