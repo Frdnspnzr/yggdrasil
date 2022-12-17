@@ -1,0 +1,51 @@
+- id: living_room_christmas_lights_every_automation
+  alias: "Wohnzimmer - Weihnachtsbeleuchtung umschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_living_room
+    - platform: state
+      entity_id: input_select.state_dining_room
+    - platform: state
+      entity_id: input_boolean.is_dark_living_room
+    - platform: state
+      entity_id: input_select.state_house
+  action:
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        #################################################################
+        - conditions:
+            - alias: "Im Wohnzimmer ist es dunkel"
+              condition: state
+              entity_id: input_boolean.is_dark_living_room
+              state: "on"
+            - alias: "Jemand ist zuhause und es ist nicht Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+            - or:
+                - alias: "Wohnzimmer Bewohnt, An, Kino oder Gedämmt"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state:
+                    - "Bewohnt"
+                    - "An"
+                    - "Kino"
+                    - "Gedaemmt"
+                - alias: "Esszimmer Bewohnt, An, oder Gedämmt"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state:
+                    - "Bewohnt"
+                    - "An"
+                    - "Gedaemmt"
+          sequence:
+            - service: switch.turn_on
+              entity_id: switch.plug_living_room_christmas_lights_1
+            - service: switch.turn_on
+              entity_id: switch.outlet_bathroom_1
+      #################################################################
+      default:
+        - service: switch.turn_off
+          entity_id: switch.plug_living_room_christmas_lights_1
+        - service: switch.turn_off
+          entity_id: switch.outlet_bathroom_1
