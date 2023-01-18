@@ -1,0 +1,21 @@
+state_study_off:
+  alias: "Turn study off"
+  icon: "mdi:power"
+  mode: single
+  max_exceeded: silent
+  sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: binary_sensor.occupancy_study
+          state: 'on'
+        sequence:
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.state_study
+              option: 'Bewohnt'
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_study
+            option: 'Leer'

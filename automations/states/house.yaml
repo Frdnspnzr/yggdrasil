@@ -185,3 +185,5 @@
       service: script.state_kitchen_off
     - alias: "Wohnzimmer ausschalten"
       service: script.state_living_room_off
+    - alias: "Büro ausschalten"
+      service: script.state_study_off
