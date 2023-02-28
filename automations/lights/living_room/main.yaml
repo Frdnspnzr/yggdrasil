@@ -28,6 +28,10 @@
             - service: switch.turn_on
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_uplight
+                brightness_pct: 100
         ################################################################# Insektenlicht
         - conditions:
             - alias: "Wohnzimmer ist An"
@@ -47,6 +51,10 @@
             - service: switch.turn_off
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_off
+              data:
+                entity_id: light.living_room_uplight
+                transition: 3
         ################################################################# Normales Licht
         - conditions:
             - alias: "Wohnzimmer ist An"
@@ -62,6 +70,11 @@
             - service: switch.turn_on
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_uplight
+                brightness_pct: 100
+                transition: 3
         ################################################################# Gedämmtes Licht
         - conditions:
             - alias: "Wohnzimmer ist Gedämmt"
@@ -77,7 +90,12 @@
             - service: switch.turn_on
               data:
                 entity_id: switch.living_room_small_lamp
-        ################################################################# Gedämmtes Licht
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_uplight
+                brightness_pct: 50
+                transition: 3
+        ################################################################# Kinomodus
         - conditions:
             - alias: "Wohnzimmer ist im Kinomodus"
               condition: state
@@ -90,6 +108,11 @@
             - service: switch.turn_off
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_uplight
+                brightness_pct: 10
+                transition: 3
         ################################################################# Bewegungslicht
         - conditions:
             - alias: "Wohnzimmer ist Bewohnt"
@@ -117,6 +140,11 @@
             - service: switch.turn_off
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_uplight
+                brightness_pct: 40
+                transition: 3
         ################################################################# Nachtlicht
         - conditions:
             - alias: "Wohnzimmer ist Bewohnt"
@@ -140,6 +168,9 @@
             - service: switch.turn_off
               data:
                 entity_id: switch.living_room_small_lamp
+            - service: light.turn_off
+              data:
+                entity_id: light.living_room_uplight
       ################################################################# Aus
       default:
         - service: light.turn_off
@@ -149,3 +180,7 @@
         - service: switch.turn_off
           data:
             entity_id: switch.living_room_small_lamp
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room_uplight
+            transition: 3
