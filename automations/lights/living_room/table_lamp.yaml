@@ -174,7 +174,7 @@
       data:
         entity_id: light.living_room_lamp_1
         brightness_pct: 20
-        hs_color: ['{{states("input_number.global_hue_secondary")|float}}', 100]
+        hs_color: ['{{states("input_number.global_hue_tertiary")|float}}', 100]
         transition: 2
 
 - id: living_room_table_lamp_mood_light
