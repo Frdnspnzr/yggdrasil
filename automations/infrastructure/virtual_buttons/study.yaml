@@ -1,0 +1,44 @@
+- id: virtual_study_turn_button_off
+  alias: "Virtueller Button Büro - Button ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_study
+      to:
+        - "Leer"
+        - "Bewohnt"
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.virtual_study
+
+- id: virtual_study_turn_button_on
+  alias: "Virtueller Button Büro - Button anschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_study
+      to:
+        - "An"
+        - "Gedaemmt"
+  action:
+    service: input_boolean.turn_on
+    entity_id: input_boolean.virtual_study
+
+- id: virtual_study_turn_state_off
+  alias: "Virtueller Button Büro - Büro ausschalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.virtual_study
+      to: "off"
+  action:
+    - service: script.state_study_off
+
+- id: virtual_study_turn_state_on
+  alias: "Virtueller Button Büro - Büro anschalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.virtual_study
+      to: "on"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_study
+        option: "An"
