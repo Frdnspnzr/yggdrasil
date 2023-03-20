@@ -1,0 +1,28 @@
+- id: sindri_auto_turn_off
+  alias: "Sindri - Automatisch ausschalten"
+  trigger:
+    - platform: state
+      entity_id: sensor.sindri_current_state
+      from: "Printing"
+    - platform: numeric_state
+      entity_id: sensor.sindri_actual_tool0_temp
+      below: 40
+  condition:
+    - not:
+        - alias: "Sindri druckt nicht"
+          condition: state
+          entity_id: sensor.sindri_current_state
+          state: "Printing"
+    - alias: " Hotend kälter als 40 Grad"
+      condition: numeric_state
+      entity_id: sensor.sindri_actual_tool0_temp
+      below: 40
+    - alias: "Automatisches Ausschalten eingeschaltet"
+      condition: state
+      entity_id: input_boolean.sindri_auto_turnoff
+      state: "on"
+  action:
+    - type: turn_off
+      device_id: 1424bdc853ad4a5ebb1c3120d9533121
+      entity_id: switch.outlet_living_room_1
+      domain: switch
