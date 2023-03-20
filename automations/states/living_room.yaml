@@ -365,12 +365,10 @@
   trigger:
     - platform: state
       entity_id: media_player.fernseher_wohnzimmer
-      to: "off"
-      for: "00:00:12"
-    - platform: state
-      entity_id: media_player.fernseher_wohnzimmer
-      to: "unavailable"
-      for: "00:00:12"
+      to:
+        - "off"
+        - "unavailable"
+      for: "00:00:05"
   condition:
     - condition: state
       entity_id: input_select.state_living_room
