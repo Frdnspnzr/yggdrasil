@@ -3,7 +3,6 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: "-00:30:00"
     - platform: state
       entity_id: binary_sensor.living_room_balcony_door
       to: "off"
@@ -29,10 +28,9 @@
         - "Bewohnt"
         - "Gedaemmt"
         - "Kino"
-    - alias: "Mindestens 30 Minuten vor Sonnenuntergang"
+    - alias: "Nach Sonnenuntergang"
       condition: sun
       after: sunset
-      after_offset: "-00:30:00"
   action:
     - service: cover.set_cover_position
       data:
@@ -124,17 +122,17 @@
       for: "00:01:00"
     - platform: sun
       event: sunrise
-      offset: "-01:00:00"
+      offset: "-00:15:00"
   condition:
     - alias: "Balkontür im Wohnzimmer ist geschlossen"
       condition: state
       entity_id: binary_sensor.living_room_balcony_door
       state: "off"
       for: "00:01:00"
-    - alias: "Höchstens eine Stunde bis Sonnenaufgang"
+    - alias: "Höchstens 15 Minuten bis Sonnenaufgang"
       condition: sun
       after: sunrise
-      after_offset: "-01:00:00"
+      after_offset: "-00:15:00"
     - alias: "Vormittags"
       condition: time
       before: "12:00:00"
