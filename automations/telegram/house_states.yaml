@@ -3,59 +3,59 @@
     - platform: event
       event_type: telegram_command
       event_data:
-        command: '/komme'
+        command: "/komme"
     - platform: event
       event_type: telegram_callback
       event_data:
-        command: '/komme'
+        command: "/komme"
   condition:
     condition: or
     conditions:
       - condition: state
         entity_id: input_select.state_house
-        state: 'Leer'
+        state: "Leer"
       - condition: state
         entity_id: input_select.state_house
-        state: 'Leerstehend'
+        state: "Leerstehend"
       - condition: state
         entity_id: input_select.state_house
-        state: 'Erwartend'
+        state: "Erwartend"
   action:
     - service: telegram_bot.send_message
-      data_template:
-        target: '{{ trigger.event.data.user_id }}'
-        message: '😘 Alles klar, ich heize schonmal das Bad auf.'
+      data:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "😘 Alles klar, ich heize schonmal das Bad auf."
         inline_keyboard:
           - "Cool.:/start"
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Erwartend'
+        option: "Erwartend"
 
 - alias: Mit Fehler antworten wenn der Telegram-Bot den Befehl empfängt und schon jemand da ist
   trigger:
     - platform: event
       event_type: telegram_command
       event_data:
-        command: '/komme'
+        command: "/komme"
     - platform: event
       event_type: telegram_callback
       event_data:
-        command: '/komme'
+        command: "/komme"
   condition:
     condition: or
     conditions:
       - condition: state
         entity_id: input_select.state_house
-        state: 'Bewohnt'
+        state: "Bewohnt"
       - condition: state
         entity_id: input_select.state_house
-        state: 'Nacht'
+        state: "Nacht"
   action:
     - service: telegram_bot.send_message
-      data_template:
-        target: '{{ trigger.event.data.user_id }}'
-        message: '🥰 Ist schon alles toll hier.'
+      data:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "🥰 Ist schon alles toll hier."
         inline_keyboard:
           - "Alles klar.:/start"
 
@@ -64,19 +64,19 @@
     - platform: event
       event_type: telegram_command
       event_data:
-        command: '/bett'
+        command: "/bett"
     - platform: event
       event_type: telegram_callback
       event_data:
-        command: '/bett'
+        command: "/bett"
   action:
     - service: telegram_bot.send_message
-      data_template:
-        target: '{{ trigger.event.data.user_id }}'
-        message: '🛌 Ich schalte das Licht für dich aus. Schlaf schön.'
+      data:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "🛌 Ich schalte das Licht für dich aus. Schlaf schön."
         inline_keyboard:
           - "Gute Nacht.:/start"
     - service: input_select.select_option
       data:
         entity_id: input_select.state_house
-        option: 'Nacht'
+        option: "Nacht"

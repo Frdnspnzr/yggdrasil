@@ -6,15 +6,15 @@
   condition:
     - condition: state
       entity_id: person.pascal
-      state:  home
+      state: home
     - condition: template
       value_template: '{{ trigger.from_state.state != "home" }}'
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.andrea_nach_hause
     - service: notify.telegram_pascal
-      data_template:
-        message: "Andrea hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.andrea_nach_hause') }} Minuten zu Hause sein!"
+      data:
+        message: "Andrea hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.andrea_nach_hause_duration_in_traffic') }} Minuten zu Hause sein!"
 
 - alias: Andrea benachrichtigen wenn Pascal sich bewegt
   trigger:
@@ -24,12 +24,12 @@
   condition:
     - condition: state
       entity_id: person.andrea
-      state:  home
+      state: home
     - condition: template
       value_template: '{{ trigger.from_state.state != "home" }}'
   action:
     - service: homeassistant.update_entity
       entity_id: sensor.pascal_nach_hause
     - service: notify.telegram_andrea
-      data_template:
-        message: "Pascal hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.pascal_nach_hause') }} Minuten zu Hause sein!"
+      data:
+        message: "Pascal hat {{ trigger.from_state.state }} verlassen und wird in ungefähr {{ states('sensor.pascal_nach_hause_duration_in_traffic'') }} Minuten zu Hause sein!"
