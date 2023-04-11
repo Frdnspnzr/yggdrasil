@@ -273,10 +273,6 @@
       data:
         entity_id: input_select.state_dining_room
         option: 'Bewohnt'
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.esszimmer
-        volume: 0.3
 
 ###############################################################################
 ### ==> Gedaemmt

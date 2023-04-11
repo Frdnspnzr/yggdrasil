@@ -15,25 +15,6 @@
     - service: script.state_living_room_off
     - service: script.state_dining_room_off
     - service: script.state_kitchen_off
-    - service: media_player.media_pause
-      data:
-        entity_id: group.all_sonos
     - service: media_player.turn_off
       data:
         entity_id: media_player.fernseher_wohnzimmer
-    - service: script.sonos_say
-      data:
-        entity_id: media_player.esszimmer
-        message: >
-          Alle Lichter sind aus.
-          {% set open_doors = states|selectattr('entity_id','in',state_attr('group.all_doors','entity_id'))
-            |selectattr('state','eq','on')|list|count %}
-          {% if open_doors == 0 %}
-            Keine Türen sind offen.
-          {% elif open_doors == 1 %}
-            Eine Tür ist offen.
-          {% else %}
-            {{ open_doors }} Türen sind offen.
-          {% endif %}
-        delay: 10
-        volume: 0.3

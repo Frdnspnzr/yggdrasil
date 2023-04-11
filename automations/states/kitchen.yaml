@@ -23,12 +23,6 @@
       data:
         entity_id: input_select.state_kitchen
         option: 'An'
-    - service: script.sonos_say
-      data:
-        entity_id: media_player.kueche
-        message: "Licht an"
-        delay: 0
-        volume: 0.3
 
 ###############################################################################
 ### ==> Leer
