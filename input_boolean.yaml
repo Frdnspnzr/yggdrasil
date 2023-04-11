@@ -28,6 +28,20 @@ holiday_mode:
   initial: off
   icon: mdi:island
 
+sindri_auto_turnoff:
+  name: Sindri automatisch ausschalten
+  initial: off
+  icon: mdi:power
+
+###
+# Virtual Buttons
+###
+
+virtual_study:
+  name: Büro
+  initial: off
+  icon: mdi:lightbulb
+
 ###
 # Darkness indicators
 ###

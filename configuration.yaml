@@ -2,32 +2,26 @@ group:
   bewohner:
     name: Bewohner
     entities:
-        - person.andrea
-        - person.pascal
+      - person.andrea
+      - person.pascal
   all_thermostats:
     name: Alle Thermostate
     entities:
-       - climate.badezimmer_1
-       - climate.thermostat_living_room_1
-       - climate.thermostat_living_room_2
-       - climate.thermostat_study_1
+      - climate.badezimmer_1
+      - climate.thermostat_living_room_1
+      - climate.thermostat_living_room_2
+      - climate.thermostat_study_1
   thermostats_house_state:
     name: Thermostate mit Hauszustand
     entities:
-       - climate.badezimmer_1
-       - climate.thermostat_living_room_1
-       - climate.thermostat_living_room_2
+      - climate.badezimmer_1
+      - climate.thermostat_living_room_1
+      - climate.thermostat_living_room_2
   thermostats_living_room:
     name: Thermostate Wohnzimmer
     entities:
-       - climate.thermostat_living_room_1
-       - climate.thermostat_living_room_2
-  all_sonos:
-    name: Alle Sonos-Geräte
-    entities:
-      - media_player.esszimmer
-      - media_player.kueche
-      - media_player.beam
+      - climate.thermostat_living_room_1
+      - climate.thermostat_living_room_2
   all_doors:
     name: Alle Türen
     entities:
@@ -35,19 +29,19 @@ group:
       - binary_sensor.office_balcony_door
 
 light:
-- platform: group
-  name: Wohnzimmer Ventilator
-  entities:
-    - light.wohnzimmer_ventilator_1
-    - light.wohnzimmer_ventilator_2
-- platform: group
-  name: Front Hallway Main
-  entities:
-    - light.front_hallway_main_1
-    - light.front_hallway_main_2
-- platform: hyperion
-  name: Hyperion Wohnzimmer
-  host: 192.168.178.151
+  - platform: group
+    name: Wohnzimmer Ventilator
+    entities:
+      - light.wohnzimmer_ventilator_1
+      - light.wohnzimmer_ventilator_2
+  - platform: group
+    name: Front Hallway Main
+    entities:
+      - light.front_hallway_main_1
+      - light.front_hallway_main_2
+  - platform: hyperion
+    name: Hyperion Wohnzimmer
+    host: 192.168.178.151
 
 cover:
   - platform: group
@@ -100,19 +94,21 @@ wake_on_lan:
 http:
   server_port: 80
 
+websocket_api:
+
 switch:
   - platform: rest
     name: WLED TV Backlighting LOR
     resource: http://192.168.178.150/json/state
     body_on: '{"lor": 0}'
     body_off: '{"lor": 1}'
-    is_on_template: '{{value_json.lor == 0}}'
+    is_on_template: "{{value_json.lor == 0}}"
     headers:
       Content-Type: application/json
 
 tts:
   - platform: google_translate
-    language: 'de'
+    language: "de"
 
 history:
   exclude:
@@ -136,6 +132,7 @@ homeassistant:
   longitude: !secret zone_home_lon
   unit_system: metric
   time_zone: Europe/Berlin
+  country: DE
   name: Yggdrasil
 
 # INCLUDES

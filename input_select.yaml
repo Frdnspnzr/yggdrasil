@@ -7,13 +7,6 @@ state_house:
     - Leerstehend
     - Nacht
 
-mode_house:
-  name: Modus Haus
-  options:
-    - Komplett
-    - Subtle
-    - Manual
-
 state_living_room:
   name: Zustand Wohnzimmer
   options:
