@@ -1,0 +1,41 @@
+- id: kitchen_media_auto_start
+  alias: "Küche - Medien automatisch starten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to:
+        - "An"
+        - "Bewohnt"
+  condition:
+    - condition: state
+      entity_id: media_player.kueche
+      state:
+        - "paused"
+    - condition: state
+      entity_id: media_player.esszimmer
+      state:
+        - "playing"
+  action:
+    - service: media_player.join
+      data:
+        group_members:
+          - media_player.kueche
+      target:
+        entity_id: media_player.esszimmer
+
+- id: kitchen_media_auto_off
+  alias: "Küche - Medien automatisch abschalten"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_kitchen
+      to:
+        - "Leer"
+  condition:
+    - condition: state
+      entity_id: media_player.kueche
+      state:
+        - "playing"
+  action:
+    - service: media_player.unjoin
+      target:
+        entity_id: media_player.kueche
