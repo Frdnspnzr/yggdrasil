@@ -1,0 +1,95 @@
+- id: audio_leader_set_paused
+  alias: "Soundsystem - Führung auf Pausiert setzen"
+  trigger:
+    - platform: state
+      entity_id:
+        - media_player.beam
+        - media_player.esszimmer
+        - media_player.kueche
+        - media_player.sonos_roam
+      to:
+        - "paused"
+        - "idle"
+  condition:
+    - condition: state
+      entity_id:
+        - media_player.beam
+        - media_player.esszimmer
+        - media_player.kueche
+        - media_player.sonos_roam
+      state:
+        - "paused"
+        - "idle"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.audio_leader
+        option: "Pausiert"
+
+- id: audio_leader_set_kitchen
+  alias: "Soundsystem - Führung auf Küche setzen"
+  trigger:
+    - platform: state
+      entity_id: media_player.kueche
+      to:
+        - "playing"
+  condition:
+    - condition: state
+      entity_id: input_select.audio_leader
+      state: "Pausiert"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.audio_leader
+        option: "Kueche"
+
+- id: audio_leader_set_living_room
+  alias: "Soundsystem - Führung auf Wohnzimmer setzen"
+  trigger:
+    - platform: state
+      entity_id: media_player.beam
+      to:
+        - "playing"
+  condition:
+    - condition: state
+      entity_id: input_select.audio_leader
+      state: "Pausiert"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.audio_leader
+        option: "Wohnzimmer"
+
+- id: audio_leader_set_dining_room
+  alias: "Soundsystem - Führung auf Esszimmer setzen"
+  trigger:
+    - platform: state
+      entity_id: media_player.esszimmer
+      to:
+        - "playing"
+  condition:
+    - condition: state
+      entity_id: input_select.audio_leader
+      state: "Pausiert"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.audio_leader
+        option: "Esszimmer"
+
+- id: audio_leader_set_roam
+  alias: "Soundsystem - Führung auf Roam setzen"
+  trigger:
+    - platform: state
+      entity_id: media_player.sonos_roam
+      to:
+        - "playing"
+  condition:
+    - condition: state
+      entity_id: input_select.audio_leader
+      state: "Pausiert"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.audio_leader
+        option: "Roam"

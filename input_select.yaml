@@ -86,3 +86,12 @@ light_scheme:
     - Winter
     - Weihnachten
     - Silvester
+
+audio_leader:
+  name: Führung Soundsystem
+  options:
+    - Pausiert
+    - Wohnzimmer
+    - Esszimmer
+    - Kueche
+    - Roam

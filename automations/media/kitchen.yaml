@@ -11,17 +11,20 @@
       entity_id: media_player.kueche
       state:
         - "paused"
-    - condition: state
-      entity_id: media_player.esszimmer
-      state:
-        - "playing"
+        - "idle"
+    - not:
+        - condition: state
+          entity_id: input_select.audio_leader
+          state:
+            - "Pausiert"
   action:
-    - service: media_player.join
+    - service: media_player.volume_set
       data:
-        group_members:
-          - media_player.kueche
-      target:
-        entity_id: media_player.esszimmer
+        entity_id: media_player.kueche
+        volume_level: 0.1
+    - service: script.soundsystem_join_leader
+      data:
+        media_player: media_player.kueche
 
 - id: kitchen_media_auto_off
   alias: "Küche - Medien automatisch abschalten"
@@ -30,6 +33,7 @@
       entity_id: input_select.state_kitchen
       to:
         - "Leer"
+      for: "00:02:00"
   condition:
     - condition: state
       entity_id: media_player.kueche

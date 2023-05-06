@@ -1,0 +1,55 @@
+soundsystem_join_leader:
+  alias: "Soundsystem - Führung beitreten"
+  icon: "mdi:lightbulb-multiple"
+  mode: parallel
+  fields:
+    media_player:
+      name: "Lautsprecher"
+      description: "Lautsprecher welcher der Führung beitreten soll"
+      required: true
+  sequence:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_select.audio_leader
+              state: "Wohnzimmer"
+          sequence:
+            - service: media_player.join
+              data:
+                group_members:
+                  - "{{ media_player }}"
+              target:
+                entity_id: media_player.beam
+        - conditions:
+            - condition: state
+              entity_id: input_select.audio_leader
+              state: "Esszimmer"
+          sequence:
+            - service: media_player.join
+              data:
+                group_members:
+                  - "{{ media_player }}"
+              target:
+                entity_id: media_player.esszimmer
+        - conditions:
+            - condition: state
+              entity_id: input_select.audio_leader
+              state: "Kueche"
+          sequence:
+            - service: media_player.join
+              data:
+                group_members:
+                  - "{{ media_player }}"
+              target:
+                entity_id: media_player.kueche
+        - conditions:
+            - condition: state
+              entity_id: input_select.audio_leader
+              state: "Roam"
+          sequence:
+            - service: media_player.join
+              data:
+                group_members:
+                  - "{{ media_player }}"
+              target:
+                entity_id: media_player.sonos_roam
