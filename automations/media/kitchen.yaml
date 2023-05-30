@@ -21,7 +21,7 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.kueche
-        volume_level: 0.1
+        volume_level: 0.05
     - service: script.soundsystem_join_leader
       data:
         media_player: media_player.kueche
