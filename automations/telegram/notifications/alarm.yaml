@@ -1,0 +1,49 @@
+- alias: "Telegram - Alarm regelmäßig bekanntmachen"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+      to: "on"
+  action:
+    - alias: "Wiederholen bis der Alarm aufgehoben ist"
+      repeat:
+        while:
+          - condition: state
+            entity_id: input_boolean.alarm_mode
+            state: "on"
+        sequence:
+          - service: telegram_bot.send_message
+            data:
+              target: !secret telegram_chat_id_pascal
+              message: "🔔🔔🔔 Alarm 🔔🔔🔔"
+              inline_keyboard:
+                - "Alarm stoppen:/stopalarm"
+          - delay: 30
+
+- alias: "Telegram - Alarm stoppen"
+  trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: "/stopalarm"
+    - platform: event
+      event_type: telegram_callback
+      event_data:
+        command: "/stopalarm"
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.alarm_mode
+    - service: telegram_bot.send_message
+      data:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Alarm wird aufgehoben."
+
+- alias: "Telegram - Gestoppten Alarm bekanntmachen"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+      to: "off"
+  action:
+    - service: notify.telegram_pascal
+      data:
+        message: "Alarm aufgehoben."
