@@ -16,7 +16,7 @@
         option: "Bewohnt"
 
 - id: state_study_set_to_empty_on_no_occupancy
-  alias: "Büro - Zustand auf Bewohnt schalten"
+  alias: "Büro - Zustand auf nicht Bewohnt schalten"
   mode: single
   trigger:
     - platform: state
@@ -62,6 +62,7 @@
     - platform: state
       entity_id: binary_sensor.ping_pc_pascal
       to: "off"
+      for: "00:00:21"
     - platform: state
       entity_id: input_boolean.is_dark_study
       to: "off"
@@ -71,6 +72,7 @@
             - condition: state
               entity_id: binary_sensor.occupancy_study
               state: "off"
+              for: "00:00:21"
           sequence:
             - service: input_select.select_option
               data:
