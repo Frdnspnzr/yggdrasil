@@ -1,113 +1,46 @@
-- id: study_door_cover_close_on_sunset
-  alias: Büro - Rollos bei Sonnenuntergang herunterfahren
+- id: study_cover_close_evening
+  alias: Büro - Rollladen bei Sonnenuntergang herunterfahren
   trigger:
     - platform: sun
       event: sunset
-      offset: "00:00:00"
+    - platform: state
+      entity_id: binary_sensor.office_balcony_door
+      to: "off"
+      for: "00:01:00"
+  condition:
+    - alias: "Balkontür im Büro ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.office_balcony_door
+      state: "off"
+    - alias: "Nach Sonnenuntergang"
+      condition: sun
+      after: sunset
   action:
     - service: cover.close_cover
       data:
-        entity_id: cover.study_door_1
-    - service: cover.close_cover
-      data:
-        entity_id: cover.study_door_2
+        entity_id: cover.buro
 
-- id: study_door_cover_open_on_sunrise
-  alias: Büro - Rollos bei Sonnenaufgang herauffahren
+- id: study_cover_open_morning
+  alias: Büro - Rollladen bei Sonnenaufgang hochfahren
   trigger:
     - platform: sun
       event: sunrise
-      offset: "00:00:00"
-  action:
-    - service: cover.open_cover
-      data:
-        entity_id: cover.study_door_1
-    - service: cover.open_cover
-      data:
-        entity_id: cover.study_door_2
-
-- id: study_door_cover_block_sun
-  alias: Büro - Rollos herunterfahren wenn die Sonne zum Schreibtisch scheint
-  trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: azimuth
-      above: 170
-      below: 230
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 31
     - platform: state
-      entity_id: binary_sensor.ping_pc_pascal
-      to: 'on'
+      entity_id: binary_sensor.office_balcony_door
+      to: "off"
+      for: "00:01:00"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: azimuth
-      above: 170
-      below: 230
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 31
-    - condition: or
-      conditions:
-      - condition: numeric_state
-        entity_id: cover.study_door_1
-        attribute: current_position
-        above: 50
-      - condition: numeric_state
-        entity_id: cover.study_door_2
-        attribute: current_position
-        above: 50
-    - condition: state
-      entity_id: binary_sensor.ping_pc_pascal
-      state: 'on'
-  action:
-    - service: cover.set_cover_position
-      data:
-        entity_id: cover.study_door_1
-        position: 50
-    - service: cover.set_cover_position
-      data:
-        entity_id: cover.study_door_2
-        position: 50
-
-- id: study_door_cover_unblock_sun
-  alias: Büro - Rollos herauffahren wenn die Sonne nicht mehr zum Schreibtisch scheint
-  trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: azimuth
-      above: 230
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: azimuth
-      below: 170
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      above: 31
-  condition:
-    - condition: or
-      conditions:
-      - condition: numeric_state
-        entity_id: sun.sun
-        attribute: azimuth
-        below: 170
-      - condition: numeric_state
-        entity_id: sun.sun
-        attribute: azimuth
-        above: 230
-      - condition: numeric_state
-        entity_id: sun.sun
-        attribute: elevation
-        above: 31
+    - alias: "Balkontür im Wohnzimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.office_balcony_door
+      state: "off"
+    - alias: "Nach Sonnenaufgang"
+      condition: sun
+      after: sunrise
+    - alias: "Vormittags"
+      condition: time
+      before: "12:00:00"
   action:
     - service: cover.open_cover
       data:
-        entity_id: cover.study_door_1
-    - service: cover.open_cover
-      data:
-        entity_id: cover.study_door_2
+        entity_id: cover.buro
