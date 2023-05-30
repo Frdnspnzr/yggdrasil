@@ -39,6 +39,10 @@
       entity_id: media_player.kueche
       state:
         - "playing"
+    - not:
+        - condition: state
+          entity_id: input_select.audio_leader
+          state: "Kueche"
   action:
     - service: media_player.unjoin
       target:
