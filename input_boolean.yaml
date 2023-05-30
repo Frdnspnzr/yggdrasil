@@ -33,6 +33,11 @@ sindri_auto_turnoff:
   initial: off
   icon: mdi:power
 
+alarm_mode:
+  name: Alarmmodus
+  initial: off
+  icon: mdi:alert-decagram
+
 ###
 # Virtual Buttons
 ###
