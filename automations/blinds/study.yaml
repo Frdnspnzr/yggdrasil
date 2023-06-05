@@ -39,8 +39,64 @@
       after: sunrise
     - alias: "Vormittags"
       condition: time
-      before: "12:00:00"
+      before: "09:00:00"
   action:
     - service: cover.open_cover
       data:
         entity_id: cover.buro
+
+- id: study_door_cover_block_sun
+  alias: Büro - Rollos herunterfahren um Sonneneinstrahlung zu vermeiden
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 125
+      below: 240
+    - platform: numeric_state
+      entity_id: weather.dwd
+      attribute: temperature
+      above: 20
+    - platform: state
+      entity_id: weather.dwd
+      to: "sunny"
+    - platform: state
+      entity_id: binary_sensor.office_balcony_door
+      to: "off"
+      for: "00:01:00"
+  condition:
+    - alias: "Balkontür im Büro ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.office_balcony_door
+      state: "off"
+    - alias: "Sonne scheint ins Büro"
+      condition: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 125
+      below: 240
+    - or:
+        - alias: "Es ist draußen warm"
+          condition: numeric_state
+          entity_id: weather.dwd
+          attribute: temperature
+          above: 18
+        - alias: "Es ist drinnen warm"
+          condition: numeric_state
+          entity_id: climate.thermostat_study_1
+          attribute: current_temperature
+          above: 20
+    - alias: "Es ist sonnig"
+      condition: state
+      entity_id: weather.dwd
+      state: "sunny"
+    - alias: "Rollladen ist nicht schon unten"
+      condition: numeric_state
+      entity_id: cover.buro
+      attribute: current_position
+      above: 25
+  action:
+    - service: cover.set_cover_position
+      data:
+        entity_id: cover.buro
+        position: 25
