@@ -1,0 +1,153 @@
+- id: living_room_cabinet_every_automation
+  alias: "Wohnzimmer - Schrank umschalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+    - platform: state
+      entity_id: input_select.state_living_room
+    - platform: state
+      entity_id: input_select.state_dining_room
+    - platform: state
+      entity_id: input_select.state_house
+  action:
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        #################################################################
+        ### Alarmodus
+        #################################################################
+        - conditions:
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.light.wled_living_room_cabinet
+                brightness_pct: 100
+                color_temp: 480
+        #################################################################
+        ### Kinomodus
+        #################################################################
+        - conditions:
+            - alias: "Kinomodus ist an"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Kino"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.wled_living_room_cabinet
+                brightness_pct: 5
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Solid"
+        #################################################################
+        ### Insektenlicht
+        #################################################################
+        - conditions:
+            - condition: or
+              conditions:
+                - alias: "Wohnzimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
+                - alias: "Esszimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+            - alias: "Insektenlicht ist an"
+              condition: state
+              entity_id: input_boolean.living_room_insect_light
+              state: "on"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.wled_living_room_cabinet
+                brightness_pct: 70
+                rgb_color: [255, 0, 0]
+                effect: "Solid"
+        #################################################################
+        ### Farben
+        #################################################################
+        - conditions:
+            - condition: or
+              conditions:
+                - alias: "Wohnzimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_living_room
+                  state: "An"
+                - alias: "Esszimmer ist An"
+                  condition: state
+                  entity_id: input_select.state_dining_room
+                  state: "An"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.wled_living_room_cabinet
+                brightness_pct: 100
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Solid"
+        #################################################################
+        ### Wohnzimmer Gedämmt
+        #################################################################
+        - conditions:
+            - alias: "Wohnzimmer ist Gedämmt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Gedaemmt"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.wled_tv_backlighting_lor
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.wled_living_room_cabinet
+                brightness_pct: 50
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                effect: "Solid"
+        #################################################################
+        ### Nachtlicht
+        #################################################################
+        - conditions:
+            - alias: "Wohnzimmer ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_living_room
+              state: "Bewohnt"
+            - alias: "Haus ist Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
+            - alias: "Nachtlicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_nightlight
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.wled_living_room_cabinet
+                brightness_pct: 15
+                transition: 3
+        #################################################################
+      default:
+        - service: light.turn_off
+          data:
+            entity_id:
+              - light.wled_living_room_cabinet
