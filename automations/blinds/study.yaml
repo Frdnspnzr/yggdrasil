@@ -51,7 +51,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       attribute: azimuth
-      above: 125
+      above: 120
       below: 240
     - platform: numeric_state
       entity_id: weather.dwd
@@ -73,7 +73,7 @@
       condition: numeric_state
       entity_id: sun.sun
       attribute: azimuth
-      above: 125
+      above: 120
       below: 240
     - or:
         - alias: "Es ist draußen warm"
