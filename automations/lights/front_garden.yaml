@@ -32,34 +32,17 @@
                 transition: 3
             - service: light.turn_on
               target:
+                entity_id: light.front_garden_small_sphere_lamp_2
+              data:
+                color_temp: 420
+                brightness_pct: 100
+                transition: 3
+            - service: light.turn_on
+              target:
                 entity_id: light.front_door_1
               data:
                 transition: 3
                 brightness: 150
-        ################################################################# Bewegung tagsüber
-        - conditions:
-            - alias: "Vorgarten steht auf Bewegung"
-              condition: state
-              entity_id: input_select.state_front_garden
-              state: "Bewegung"
-            - alias: "Sonne ist aufgegangen"
-              condition: state
-              entity_id: sun.sun
-              state: "above_horizon"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.front_garden_small_sphere_lamp_1
-              data:
-                brightness_pct: 100
-                hs_color:
-                  ['{{states("input_number.global_hue_primary")|float}}', 100]
-                transition: 3
-            - service: light.turn_off
-              target:
-                entity_id: light.front_door_1
-              data:
-                transition: 3
         ################################################################# Nacht
         - conditions:
             - alias: "Vorgarten steht auf Nacht"
@@ -74,6 +57,13 @@
                 transition: 3
                 hs_color:
                   ['{{states("input_number.global_hue_primary")|float}}', 100]
+            - service: light.turn_on
+              target:
+                entity_id: light.front_garden_small_sphere_lamp_2
+              data:
+                transition: 3
+                hs_color:
+                  ['{{states("input_number.global_hue_secondary")|float}}', 100]
                 brightness_pct: 20
             - service: light.turn_off
               target:
@@ -85,6 +75,10 @@
         - service: light.turn_off
           data:
             entity_id: light.front_garden_small_sphere_lamp_1
+            transition: 3
+        - service: light.turn_off
+          data:
+            entity_id: light.front_garden_small_sphere_lamp_2
             transition: 3
         - service: light.turn_off
           target:
