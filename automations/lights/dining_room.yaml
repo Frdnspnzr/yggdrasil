@@ -1,117 +1,128 @@
-- id: light_dining_room_main_normal
-  alias: "Esszimmer - Licht auf Normal schalten"
+- id: dining_room_main_light_every_automation
+  alias: "Esszimmer - Hauptlicht umschalten"
   trigger:
     - platform: state
-      entity_id: input_select.state_dining_room
-      to: "An"
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.dining_room_main
-        brightness_pct: 100
-        transition: 3
-
-- id: light_dining_room_main_dimmed
-  alias: "Esszimmer - Licht auf Gedämmt schalten"
-  trigger:
+      entity_id: input_boolean.alarm_mode
     - platform: state
       entity_id: input_select.state_dining_room
-      to: "Gedaemmt"
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.dining_room_main
-        brightness_pct: 30
-        transition: 3
-
-- id: light_dining_room_main_occupied_day
-  alias: "Esszimmer - Licht auf Bewohnt schalten (Tag)"
-  trigger:
     - platform: state
-      entity_id: input_select.state_dining_room
-      to: "Bewohnt"
-    - platform: state
-      entity_id: input_boolean.is_dark_dining_room
-      to: "on"
-  condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: input_select.state_house
-          state: "Nacht"
-    - condition: state
-      entity_id: input_boolean.is_dark_dining_room
-      state: "on"
-    - condition: state
-      entity_id: input_select.state_dining_room
-      state: "Bewohnt"
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_dining_room
-      state: "off"
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.dining_room_main
-        brightness_pct: 50
-        transition: 3
-
-- id: light_dining_room_main_occupied_night
-  alias: "Esszimmer - Licht auf Bewohnt schalten (Nacht)"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_dining_room
-      to: "Bewohnt"
-  condition:
-    - condition: state
       entity_id: input_select.state_house
-      state: "Nacht"
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_nightlight
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_dining_room
-      state: "off"
+    - platform: state
+      entity_id:
+        - light.dining_room_main
+      from: "unavailable"
+      for: "00:00:15"
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.dining_room_main
-        brightness_pct: 10
-        transition: 3
-
-- id: light_dining_room_main_off
-  alias: "Esszimmer - Licht ausschalten"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_dining_room
-      to: "Leer"
-    - platform: state
-      entity_id: input_select.state_dining_room
-      to: "Bewohnt"
-    - platform: state
-      entity_id: input_boolean.is_dark_dining_room
-      to: "off"
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "Leer"
-        - condition: and
-          conditions:
-            - condition: state
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        #################################################################
+        ### Alarmodus
+        #################################################################
+        - conditions:
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_main
+                brightness_pct: 100
+                transition: 0
+        #################################################################
+        ### Hauptlicht
+        #################################################################
+        - conditions:
+            - alias: "Eszimmer ist An"
+              condition: state
+              entity_id: input_select.state_dining_room
+              state: "An"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_main
+                brightness_pct: 100
+                transition: 3
+        #################################################################
+        ### Gedämmt
+        #################################################################
+        - conditions:
+            - alias: "Eszimmer ist Gedämmt"
+              condition: state
+              entity_id: input_select.state_dining_room
+              state: "An"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_main
+                brightness_pct: 30
+                transition: 3
+        #################################################################
+        ###  Nachtlich
+        #################################################################
+        - conditions:
+            - alias: "Esszimmer ist Bewohnt"
+              condition: state
               entity_id: input_select.state_dining_room
               state: "Bewohnt"
-            - condition: state
+            - alias: "Haus ist Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
+            - alias: "Im Eszimmer ist es dunkel"
+              condition: state
               entity_id: input_boolean.is_dark_dining_room
+              state: "on"
+            - alias: "Eszimmer nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_dining_room
               state: "off"
-  action:
-    - service: light.turn_off
-      data:
-        entity_id: light.dining_room_main
-        transition: 3
+            - alias: "Nachtlicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_nightlight
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_main
+                brightness_pct: 50
+                transition: 3
+        #################################################################
+        ### Bewegungslicht
+        #################################################################
+        - conditions:
+            - alias: "Esszimmer ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_dining_room
+              state: "Bewohnt"
+            - alias: "Haus ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Bewohnt"
+            - alias: "Im Eszimmer ist es dunkel"
+              condition: state
+              entity_id: input_boolean.is_dark_dining_room
+              state: "on"
+            - alias: "Beweungsmelder nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_occupation_lights
+              state: "off"
+            - alias: "Eszimmer nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_dining_room
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_main
+                brightness_pct: 50
+                transition: 3
+        #################################################################
+      default:
+        - service: switch.turn_off
+          entity_id: switch.wled_tv_backlighting_lor
+        - service: light.turn_off
+          data:
+            entity_id:
+              - light.dining_room_main
+            transition: 3
