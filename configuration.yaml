@@ -50,23 +50,6 @@ cover:
       - cover.study_door_1
       - cover.study_door_2
 
-webostv:
-  host: !secret ip_adress_tv_living_room
-  name: Fernseher Wohnzimmer
-  turn_on_action:
-    service: wake_on_lan.send_magic_packet
-    data:
-      mac: !secret mac_adress_tv
-  customize:
-    sources:
-      - livetv
-      - youtube
-      - netflix
-      - amazon
-      - xbox
-      - playstation
-      - switch
-
 media_player:
 
 notify:
@@ -105,6 +88,18 @@ switch:
     is_on_template: "{{value_json.lor == 0}}"
     headers:
       Content-Type: application/json
+
+homekit:
+  - port: 21063
+    filter:
+      include_entities:
+        - input_boolean.virtual_study
+        - cover.buro
+    entity_config:
+      input_boolean.virtual_study:
+        name: "Licht Büro"
+      cover.buro:
+        name: "Rollladen Büro"
 
 tts:
   - platform: google_translate
