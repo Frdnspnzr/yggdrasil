@@ -46,7 +46,7 @@
         entity_id: cover.buro
 
 - id: study_door_cover_block_sun
-  alias: Büro - Rollos herunterfahren um Sonneneinstrahlung zu vermeiden
+  alias: Büro - Rollläden herunterfahren um Sonneneinstrahlung zu vermeiden
   trigger:
     - platform: numeric_state
       entity_id: sun.sun
@@ -54,7 +54,15 @@
       above: 120
       below: 240
     - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 35
+    - platform: numeric_state
       entity_id: weather.dwd
+      attribute: temperature
+      above: 20
+    - platform: numeric_state
+      entity_id: climate.thermostat_study_1
       attribute: temperature
       above: 20
     - platform: state
@@ -75,12 +83,17 @@
       attribute: azimuth
       above: 120
       below: 240
+    - alias: "Sonne steht hoch genug"
+      condition: numeric_state
+      entity_id: sun.sun
+      attribute: eleveation
+      above: 35
     - or:
         - alias: "Es ist draußen warm"
           condition: numeric_state
           entity_id: weather.dwd
           attribute: temperature
-          above: 18
+          above: 20
         - alias: "Es ist drinnen warm"
           condition: numeric_state
           entity_id: climate.thermostat_study_1
@@ -89,7 +102,9 @@
     - alias: "Es ist sonnig"
       condition: state
       entity_id: weather.dwd
-      state: "sunny"
+      state:
+        - "sunny"
+        - "partlycloudy"
     - alias: "Rollladen ist nicht schon unten"
       condition: numeric_state
       entity_id: cover.buro
