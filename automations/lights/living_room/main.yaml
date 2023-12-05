@@ -11,6 +11,12 @@
       entity_id: input_select.state_living_room
     - platform: state
       entity_id: input_select.state_house
+    - platform: state
+      entity_id:
+        - light.wohnzimmer_ventilator_1
+        - light.wohnzimmer_ventilator_2
+      from: "unavailable"
+      for: "00:00:15"
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:

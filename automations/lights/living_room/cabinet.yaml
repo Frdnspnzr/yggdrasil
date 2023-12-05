@@ -9,6 +9,12 @@
       entity_id: input_select.state_dining_room
     - platform: state
       entity_id: input_select.state_house
+    - platform: state
+      entity_id: input_boolean.effect_achievement
+    - platform: state
+      entity_id: light.wled_living_room_cabinet
+      from: "unavailable"
+      for: "00:00:15"
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:

@@ -11,6 +11,14 @@
       entity_id: input_select.state_dining_room
     - platform: state
       entity_id: input_select.state_house
+    - platform: state
+      entity_id:
+        - light.living_room_tv_backlighting_left
+        - light.living_room_tv_backlighting_right
+        - light.living_room_tv_backlighting_bottom
+        - light.living_room_tv_backlighting_top
+      from: "unavailable"
+      for: "00:00:15"
   action:
     - alias: "Korrekte Beleuchtung auswählen"
       choose:
