@@ -55,6 +55,20 @@
         entity_id: input_select.state_study
         option: "An"
 
+- id: state_study_turn_on_with_lights
+  alias: "Büro - Zustand auf Ein schalten wenn die Lampe eingeschaltet wird"
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: light.office_main_1
+      from: "unavailable"
+      for: "00:00:05"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_study
+        option: "An"
+
 - id: state_study_turn_off
   alias: "Büro - Zustand automatisch auf Aus oder Bewohnt schalten"
   mode: single
