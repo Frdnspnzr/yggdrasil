@@ -39,6 +39,15 @@ alarm_mode:
   icon: mdi:alert-decagram
 
 ###
+# Effects
+###
+
+effect_achievement:
+  name: Effekt - Achievement
+  initial: off
+  icon: mdi:trophy
+
+###
 # Virtual Buttons
 ###
 

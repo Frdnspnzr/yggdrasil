@@ -29,9 +29,24 @@
           sequence:
             - service: light.turn_on
               data:
-                entity_id: light.light.wled_living_room_cabinet
+                entity_id: light.wled_living_room_cabinet
                 brightness_pct: 100
                 color_temp: 480
+        #################################################################
+        ### Effekt: Achievement
+        #################################################################
+        - conditions:
+            - alias: "Effekt ist an"
+              condition: state
+              entity_id: input_boolean.effect_achievement
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.wled_living_room_cabinet
+                brightness_pct: 100
+                effect: "Fireworks 1D"
         #################################################################
         ### Kinomodus
         #################################################################

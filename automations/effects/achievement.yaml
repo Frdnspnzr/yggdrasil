@@ -1,0 +1,21 @@
+- id: effect_achievement_automation
+  alias: "Effekt - Achievement"
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: sensor.frdnspnzr_gamer_score
+  condition:
+    - alias: "Xbox im Wohnzimmer ist an"
+      condition: state
+      entity_id: media_player.wohnzimmer_xbox
+      state: "on"
+  action:
+    - alias: "Effekt einschalten"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.effect_achievement
+    - delay: "00:00:07"
+    - alias: "Effekt ausschalten"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.effect_achievement
