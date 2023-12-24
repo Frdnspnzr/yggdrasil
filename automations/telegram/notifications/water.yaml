@@ -1,0 +1,10 @@
+- alias: Telegram Benachrichtigung - Wasser unter der Spüle
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.water_behind_sink
+      to: "on"
+      for: "00:00:30"
+  action:
+    - service: notify.telegram_alle
+      data:
+        message: "💦 Ich hab unter der Spüle in der Küche Wasser gefunden!"
