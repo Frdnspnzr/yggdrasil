@@ -1,0 +1,28 @@
+- id: living_room_turn_on_night_sound
+  alias: "Wohnzimmer - Nachtsound am Fernseher einschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_bedroom
+      to: "off"
+  action:
+    - alias: "action alias (name)"
+      service: switch.turn_on
+      target:
+        entity_id:
+          - switch.sonos_wohnzimmer_night_sound
+          - switch.sonos_wohnzimmer_speech_enhancement
+
+- id: living_room_turn_off_night_sound
+  alias: "Wohnzimmer - Nachtsound am Fernseher ausschalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_bedroom
+      to: "on"
+      for: "00:01:30"
+  action:
+    - alias: "action alias (name)"
+      service: switch.turn_off
+      target:
+        entity_id:
+          - switch.sonos_wohnzimmer_night_sound
+          - switch.sonos_wohnzimmer_speech_enhancement
