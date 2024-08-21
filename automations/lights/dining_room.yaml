@@ -55,7 +55,7 @@
             - service: light.turn_on
               data:
                 entity_id: light.dining_room_main
-                brightness_pct: 30
+                brightness_pct: 15
                 transition: 3
         #################################################################
         ###  Nachtlich
