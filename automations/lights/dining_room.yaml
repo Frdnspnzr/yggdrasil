@@ -50,7 +50,7 @@
             - alias: "Eszimmer ist Gedämmt"
               condition: state
               entity_id: input_select.state_dining_room
-              state: "An"
+              state: "Gedaemmt"
           sequence:
             - service: light.turn_on
               data:
