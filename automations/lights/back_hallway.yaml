@@ -1,0 +1,111 @@
+- id: back_hallway_ceiling_light_every_automation
+  alias: "Flur hinten - Hauptlicht umschalten"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+    - platform: state
+      entity_id: input_select.state_back_hallway
+    - platform: state
+      entity_id: input_select.state_living_room
+    - platform: state
+      entity_id: input_select.state_dining_room
+    - platform: state
+      entity_id: input_select.state_house
+  action:
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        ################################################################# Alarm
+        - conditions:
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id:
+                  - light.light.hallway_back_ceiling_1
+                  - light.light.hallway_back_ceiling_2
+                  - light.light.hallway_back_ceiling_3
+                  - light.light.hallway_back_ceiling_4
+                brightness_pct: 100
+                color_temp_kelvin: 3500
+        ################################################################# Nachtlicht
+        - conditions:
+            - alias: "Hinterer Flur ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_back_hallway
+              state: "Bewohnt"
+            - alias: "Haus ist Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
+            - alias: "Nachtlicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_nightlight
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.hallway_back_ceiling_1
+                  - light.hallway_back_ceiling_4
+              data:
+                brightness_pct: 1
+                color_temp_kelvin: 2000
+                transition: 3
+            - service: light.turn_off
+              target:
+                entity_id:
+                  - light.hallway_back_ceiling_2
+                  - light.hallway_back_ceiling_3
+              data:
+                transition: 3
+        ################################################################# Zusätzliches Ambiente
+        - conditions:
+            - alias: "Esszimmer oder Wohnzimmer An oder Kino"
+              condition: state
+              match: any
+              entity_id:
+                - input_select.state_living_room
+                - input_select.state_dining_room
+              state:
+                - "An"
+                - "Kino"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.hallway_back_ceiling_2
+              data:
+                hs_color:
+                  ['{{states("input_number.global_hue_primary")|float}}', 100]
+                brightness_pct: 30
+                transition: 3
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.hallway_back_ceiling_3
+              data:
+                hs_color:
+                  ['{{states("input_number.global_hue_secondary")|float}}', 100]
+                brightness_pct: 40
+                transition: 3
+            - service: light.turn_off
+              target:
+                entity_id:
+                  - light.hallway_back_ceiling_1
+                  - light.hallway_back_ceiling_4
+              data:
+                transition: 3
+      ################################################################# Aus
+      default:
+        - service: light.turn_off
+          target:
+            entity_id:
+              - light.hallway_back_ceiling_1
+              - light.hallway_back_ceiling_2
+              - light.hallway_back_ceiling_3
+              - light.hallway_back_ceiling_4
+          data:
+            transition: 3
