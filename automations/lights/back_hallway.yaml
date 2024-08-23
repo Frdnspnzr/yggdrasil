@@ -62,42 +62,42 @@
               data:
                 transition: 3
         ################################################################# Zusätzliches Ambiente
-        - conditions:
-            - alias: "Esszimmer oder Wohnzimmer An oder Kino"
-              condition: state
-              match: any
-              entity_id:
-                - input_select.state_living_room
-                - input_select.state_dining_room
-              state:
-                - "An"
-                - "Kino"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id:
-                  - light.hallway_back_ceiling_2
-              data:
-                hs_color:
-                  ['{{states("input_number.global_hue_primary")|float}}', 100]
-                brightness_pct: 30
-                transition: 3
-            - service: light.turn_on
-              target:
-                entity_id:
-                  - light.hallway_back_ceiling_3
-              data:
-                hs_color:
-                  ['{{states("input_number.global_hue_secondary")|float}}', 100]
-                brightness_pct: 40
-                transition: 3
-            - service: light.turn_off
-              target:
-                entity_id:
-                  - light.hallway_back_ceiling_1
-                  - light.hallway_back_ceiling_4
-              data:
-                transition: 3
+        # - conditions:
+        #     - alias: "Esszimmer oder Wohnzimmer An oder Kino"
+        #       condition: state
+        #       match: any
+        #       entity_id:
+        #         - input_select.state_living_room
+        #         - input_select.state_dining_room
+        #       state:
+        #         - "An"
+        #         - "Kino"
+        #   sequence:
+        #     - service: light.turn_on
+        #       target:
+        #         entity_id:
+        #           - light.hallway_back_ceiling_2
+        #       data:
+        #         hs_color:
+        #           ['{{states("input_number.global_hue_primary")|float}}', 100]
+        #         brightness_pct: 30
+        #         transition: 3
+        #     - service: light.turn_on
+        #       target:
+        #         entity_id:
+        #           - light.hallway_back_ceiling_3
+        #       data:
+        #         hs_color:
+        #           ['{{states("input_number.global_hue_secondary")|float}}', 100]
+        #         brightness_pct: 40
+        #         transition: 3
+        #     - service: light.turn_off
+        #       target:
+        #         entity_id:
+        #           - light.hallway_back_ceiling_1
+        #           - light.hallway_back_ceiling_4
+        #       data:
+        #         transition: 3
       ################################################################# Aus
       default:
         - service: light.turn_off
