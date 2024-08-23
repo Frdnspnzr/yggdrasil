@@ -85,6 +85,11 @@ is_dark_study:
   initial: on
   icon: mdi:white-balance-sunny
 
+is_dark_back_hallway:
+  name: Flur hinten ist dunkel
+  initial: on
+  icon: mdi:white-balance-sunny
+
 ###
 # Disable switches for rooms
 ###
@@ -111,6 +116,11 @@ disable_kitchen:
 
 disable_front_hallway:
   name: Flur vorne deaktivieren
+  initial: off
+  icon: mdi:electric-switch
+
+disable_back_hallway:
+  name: Flur hinten deaktivieren
   initial: off
   icon: mdi:electric-switch
 

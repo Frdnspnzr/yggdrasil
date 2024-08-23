@@ -1,0 +1,67 @@
+- id: state_back_hallway_set_to_occupied_on_door_open
+  alias: "Flur Hinten - Zustand auf Bewohnt schalten"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_bedroom
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.door_main_bathroom
+      to: "on"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_back_hallway
+        option: "Bewohnt"
+
+- id: state_back_hallway_set_to_not_occupied_on_door_close
+  alias: "Flur Hinten - Zustand auf Leer schalten (Tür geschlossen)"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_bedroom
+      to:
+        - "off"
+        - "unavailable"
+      for: "00:00:10"
+    - platform: state
+      entity_id: binary_sensor.door_main_bathroom
+      to:
+        - "off"
+        - "unavailable"
+      for: "00:00:10"
+  condition:
+    - alias: "Badezimmertür geschlossen"
+      condition: state
+      entity_id: binary_sensor.door_main_bathroom
+      state:
+        - "off"
+        - "unavailable"
+      for: "00:00:10"
+    - alias: "Badezimmertür geschlossen"
+      condition: state
+      entity_id: binary_sensor.door_bedroom
+      state:
+        - "off"
+        - "unavailable"
+      for: "00:00:10"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_back_hallway
+        option: "Leer"
+
+- id: state_back_hallway_set_to_not_occupied_on_door_stay_opem
+  alias: "Flur Hinten - Zustand auf Leer schalten (Tür offen)"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_bedroom
+      to: "on"
+      for: "00:02:00"
+    - platform: state
+      entity_id: binary_sensor.door_main_bathroom
+      to: "on"
+      for: "00:02:00"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_back_hallway
+        option: "Leer"

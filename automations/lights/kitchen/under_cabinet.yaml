@@ -1,166 +1,125 @@
-- id: light_kitchen_under_cabinet_on
-  alias: "Küche - Unterschrankbeleuchtung einschalten"
+- id: light_kitchen_under_cabinet_every_automation
+  alias: "Küche - Unterschrankbeleuchtung umschalten"
   trigger:
     - platform: state
       entity_id: input_select.state_kitchen
-      to: "An"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.motion_kitchen_2
-      state: "off"
-  action:
-    - service: light.turn_on
-      data:
-        brightness_pct: 50
-        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-        transition: 1
-        entity_id: light.kitchen_under_cabinet_1
-
-- id: light_kitchen_under_cabinet_automatic_day"
-  alias: "Küche - Unterschrankbeleuchtung auf bewohnt schalten (Tag)"
-  trigger:
-    - platform: state
-      entity_id: input_select.state_kitchen
-      to: "Bewohnt"
     - platform: state
       entity_id: input_number.global_hue_primary
-  condition:
-    - condition: state
+    - platform: state
+      entity_id: input_boolean.is_dark_kitchen
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_2
+    - platform: state
       entity_id: input_select.state_house
-      state: "Bewohnt"
-    - condition: state
-      entity_id: input_boolean.is_dark_kitchen
-      state: "on"
-    - condition: state
-      entity_id: binary_sensor.motion_kitchen_2
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
+    - platform: state
+      entity_id: input_boolean.alarm_mode
+    - platform: state
       entity_id: input_boolean.disable_kitchen
-      state: "off"
-  action:
-    - service: light.turn_on
-      data:
-        brightness_pct: 50
-        hs_color: ['{{states("input_number.global_hue_primary")|float}}', 100]
-        transition: 1
-        entity_id: light.kitchen_under_cabinet_1
-
-- id: light_kitchen_under_cabinet_off
-  alias: "Küche - Unterschrankbeleuchtung ausschalten"
-  trigger:
     - platform: state
-      entity_id: input_select.state_kitchen
-      to: "Leer"
-    - platform: state
-      entity_id: input_select.state_kitchen
-      to: "Bewohnt"
-    - platform: state
-      entity_id: input_boolean.is_dark_kitchen
-      to: "off"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.motion_kitchen_2
-      state: "off"
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_kitchen
-          state: "Leer"
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: input_select.state_kitchen
-              state: "Bewohnt"
-            - condition: state
-              entity_id: input_boolean.is_dark_kitchen
-              state: "off"
-  action:
-    - service: light.turn_off
-      data:
-        entity_id: light.kitchen_under_cabinet_1
-        transition: 1
-
-- id: light_kitchen_under_cabinet_work_light_on
-  alias: "Küche - Unterschrankbeleuchtung Arbeitslicht anschalten"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_kitchen_2
-      to: "on"
-    - platform: state
-      entity_id: input_select.state_kitchen
-      to: "An"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.motion_kitchen_2
-      state: "on"
-    - condition: or
-      conditions:
-        - condition: not
-          conditions:
-            - condition: state
-              entity_id: input_select.state_house
-              state: "Nacht"
-        - condition: state
-          entity_id: input_select.state_kitchen
-          state: "An"
-    - condition: state
       entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_kitchen
-      state: "off"
   action:
-    - service: light.turn_on
-      data:
-        brightness: 255
-        color_temp: 315
-        transition: 1
-        entity_id: light.kitchen_under_cabinet_1
-
-- id: light_kitchen_under_cabinet_work_light_off
-  alias: "Küche - Unterschrankbeleuchtung Arbeitslicht ausschalten"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_kitchen_2
-      to: "off"
-  condition:
-    - condition: state
-      entity_id: input_boolean.disable_occupation_lights
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.disable_kitchen
-      state: "off"
-  action:
-    - choose:
+    - alias: "Korrekte Beleuchtung auswählen"
+      choose:
+        ################################################################# Alarm
         - conditions:
-            - condition: state
-              entity_id: input_select.state_kitchen
-              state:
-                - "An"
-                - "Bewohnt"
-            - condition: or
-              conditions:
-                - condition: not
-                  conditions:
-                    - condition: state
-                      entity_id: input_select.state_house
-                      state: "Nacht"
-                - condition: state
-                  entity_id: input_select.state_kitchen
-                  state: "An"
+            - alias: "Alarm ist an"
+              condition: state
+              entity_id: input_boolean.alarm_mode
+              state: "on"
           sequence:
             - service: light.turn_on
               data:
+                entity_id: light.kitchen_under_cabinet_1
+                brightness_pct: 100
+                transition: 0
+                color_temp: 315
+        ################################################################# Arbeitslicht
+        - conditions:
+            - or:
+                - alias: "Küche ist An"
+                  condition: state
+                  entity_id: input_select.state_kitchen
+                  state: "An"
+                - and:
+                    - alias: "Bewegungsmelder löst aus"
+                      condition: state
+                      entity_id: binary_sensor.motion_kitchen_2
+                      state: "on"
+                    - not:
+                        - alias: "Es ist Nacht"
+                          condition: state
+                          entity_id: input_select.state_house
+                          state: "Nacht"
+                    - alias: "Küche nicht ausgeschaltet"
+                      condition: state
+                      entity_id: input_boolean.disable_kitchen
+                      state: "off"
+                    - alias: "Bewegungslicht nicht ausgeschaltet"
+                      condition: state
+                      entity_id: input_boolean.disable_occupation_lights
+                      state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kitchen_under_cabinet_1
+                brightness_pct: 100
+                transition: 2
+                color_temp: 315
+        ################################################################# Nachtlicht
+        - conditions:
+            - alias: "Bewegungsmelder löst aus"
+              condition: state
+              entity_id: binary_sensor.motion_kitchen_2
+              state: "on"
+            - alias: "Es ist Nacht"
+              condition: state
+              entity_id: input_select.state_house
+              state: "Nacht"
+            - alias: "Küche nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_kitchen
+              state: "off"
+            - alias: "Nachtlicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_nightlight
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kitchen_under_cabinet_1
                 brightness_pct: 50
+                transition: 2
+                color_temp: 315
+        ################################################################# Akzentlicht
+        - conditions:
+            - alias: "Küche ist Bewohnt"
+              condition: state
+              entity_id: input_select.state_kitchen
+              state: "Bewohnt"
+            - not:
+                - alias: "Es ist Nacht"
+                  condition: state
+                  entity_id: input_select.state_house
+                  state: "Nacht"
+            - alias: "Küche nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_kitchen
+              state: "off"
+            - alias: "Bewegungslicht nicht ausgeschaltet"
+              condition: state
+              entity_id: input_boolean.disable_occupation_lights
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kitchen_under_cabinet_1
+                brightness_pct: 50
+                transition: 2
                 hs_color:
                   ['{{states("input_number.global_hue_primary")|float}}', 100]
-                transition: 1
-                entity_id: light.kitchen_under_cabinet_1
+      ################################################################# Aus
       default:
         - service: light.turn_off
           data:
             entity_id: light.kitchen_under_cabinet_1
-            transition: 1
+            transition: 5

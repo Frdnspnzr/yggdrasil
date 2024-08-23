@@ -1,37 +1,48 @@
 ###############################################################################
-### ==> Leer
-###############################################################################
-
-- alias: Flur vorne auf Leer schalten wenn niemand dort ist
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_front_hallway
-      to: 'on'
-  condition:
-    condition: state
-    entity_id: input_select.state_front_hallway
-    state: 'Leer'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_front_hallway
-        option: 'Bewohnt'
-
-###############################################################################
 ### ==> Bewohnt
 ###############################################################################
 
 - alias: Flur vorne auf Bewohnt schalten wenn jemand dort ist
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_front_hallway
-      to: 'off'
+      entity_id:
+        - binary_sensor.motion_front_hallway
+        - binary_sensor.motion_stairs_middle
+      to: "on"
   condition:
     condition: state
     entity_id: input_select.state_front_hallway
-    state: 'Bewohnt'
+    state: "Leer"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_front_hallway
-        option: 'Leer'
+        option: "Bewohnt"
+
+###############################################################################
+### ==> Leer
+###############################################################################
+
+- alias: Flur vorne auf Leer schalten wenn jemand dort ist
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.motion_front_hallway
+        - binary_sensor.motion_stairs_middle
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: input_select.state_front_hallway
+      state: "Bewohnt"
+    - condition: state
+      entity_id:
+        - binary_sensor.motion_front_hallway
+        - binary_sensor.motion_stairs_middle
+      state:
+        - "off"
+        - "unavailable"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_front_hallway
+        option: "Leer"

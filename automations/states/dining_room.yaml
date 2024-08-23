@@ -8,7 +8,7 @@
 ###
 
 - id: state_dining_room_set_to_on_main_button_press
-  alias: "Esszimmer - Zustand mit Remote auf An schalten"
+  alias: "Esszimmer - Zustand mit Remote auf An schalten (Hauptknopf)"
   trigger:
     - platform: device
       type: remote_button_short_press
@@ -23,17 +23,17 @@
   condition:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'Leer'
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'Bewohnt'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "Leer"
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "Bewohnt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'An'
+        option: "An"
 
 ###
 # Coming from any state but An (On)
@@ -41,7 +41,7 @@
 ###
 
 - id: state_dining_room_set_to_on_up_button_press
-  alias: "Esszimmer - Zustand mit Remote auf An schalten"
+  alias: "Esszimmer - Zustand mit Remote auf An schalten (Dim up)"
   trigger:
     - platform: device
       type: remote_button_short_press
@@ -56,14 +56,14 @@
   condition:
     - condition: not
       conditions:
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'An'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'An'
+        option: "An"
 
 ###
 # Coming from either Leer (Empty) or Bewohnt (Occupied)
@@ -75,28 +75,28 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_dining_room
-      to: 'on'
-      for: '00:05:00'
+      to: "on"
+      for: "00:05:00"
   condition:
     - condition: state
       entity_id: input_boolean.disable_timeouts
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_dining_room
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: sun.sun
-      state: 'below_horizon'
+      state: "below_horizon"
     - condition: state
       entity_id: input_select.state_dining_room
       state:
-        - 'Leer'
-        - 'Bewohnt'
+        - "Leer"
+        - "Bewohnt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'An'
+        option: "An"
 
 ###############################################################################
 ### ==> Leer
@@ -124,20 +124,20 @@
   condition:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'An'
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'Gedaemmt'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "Gedaemmt"
     - condition: state
       entity_id: binary_sensor.occupancy_dining_room
-      state: 'off'
+      state: "off"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Leer'
+        option: "Leer"
     - service: script.announce_light_status
       data:
         media_player: media_player.esszimmer
@@ -153,16 +153,16 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_dining_room
-      to: 'off'
+      to: "off"
   condition:
     - condition: state
       entity_id: input_select.state_dining_room
-      state: 'Bewohnt'
+      state: "Bewohnt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Leer'
+        option: "Leer"
 
 ###
 # Coming from An (On)
@@ -174,13 +174,13 @@
   trigger:
     - platform: state
       entity_id: input_select.state_living_room
-      to: 'Gedaemmt'
-      for: '00:05:00'
+      to: "Gedaemmt"
+      for: "00:05:00"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Leer'
+        option: "Leer"
 
 ###
 # Coming from either An (On) or Gedaemmt (Dimmed)
@@ -192,25 +192,25 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_dining_room
-      to: 'off'
-      for: '00:20:00'
+      to: "off"
+      for: "00:20:00"
   condition:
     - condition: state
       entity_id: input_boolean.disable_timeouts
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_boolean.disable_dining_room
-      state: 'off'
+      state: "off"
     - condition: state
       entity_id: input_select.state_dining_room
       state:
-        - 'An'
-        - 'Gedaemmt'
+        - "An"
+        - "Gedaemmt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Leer'
+        option: "Leer"
 
 ###############################################################################
 ### ==> Bewohnt
@@ -226,16 +226,16 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_dining_room
-      to: 'on'
+      to: "on"
   condition:
     - condition: state
       entity_id: input_select.state_dining_room
-      state: 'Leer'
+      state: "Leer"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 ###
 # Coming from 'Gedaemmt' (Dimmed) or 'An' (On)
@@ -259,20 +259,20 @@
   condition:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'An'
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'Gedaemmt'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "An"
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "Gedaemmt"
     - condition: state
       entity_id: binary_sensor.occupancy_dining_room
-      state: 'on'
+      state: "on"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Bewohnt'
+        option: "Bewohnt"
 
 ###############################################################################
 ### ==> Gedaemmt
@@ -299,11 +299,11 @@
   condition:
     - condition: not
       conditions:
-      - condition: state
-        entity_id: input_select.state_dining_room
-        state: 'Gedaemmt'
+        - condition: state
+          entity_id: input_select.state_dining_room
+          state: "Gedaemmt"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_dining_room
-        option: 'Gedaemmt'
+        option: "Gedaemmt"

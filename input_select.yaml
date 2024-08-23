@@ -37,6 +37,12 @@ state_front_hallway:
     - Bewohnt
     - Leer
 
+state_back_hallway:
+  name: Zustand Flur hinten
+  options:
+    - Bewohnt
+    - Leer
+
 state_bedroom:
   name: Zustand Schlafzimmer
   options:
