@@ -1,129 +1,73 @@
-###############################################################################
-### ==> An
-###############################################################################
-
-- alias: Kuechenzustand mit Remote auf An schalten
+- id: state_kitchen_remote
+  alias: Kuechenzustand mit Remote umschalten
   trigger:
     - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
       domain: deconz
       platform: device
       type: remote_button_short_press
       subtype: turn_on
-  condition:
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: input_select.state_kitchen
-      state: 'Bewohnt'
-    - condition: state
-      entity_id: input_select.state_kitchen
-      state: 'Leer'
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_kitchen
-        option: 'An'
-
-###############################################################################
-### ==> Leer
-###############################################################################
-
-- id: state_kitche_set_to_off_with_remote
-  alias: Kuechenzustand mit Remote auf Leer schalten
-  trigger:
-    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-  condition:
-    - condition: state
-      entity_id: input_select.state_kitchen
-      state: 'An'
-    - condition: state
-      entity_id: binary_sensor.occupancy_kitchen
-      state: 'off'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_kitchen
-        option: 'Leer'
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.kueche
-        volume: 0.2
-
-- alias: Küche auf Leer schalten wenn niemand dort ist
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.occupancy_kitchen
-      to: 'off'
-  condition:
-    condition: state
-    entity_id: input_select.state_kitchen
-    state: 'Bewohnt'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_kitchen
-        option: 'Leer'
+    - alias: "Neuen Folgezustand auswählen"
+      choose:
+        - conditions:
+            - or:
+                - condition: state
+                  entity_id: input_select.state_kitchen
+                  state: "Bewohnt"
+                - condition: state
+                  entity_id: input_select.state_kitchen
+                  state: "Leer"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_kitchen
+                option: "An"
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_kitchen
+              state: "An"
+            - condition: state
+              entity_id: binary_sensor.occupancy_kitchen
+              state: "on"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_kitchen
+                option: "Bewohnt"
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_kitchen
+            option: "Leer"
 
 - alias: Küche - Timeout des Raums wenn er leer steht
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_kitchen
-      to: 'off'
-      for: '00:05:00'
+      to: "off"
+      for: "00:05:00"
   condition:
-    condition: state
-    entity_id: input_select.state_kitchen
-    state: 'An'
+    - not:
+        - condition: state
+          entity_id: input_select.state_kitchen
+          state: "An"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_kitchen
-        option: 'Leer'
-
-###############################################################################
-### ==> Bewohnt
-###############################################################################
+        option: "Leer"
 
 - alias: Küche auf Bewohnt schalten wenn jemand dort ist
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_kitchen
-      to: 'on'
+      to: "on"
   condition:
     condition: state
     entity_id: input_select.state_kitchen
-    state: 'Leer'
+    state: "Leer"
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.state_kitchen
-        option: 'Bewohnt'
-
-- id: state_kitchen_set_to_occupied_with_remote
-  alias: Küche - Zustand mit Remote auf Bewohnt schalten
-  trigger:
-    - device_id: 17eb1169ca2043cca3832ba7482e1dca #Tradfri Switch Kitchen 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-  condition:
-    - condition: state
-      entity_id: input_select.state_kitchen
-      state: 'An'
-    - condition: state
-      entity_id: binary_sensor.occupancy_kitchen
-      state: 'on'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_kitchen
-        option: 'Bewohnt'
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.kueche
-        volume: 0.2
+        option: "Bewohnt"

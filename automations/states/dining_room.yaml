@@ -1,14 +1,5 @@
-###############################################################################
-### ==> An
-###############################################################################
-
-###
-# Coming from Leer (Emtpy) or Bewohnt (Occupied)
-# Event 'main button'
-###
-
-- id: state_dining_room_set_to_on_main_button_press
-  alias: "Esszimmer - Zustand mit Remote auf An schalten (Hauptknopf)"
+- id: state_dining_room_set_with_remote_big_button
+  alias: "Esszimmer - Zustand mit großem Knopf der Remote umschalten"
   trigger:
     - platform: device
       type: remote_button_short_press
@@ -20,20 +11,43 @@
       domain: deconz
       device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
       subtype: turn_on
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "Leer"
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "Bewohnt"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_dining_room
-        option: "An"
+    - alias: "Neuen Folgezustand auswählen"
+      choose:
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_dining_room
+              state:
+                - "Leer"
+                - "Bewohnt"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_dining_room
+                option: "An"
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_dining_room
+              state:
+                - "An"
+                - "Gedaemmt"
+            - condition: state
+              entity_id: binary_sensor.occupancy_dining_room
+              state: "on"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_dining_room
+                option: "Bewohnt"
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_dining_room
+            option: "Aus"
+
+###############################################################################
+### ==> An
+###############################################################################
 
 ###
 # Coming from any state but An (On)
@@ -101,47 +115,6 @@
 ###############################################################################
 ### ==> Leer
 ###############################################################################
-
-###
-# Coming from 'An' (On) or 'Gedaemmt' (Dimmed)
-# Event 'main switch'
-# No occupancy
-###
-
-- id: state_dining_room_set_to_empty_button
-  alias: "Esszimmer - Zustand mit Knopf auf Leer schalten"
-  trigger:
-    - platform: device
-      type: remote_button_short_press
-      domain: deconz
-      device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
-      subtype: turn_on
-    - platform: device
-      type: remote_button_short_press
-      domain: deconz
-      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
-      subtype: turn_on
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "An"
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "Gedaemmt"
-    - condition: state
-      entity_id: binary_sensor.occupancy_dining_room
-      state: "off"
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_dining_room
-        option: "Leer"
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.esszimmer
-        volume: 0.3
 
 ###
 # Coming from 'Bewohnt' (Occupied)
@@ -231,43 +204,6 @@
     - condition: state
       entity_id: input_select.state_dining_room
       state: "Leer"
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_dining_room
-        option: "Bewohnt"
-
-###
-# Coming from 'Gedaemmt' (Dimmed) or 'An' (On)
-# Event 'main switch'
-# Occupancy
-###
-
-- id: state_dining_room_set_to_occupied_button
-  alias: "Esszimmer - Zustand mit Knopf auf Bewohnt schalten"
-  trigger:
-    - platform: device
-      type: remote_button_short_press
-      domain: deconz
-      device_id: f4093bdae6d44f4e805e481c5c39bc1c #Tradfri Switch Dining Room 1
-      subtype: turn_on
-    - platform: device
-      type: remote_button_short_press
-      domain: deconz
-      device_id: 29ad4085f8934b8e9e13cb7788c3221e #Tradfri Switch Dining Room 2
-      subtype: turn_on
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "An"
-        - condition: state
-          entity_id: input_select.state_dining_room
-          state: "Gedaemmt"
-    - condition: state
-      entity_id: binary_sensor.occupancy_dining_room
-      state: "on"
   action:
     - service: input_select.select_option
       data:

@@ -1,3 +1,53 @@
+- id: state_living_room_set_with_remote_big_button
+  alias: "Wohnzimmer - Zustand mit großem Knopf der Remote umschalten"
+  trigger:
+    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
+      domain: deconz
+      platform: device
+      type: remote_button_short_press
+      subtype: turn_on
+  action:
+    - alias: "Neuen Folgezustand auswählen"
+      choose:
+        - conditions:
+            - or:
+                - condition: state
+                  entity_id: input_select.state_living_room
+                  state: "Bewohnt"
+                - condition: state
+                  entity_id: input_select.state_living_room
+                  state: "Leer"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_living_room
+                option: "An"
+        - conditions:
+            - condition: state
+              entity_id: input_select.state_living_room
+              state:
+                - "An"
+                - "Gedaemmt"
+                - "Kino"
+            - condition: state
+              entity_id: binary_sensor.occupancy_living_room
+              state: "on"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.state_living_room
+                option: "Bewohnt"
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.state_living_room
+            option: "Aus"
+
 ###############################################################################
 ### ==> An
 ###############################################################################
@@ -11,16 +61,6 @@
 - id: state_living_room_set_to_on_with_remote
   alias: "Wohnzimmer - Zustand mit Remote auf An schalten"
   trigger:
-    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
     - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
       domain: deconz
       platform: device
@@ -170,47 +210,6 @@
         option: "Leer"
 
 ###
-# Coming from either 'An' (On) or 'Kino' (Movie)
-# Event 'main switch'
-# No occupancy
-###
-
-- id: state_living_room_set_to_off_with_remote_no_occupancy
-  alias: "Wohnzimmer - Zustand mit Remote auf Aus schalten, wenn niemand da ist"
-  trigger:
-    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: "Kino"
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: "An"
-    - condition: state
-      entity_id: binary_sensor.occupancy_living_room
-      state: "off"
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_living_room
-        option: "Leer"
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.esszimmer
-        volume: 0.3
-
-###
 # Coming from 'Kino' (Movie)
 # Event 'TV turning off'
 # Occupancy
@@ -312,47 +311,6 @@
       data:
         entity_id: input_select.state_living_room
         option: "Bewohnt"
-
-###
-# Coming from either 'An' (On) or 'Kino' (Movie)
-# Event 'main switch'
-# Occupancy
-###
-
-- id: state_living_room_set_to_occupied_with_remote
-  alias: "Wohnzimmer - Zustand mit Remote auf Bewohnt schalten"
-  trigger:
-    - device_id: 46e3f4f82f2341f2bfbd86cfe28004a3 #Tradfri Switch Living Room 1
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-    - device_id: 98de5a8c03d643e4826488781a4bd016 #Tradfri Switch Living Room 2
-      domain: deconz
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: "An"
-        - condition: state
-          entity_id: input_select.state_living_room
-          state: "Kino"
-    - condition: state
-      entity_id: binary_sensor.occupancy_living_room
-      state: "on"
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.state_living_room
-        option: "Bewohnt"
-    - service: script.announce_light_status
-      data:
-        media_player: media_player.esszimmer
-        volume: 0.3
 
 ###
 # Coming from 'Kino' (Movie)
