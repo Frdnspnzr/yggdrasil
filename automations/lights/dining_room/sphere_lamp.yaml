@@ -1,5 +1,5 @@
-- id: dining_room_main_light_every_automation
-  alias: "Esszimmer - Deckenlicht umschalten"
+- id: dining_room_sphere_lamp_every_automation
+  alias: "Esszimmer - Kugellampe umschalten"
   trigger:
     - platform: state
       entity_id: input_boolean.alarm_mode
@@ -26,7 +26,7 @@
           sequence:
             - service: light.turn_on
               data:
-                entity_id: light.dining_room_main
+                entity_id: light.dining_room_sphere_lamp
                 brightness_pct: 100
                 transition: 0
         #################################################################
@@ -40,9 +40,10 @@
           sequence:
             - service: light.turn_on
               data:
-                entity_id: light.dining_room_main
+                entity_id: light.dining_room_sphere_lamp
                 brightness_pct: 100
-                transition: 3
+                color_temp_kelvin: 2800
+                transition: 0
         #################################################################
         ### Gedämmt
         #################################################################
@@ -54,9 +55,10 @@
           sequence:
             - service: light.turn_on
               data:
-                entity_id: light.dining_room_main
-                brightness_pct: 15
-                transition: 3
+                entity_id: light.dining_room_sphere_lamp
+                brightness_pct: 50
+                color_temp_kelvin: 2000
+                transition: 0
         #################################################################
         ###  Nachtlich
         #################################################################
@@ -82,11 +84,10 @@
               entity_id: input_boolean.disable_nightlight
               state: "off"
           sequence:
-            - service: light.turn_on
+            - service: light.turn_off
               data:
-                entity_id: light.dining_room_main
-                brightness_pct: 50
-                transition: 3
+                entity_id: light.dining_room_sphere_lamp
+                transition: 0
         #################################################################
         ### Bewegungslicht
         #################################################################
@@ -112,15 +113,14 @@
               entity_id: input_boolean.disable_dining_room
               state: "off"
           sequence:
-            - service: light.turn_on
+            - service: light.turn_off
               data:
-                entity_id: light.dining_room_main
-                brightness_pct: 50
-                transition: 3
+                entity_id: light.dining_room_sphere_lamp
+                transition: 0
         #################################################################
       default:
         - service: light.turn_off
           data:
             entity_id:
-              - light.dining_room_main
+              - light.dining_room_sphere_lamp
             transition: 3
