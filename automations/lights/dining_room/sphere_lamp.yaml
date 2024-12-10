@@ -28,6 +28,7 @@
               data:
                 entity_id: light.dining_room_sphere_lamp
                 brightness_pct: 100
+                color_temp_kelvin: 4000
                 transition: 0
         #################################################################
         ### Hauptlicht
@@ -41,9 +42,9 @@
             - service: light.turn_on
               data:
                 entity_id: light.dining_room_sphere_lamp
-                brightness_pct: 100
-                color_temp_kelvin: 2800
-                transition: 0
+                brightness_pct: 85
+                color_temp_kelvin: 2200
+                transition: 5
         #################################################################
         ### Gedämmt
         #################################################################
@@ -57,8 +58,8 @@
               data:
                 entity_id: light.dining_room_sphere_lamp
                 brightness_pct: 50
-                color_temp_kelvin: 2000
-                transition: 0
+                color_temp_kelvin: 2300
+                transition: 5
         #################################################################
         ###  Nachtlich
         #################################################################
@@ -113,14 +114,16 @@
               entity_id: input_boolean.disable_dining_room
               state: "off"
           sequence:
-            - service: light.turn_off
+            - service: light.turn_on
               data:
                 entity_id: light.dining_room_sphere_lamp
-                transition: 0
+                brightness_pct: 85
+                rgb_color: [170, 50, 255]
+                transition: 5
         #################################################################
       default:
         - service: light.turn_off
           data:
             entity_id:
               - light.dining_room_sphere_lamp
-            transition: 3
+            transition: 5
