@@ -29,6 +29,11 @@
                 entity_id: light.dining_room_main
                 brightness_pct: 100
                 transition: 0
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_sphere_lamp
+                brightness_pct: 100
+                transition: 0
         #################################################################
         ### Hauptlicht
         #################################################################
@@ -43,6 +48,12 @@
                 entity_id: light.dining_room_main
                 brightness_pct: 100
                 transition: 3
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_sphere_lamp
+                brightness_pct: 100
+                color_temp_kelvin: 2800
+                transition: 0
         #################################################################
         ### Gedämmt
         #################################################################
@@ -57,6 +68,12 @@
                 entity_id: light.dining_room_main
                 brightness_pct: 15
                 transition: 3
+            - service: light.turn_on
+              data:
+                entity_id: light.dining_room_sphere_lamp
+                brightness_pct: 50
+                color_temp_kelvin: 2000
+                transition: 0
         #################################################################
         ###  Nachtlich
         #################################################################
@@ -87,6 +104,10 @@
                 entity_id: light.dining_room_main
                 brightness_pct: 50
                 transition: 3
+            - service: light.turn_off
+              data:
+                entity_id: light.dining_room_sphere_lamp
+                transition: 0
         #################################################################
         ### Bewegungslicht
         #################################################################
@@ -117,6 +138,10 @@
                 entity_id: light.dining_room_main
                 brightness_pct: 50
                 transition: 3
+            - service: light.turn_off
+              data:
+                entity_id: light.dining_room_sphere_lamp
+                transition: 0
         #################################################################
       default:
         - service: switch.turn_off
@@ -125,4 +150,5 @@
           data:
             entity_id:
               - light.dining_room_main
+              - light.dining_room_sphere_lamp
             transition: 3
