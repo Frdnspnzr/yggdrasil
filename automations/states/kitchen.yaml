@@ -40,7 +40,7 @@
             entity_id: input_select.state_kitchen
             option: "Leer"
 
-- alias: Küche - Timeout des Raums wenn er leer steht
+- alias: Küche - Timeout des Raums wenn er nicht an ist
   trigger:
     - platform: state
       entity_id: binary_sensor.occupancy_kitchen
@@ -48,6 +48,22 @@
       for: "00:05:00"
   condition:
     - not:
+        - condition: state
+          entity_id: input_select.state_kitchen
+          state: "An"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_kitchen
+        option: "Leer"
+
+- alias: Küche - Timeout des Raums wenn er an ist
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.occupancy_kitchen
+      to: "off"
+      for: "00:20:00"
+  condition:
         - condition: state
           entity_id: input_select.state_kitchen
           state: "An"
