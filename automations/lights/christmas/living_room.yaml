@@ -6,6 +6,8 @@
     - platform: state
       entity_id: input_select.state_dining_room
     - platform: state
+      entity_id: input_select.state_front_hallway
+    - platform: state
       entity_id: input_boolean.is_dark_living_room
     - platform: state
       entity_id: input_select.state_house
@@ -38,6 +40,12 @@
                     - "Bewohnt"
                     - "An"
                     - "Gedaemmt"
+                - alias: "Flur vorne Bewohnt oder An"
+                  condition: state
+                  entity_id: input_select.state_front_hallway
+                  state:
+                    - "Bewohnt"
+                    - "An"
           sequence:
             - service: switch.turn_on
               entity_id: switch.plug_christmas_star
