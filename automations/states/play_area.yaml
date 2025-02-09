@@ -1,0 +1,83 @@
+- id: state_play_area_off
+  alias: "Spielecke - Zustand mit Schalter auf Aus schalten"
+  trigger:
+    - platform: device
+      device_id: a12ea08769b659923aae2c149538a877 # Spielecke 1
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_2
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Aus"
+
+- id: state_play_area_bright
+  alias: "Spielecke - Zustand mit Schalter auf Hell schalten"
+  trigger:
+    - platform: device
+      device_id: a12ea08769b659923aae2c149538a877 # Spielecke 1
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_1
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Hell"
+
+- id: state_play_area_twinkle
+  alias: "Spielecke - Zustand mit Schalter auf Funkeln schalten"
+  trigger:
+    - platform: device
+      device_id: 9ee8f82a57fa64cdd5cd0382fcad6654 # Spielecke 2
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_1
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Funkeln"
+
+- id: state_play_area_dim
+  alias: "Spielecke - Zustand mit Schalter auf Dunkel schalten"
+  trigger:
+    - platform: device
+      device_id: 9ee8f82a57fa64cdd5cd0382fcad6654 # Spielecke 2
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_2
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Dunkel"
+
+- id: state_play_area_color_1
+  alias: "Spielecke - Zustand mit Schalter auf Farbe 1 schalten"
+  trigger:
+    - platform: device
+      device_id: bb11a9deaaba12a6dfb1555df4c1cad7 # Spielecke 3
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_1
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Farbe 1"
+
+- id: state_play_area_color_2
+  alias: "Spielecke - Zustand mit Schalter auf Farbe 2 schalten"
+  trigger:
+    - platform: device
+      device_id: bb11a9deaaba12a6dfb1555df4c1cad7 # Spielecke 3
+      domain: deconz
+      type: remote_button_short_press
+      subtype: button_2
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Farbe 2"
