@@ -1,0 +1,9 @@
+- alias: Telegram - Alle benachrichtigen wenn es in der Bäckerei Tüten gibt
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.tgtg_bakery
+      above: 0
+  action:
+    - service: notify.telegram_alle
+      data:
+        message: "🍞🥐🥨 Es gibt Tüten!"

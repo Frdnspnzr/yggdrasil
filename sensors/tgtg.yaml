@@ -1,0 +1,6 @@
+- platform: tgtg
+  email: !secret tgtg_email
+  access_token: !secret tgtg_access_token
+  refresh_token: !secret tgtg_refresh_token
+  cookie: !secret tgtg_cookie
+  scan_interval: 900
