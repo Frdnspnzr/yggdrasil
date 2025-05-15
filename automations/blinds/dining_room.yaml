@@ -1,0 +1,219 @@
+- id: dining_room_cover_close
+  alias: Esszimmer - Rollladen schließen
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: sun
+      event: sunset
+    - platform: sun
+      event: sunset
+      offset: "01:00:00"
+    - platform: state
+      entity_id: binary_sensor.window_dining_room
+      to: "off"
+      for: "00:01:00"
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+        - "Kino"
+    - platform: state
+      entity_id: input_select.state_house
+      to: "Nacht"
+  condition:
+    - alias: "Fenster im Esszimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.window_dining_room
+      state: "off"
+      for: "00:01:00"
+    - or:
+        - alias: "Hauszustand ist Nacht"
+          condition: state
+          entity_id: input_select.state_house
+          state: "Nacht"
+        - alias: "Eszimmer ist Gedämmt, Bewohnt oder An"
+          condition: state
+          entity_id: input_select.state_dining_room
+          state:
+            - "An"
+            - "Bewohnt"
+            - "Gedaemmt"
+        - alias: "Wohnzimmer ist Bewohnt oder An"
+          condition: state
+          entity_id: input_select.state_living_room
+          state:
+            - "An"
+            - "Bewohnt"
+            - "Gedaemmt"
+            - "Kino"
+        - alias: "Sonnenuntergang schon eine Stunde her"
+          condition: sun
+          after: sunset
+          after_offset: "01:00:00"
+    - alias: "Nach Sonnenuntergang"
+      condition: sun
+      after: sunset
+  action:
+    - service: cover.close_cover
+      target:
+        entity_id: cover.dining_room
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.dining_room_cover_close
+
+- id: dining_room_cover_open
+  alias: Esszimmer - Rollladen hochfahren
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id: input_select.state_dining_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+    - platform: state
+      entity_id: input_select.state_living_room
+      to:
+        - "An"
+        - "Bewohnt"
+        - "Gedaemmt"
+        - "Kino"
+    - platform: state
+      entity_id: binary_sensor.window_dining_room
+      to: "off"
+      for: "00:01:00"
+    - platform: sun
+      event: sunrise
+      offset: "-00:15:00"
+    - platform: sun
+      event: sunrise
+      offset: "01:30:00"
+  condition:
+    - alias: "Fenster im Esszimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.window_dining_room
+      state: "off"
+      for: "00:01:00"
+    - alias: "Höchstens 15 Minuten bis Sonnenaufgang"
+      condition: sun
+      after: sunrise
+      after_offset: "-00:15:00"
+    - alias: "Vormittags"
+      condition: time
+      before: "12:00:00"
+    - or:
+        - alias: "Esszimmer ist Gedämmt, Bewohnt oder An"
+          condition: state
+          entity_id: input_select.state_dining_room
+          state:
+            - "An"
+            - "Bewohnt"
+            - "Gedaemmt"
+        - alias: "Wohnzimmer ist Bewohnt oder An"
+          condition: state
+          entity_id: input_select.state_living_room
+          state:
+            - "An"
+            - "Bewohnt"
+            - "Gedaemmt"
+            - "Kino"
+        - alias: "90 Minuten nach Sonnenaufgang"
+          condition: sun
+          after: sunrise
+          after_offset: "00:30:00"
+  action:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.dining_room
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - automation.dining_room_cover_open
+
+- id: dining_room_reset_cover_automations
+  alias: Esszimmer - Rollladensteuerung zurücksetzen
+  trigger:
+    - platform: time
+      at: "04:00:00"
+  action:
+    - alias: "Automatisierungen reaktivieren"
+      service: automation.turn_on
+      target:
+        entity_id:
+          - automation.dining_room_cover_close
+          - automation.dining_room_cover_open
+
+- id: dining_room_cover_close_for_sun
+  alias: Esszimmer - Rollladen wegen der Sonne schließen
+  mode: single
+  max_exceeded: silent
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 113
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 36
+    - platform: state
+      entity_id: binary_sensor.window_dining_room
+      to: "off"
+      for: "00:01:00"
+    - platform: numeric_state
+      entity_id: sensor.temperature_living_room
+      above: 23
+    - platform: numeric_state
+      entity_id: sensor.ramstein_bewolkungsgrad
+      below: 50
+    - platform: numeric_state
+      entity_id: weather.kaiserslautern_aktuell
+      attribute: temperature
+      above: 20
+  condition:
+    - alias: "Azimuth zwischen 113° und 250°"
+      condition: numeric_state
+      entity_id: sun.sun
+      attribute: azimuth
+      above: 113
+      below: 250
+    - alias: "Elevation über 36°"
+      condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 36
+    - alias: "Fenster im Esszimmer ist geschlossen"
+      condition: state
+      entity_id: binary_sensor.window_dining_room
+      state: "off"
+      for: "00:01:00"
+    - alias: "Temperatur im Wohnzimmer über 23°"
+      condition: numeric_state
+      entity_id: sensor.temperature_living_room
+      above: 23
+    - alias: "Bewölkungsgrad unter 50%"
+      condition: numeric_state
+      entity_id: sensor.ramstein_bewolkungsgrad
+      below: 50
+    - alias: "Außentemperatur über 20°"
+      condition: numeric_state
+      entity_id: weather.kaiserslautern_aktuell
+      attribute: temperature
+      above: 20
+  action:
+    - alias: "Rollladen im Esszimmer herunterfahren"
+      service: cover.set_cover_position
+      data:
+        position: 20
+      target:
+        entity_id: cover.dining_room
