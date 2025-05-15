@@ -81,6 +81,16 @@ state_front_garden:
     - Bewegung
     - Nacht
 
+state_play_area:
+  name: Zustand Spielecke
+  options:
+    - Aus
+    - Hell
+    - Dunkel
+    - Funkeln
+    - Farbe 1
+    - Farbe 2
+
 light_scheme:
   name: Aktuelles Lichtschema
   options:

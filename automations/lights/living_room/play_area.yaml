@@ -1,0 +1,101 @@
+- id: play_area_bright
+  alias: "Spielecke - Helles Licht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Hell"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_on
+      target:
+        entity_id: light.play_area
+    - alias: "Preset auswählen"
+      service: select.select_option
+      target:
+        entity_id: select.play_area_preset
+      data:
+        option: "Licht (Hell)"
+
+- id: play_area_dim
+  alias: "Spielecke - Dunkles Licht"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Dunkel"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_on
+      target:
+        entity_id: light.play_area
+    - alias: "Preset auswählen"
+      service: select.select_option
+      target:
+        entity_id: select.play_area_preset
+      data:
+        option: "Licht (Dunkel)"
+
+- id: play_area_sparkles
+  alias: "Spielecke - Funkeln"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Funkeln"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_on
+      target:
+        entity_id: light.play_area
+    - alias: "Preset auswählen"
+      service: select.select_option
+      target:
+        entity_id: select.play_area_preset
+      data:
+        option: "Funkeln"
+
+- id: play_area_color_1
+  alias: "Spielecke - Farbe 1"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Farbe 1"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_on
+      target:
+        entity_id: light.play_area
+    - alias: "Preset auswählen"
+      service: select.select_option
+      target:
+        entity_id: select.play_area_preset
+      data:
+        option: "Farbe 1"
+
+- id: play_area_color_2
+  alias: "Spielecke - Farbe 2"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Farbe 2"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_on
+      target:
+        entity_id: light.play_area
+    - alias: "Preset auswählen"
+      service: select.select_option
+      target:
+        entity_id: select.play_area_preset
+      data:
+        option: "Farbe 2"
+
+- id: play_area_off
+  alias: "Spielecke - Aus"
+  trigger:
+    - platform: state
+      entity_id: input_select.state_play_area
+      to: "Aus"
+  action:
+    - alias: "Licht einschalten"
+      service: light.turn_off
+      target:
+        entity_id: light.play_area

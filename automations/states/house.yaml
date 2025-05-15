@@ -187,3 +187,8 @@
       service: script.state_living_room_off
     - alias: "Büro ausschalten"
       service: script.state_study_off
+    - alias: "Spielecke ausschalten"
+      service: input_select.select_option
+      data:
+        entity_id: input_select.state_play_area
+        option: "Aus"
